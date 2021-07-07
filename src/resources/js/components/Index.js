@@ -44,16 +44,16 @@ function Index() {
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="lg">
-        <Header title="Blog" sections={sections} />
+        <Header title="Blog System" sections={sections} />
         <main>
           {/* <MainFeaturedPost post={mainFeaturedPost} /> */}
           <Grid container spacing={5} className={classes.mainGrid}></Grid>
         </main>
       </Container>
-      {/* <Footer
-        title="Footer"
-        description="Something here to give the footer a purpose!"
-      /> */}
+      <Footer
+      // title="Footer"
+      // description="Something here to give the footer a purpose!"
+      />
     </React.Fragment>
   );
 }

@@ -7,6 +7,8 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
+import Login from "./Login";
+import Register from "./Register";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -32,7 +34,7 @@ export default function Header(props) {
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-        <Button size="small">Subscribe</Button>
+        <Login />
         <Typography
           component="h2"
           variant="h5"
@@ -46,9 +48,7 @@ export default function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Button variant="outlined" size="small">
-          Sign up
-        </Button>
+        <Register />
       </Toolbar>
       <Toolbar
         component="nav"
