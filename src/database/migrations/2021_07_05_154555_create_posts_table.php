@@ -20,6 +20,8 @@ class CreatePostsTable extends Migration
             $table->string('slug');
             $table->tinyText('summary');
             $table->text('content');
+            $table->string('img_url');
+            $table->string('img_text');
             $table->dateTime('published_at');
             $table->timestamps();
         });

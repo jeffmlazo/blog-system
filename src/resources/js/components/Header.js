@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import Typography from "@material-ui/core/Typography";
@@ -29,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
-  const { sections, title } = props;
+  const { categories, title } = props;
 
   return (
     <React.Fragment>
@@ -55,16 +54,16 @@ export default function Header(props) {
         variant="dense"
         className={classes.toolbarSecondary}
       >
-        {sections.map((section) => (
+        {categories.map((category) => (
           <Link
             color="inherit"
             noWrap
-            key={section.title}
+            key={category.title}
             variant="body2"
-            href={section.url}
+            href={category.url}
             className={classes.toolbarLink}
           >
-            {section.title}
+            {category.title}
           </Link>
         ))}
       </Toolbar>
@@ -73,6 +72,6 @@ export default function Header(props) {
 }
 
 Header.propTypes = {
-  sections: PropTypes.array,
+  categories: PropTypes.array,
   title: PropTypes.string,
 };
