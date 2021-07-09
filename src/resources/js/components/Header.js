@@ -1,11 +1,12 @@
-import React from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
+import {
+  makeStyles,
+  Toolbar,
+  IconButton,
+  Typography,
+  Link,
+} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 import Login from "./Login";
 import Register from "./Register";
 
@@ -31,7 +32,7 @@ export default function Header(props) {
   const { categories, title } = props;
 
   return (
-    <React.Fragment>
+    <>
       <Toolbar className={classes.toolbar}>
         <Login />
         <Typography
@@ -67,7 +68,7 @@ export default function Header(props) {
           </Link>
         ))}
       </Toolbar>
-    </React.Fragment>
+    </>
   );
 }
 

@@ -1,16 +1,18 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import { makeStyles } from "@material-ui/core/styles";
+import { useState } from "react";
+import {
+  Button,
+  TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  makeStyles,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -22,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FormDialog() {
+export default function RegisterForm() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -32,6 +34,66 @@ export default function FormDialog() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  // Form input fields useState
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [userType, setUserType] = useState("");
+
+  // Add User
+  const addUser = async (user) => {
+    const res = await fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    const data = await res.json();
+    console.log(data);
+    // setUsers([...users, data]);
+  };
+
+  // Form submit
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const userData = {
+      firstName,
+      middleName,
+      lastName,
+      username,
+      password,
+      emailAddress,
+      mobile,
+      userType,
+    };
+
+    handleClose();
+    console.log(userData);
+    // if (!text) {
+    //   alert("Please add a task");
+    //   return;
+    // }
+
+    // onAdd({ text, day, reminder });
+
+    // Clear the all form states
+    setFirstName("");
+    setMiddleName("");
+    setLastName("");
+    setUsername("");
+    setPassword("");
+    setEmailAddress("");
+    setMobile("");
+    setUserType("");
   };
 
   return (
@@ -49,12 +111,17 @@ export default function FormDialog() {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Register</DialogTitle>
+        <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please fill up the neccessary required fields.
           </DialogContentText>
-          <form className="sign-up-form" noValidate autoComplete="off">
+          <form
+            className="sign-up-form"
+            noValidate
+            autoComplete="off"
+            onSubmit={onSubmit}
+          >
             <TextField
               autoFocus
               margin="dense"
@@ -62,38 +129,44 @@ export default function FormDialog() {
               label="First Name"
               type="text"
               fullWidth
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="middle_name"
               label="Middle Name"
               type="text"
               fullWidth
+              value={middleName}
+              onChange={(e) => setMiddleName(e.target.value)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="last_name"
               label="Last Name"
               type="text"
               fullWidth
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="username"
               label="Username"
               type="text"
               fullWidth
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="password"
               label="Password"
               type="password"
               fullWidth
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <FormControl className={classes.formControl}>
@@ -101,37 +174,39 @@ export default function FormDialog() {
               <Select
                 labelId="user-type"
                 id="user-type"
-                // value={age}
-                // onChange={handleChange}
+                value={userType}
+                onChange={(e) => setUserType(e.target.value)}
               >
-                <MenuItem value={1}>User</MenuItem>
-                <MenuItem value={2}>Twenty</MenuItem>
-                <MenuItem value={3}>Thirty</MenuItem>
+                <MenuItem value="user">User</MenuItem>
+                <MenuItem value="author">Author</MenuItem>
+                <MenuItem value="admin">Admin</MenuItem>
               </Select>
             </FormControl>
 
             <TextField
-              autoFocus
               margin="dense"
               id="email-address"
               label="Email Address"
               type="email"
               fullWidth
+              value={emailAddress}
+              onChange={(e) => setEmailAddress(e.target.value)}
             />
             <TextField
-              autoFocus
               margin="dense"
               id="mobile"
               label="Mobile"
               type="text"
               fullWidth
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
             />
             <DialogActions>
               <Button onClick={handleClose} color="primary">
                 Cancel
               </Button>
-              <Button onClick={handleClose} color="primary">
-                Login
+              <Button onClick={onSubmit} color="primary">
+                Register
               </Button>
             </DialogActions>
           </form>

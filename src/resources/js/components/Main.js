@@ -1,9 +1,5 @@
-import React from "react";
 import ReactDOM from "react-dom";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
+import { makeStyles, CssBaseline, Grid, Container } from "@material-ui/core";
 import MainFeaturedPost from "./MainFeaturedPost";
 import FeaturedPost from "./FeaturedPost";
 import EditorsPick from "./EditorsPick";
@@ -78,39 +74,42 @@ const featuredPosts = [
 const editorsPickPosts = [
   {
     id: 4,
-    title: "Pellentesque non blandit dui",
-    slug: "pellentesque-non-blandit-dui",
+    title: "Passages of Lorem Ipsum available",
+    slug: "passages-of-lorem-ipsum-available",
     imageUrl: "https://source.unsplash.com/user/erondu/800x600",
     imgText: "Nullam nec faucibus risus. Integer rutrum metus ut est convallis",
   },
   {
     id: 3,
-    title: "Pellentesque non blandit dui",
-    slug: "pellentesque-non-blandit-dui",
+    title: "Discovered The Undoubtable Source",
+    slug: "discovered-the-undoubtable-source",
     imageUrl: "https://placeimg.com/800/600/tech",
     imgText: "Morbi ut augue quis nunc scelerisque rhoncus sed ut justo",
   },
   {
     id: 2,
-    title: "Pellentesque non blandit dui",
-    slug: "pellentesque-non-blandit-dui",
+    title: "Making This The First True Generator",
+    slug: "making-this-the-first-true-generator",
     imageUrl: "https://placeimg.com/800/600/nature",
     imgText: "Morbi ut augue quis nunc scelerisque rhoncus sed ut justo",
   },
   {
     id: 1,
-    title: "Pellentesque non blandit dui",
-    slug: "pellentesque-non-blandit-dui",
+    title: "Sed Do Eiusmod Tempor Incididunt Ut Labore",
+    slug: "sed-do-eiusmod-tempor-incididunt-ut-labore",
     imageUrl: "https://placeimg.com/800/600/people",
     imgText: "Morbi ut augue quis nunc scelerisque rhoncus sed ut justo",
   },
 ];
 
-function Index() {
+function Main() {
   const classes = useStyles();
 
+  // Registration variables
+  // const [users, setUsers] = useState([]);
+
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <Container maxWidth="lg">
         <Header title="Blog System" categories={categories} />
@@ -127,12 +126,12 @@ function Index() {
         </main>
       </Container>
       <Footer />
-    </React.Fragment>
+    </>
   );
 }
 
-export default Index;
+export default Main;
 
 if (document.getElementById("app")) {
-  ReactDOM.render(<Index />, document.getElementById("app"));
+  ReactDOM.render(<Main />, document.getElementById("app"));
 }

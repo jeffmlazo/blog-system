@@ -1,10 +1,11 @@
-import React from "react";
 import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Typography from "@material-ui/core/Typography";
+import {
+  makeStyles,
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     flex: "1 0 auto",
   },
   cover: {
-    width: "55%",
+    width: 120,
   },
   boxBgColor: {
     background: "rgb(213, 216, 223)",
@@ -31,12 +32,12 @@ export default function EditorsPick(props) {
   const { post } = props;
 
   return (
-    <React.Fragment>
+    <>
       <Card className={classes.root}>
         <CardMedia
           className={classes.cover}
-          image="https://source.unsplash.com/user/skyangel79/800x600"
-          title="Aliquam id pretium metus. Sed lorem ante, ullamcorper"
+          image={post.imageUrl}
+          title={post.imageTitle}
         />
         <div className={classes.details}>
           <CardContent className={classes.content}>
@@ -46,7 +47,7 @@ export default function EditorsPick(props) {
           </CardContent>
         </div>
       </Card>
-    </React.Fragment>
+    </>
   );
 }
 
