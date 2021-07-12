@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@material-ui/core";
 
-export default function FormDialog() {
+export default function LoginForm() {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {

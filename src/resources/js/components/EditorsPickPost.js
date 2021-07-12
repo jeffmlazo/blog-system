@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EditorsPick(props) {
+export default function EditorsPickPost(props) {
   const classes = useStyles();
   const { post } = props;
 

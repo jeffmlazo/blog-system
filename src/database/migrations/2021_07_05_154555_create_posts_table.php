@@ -15,7 +15,8 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('author_id');
+            $table->unsignedBigInteger('author_id')->index();
+            $table->foreign('author_id')->references('id')->on('users');
             $table->string('title');
             $table->string('slug');
             $table->tinyText('summary');
@@ -23,6 +24,10 @@ class CreatePostsTable extends Migration
             $table->string('img_url');
             $table->string('img_text');
             $table->dateTime('published_at');
+            $table->unsignedBigInteger('tag_id')->index();
+            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->unsignedBigInteger('category_id')->index();
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }

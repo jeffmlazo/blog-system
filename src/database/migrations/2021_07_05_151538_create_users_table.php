@@ -18,11 +18,11 @@ class CreateUsersTable extends Migration
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
-            $table->string('username')->unique();
+            $table->string('username')->unique()->index();
             $table->string('password');
             $table->enum('user_type', ['user', 'author', 'admin'])->default('user');
-            $table->string('email_address')->unique();
-            $table->string('mobile')->unique();
+            $table->string('email_address')->unique()->index();
+            $table->string('mobile')->nullable();
             $table->dateTime('register_at');
             $table->dateTime('last_login');
             $table->timestamps();

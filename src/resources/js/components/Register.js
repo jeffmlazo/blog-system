@@ -48,7 +48,7 @@ export default function RegisterForm() {
 
   // Add User
   const addUser = async (user) => {
-    const res = await fetch("http://localhost:5000/users", {
+    const res = await fetch("http://localhost/api/user/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

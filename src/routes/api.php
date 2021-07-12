@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\User;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::post('user/create', 'UserController@create');
+Route::get('/user', [UserController::class, 'index']);
+// Route::post('/user', [UserController::class, 'create']);
+// Route::get('posts', function () {
+Route::get('users', function () {
+    return User::all();
 });
