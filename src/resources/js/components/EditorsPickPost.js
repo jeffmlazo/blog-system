@@ -6,6 +6,7 @@ import {
   CardMedia,
   Typography,
 } from "@material-ui/core";
+import EditorsPick from "./EditorsPick";
 
 const useStyles = makeStyles((theme) => ({
   root: {
