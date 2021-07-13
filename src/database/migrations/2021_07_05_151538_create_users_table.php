@@ -23,8 +23,8 @@ class CreateUsersTable extends Migration
             $table->enum('user_type', ['user', 'author', 'admin'])->default('user');
             $table->string('email_address')->unique()->index();
             $table->string('mobile')->nullable();
-            $table->dateTime('register_at');
-            $table->dateTime('last_login');
+            // $table->dateTime('register_at');
+            // $table->dateTime('last_login');
             $table->timestamps();
         });
     }

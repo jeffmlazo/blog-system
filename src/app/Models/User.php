@@ -9,7 +9,6 @@ class User extends Model
 {
     use HasFactory;
 
-
     /**
      * The attributes that are mass assignable.
      *
@@ -18,9 +17,15 @@ class User extends Model
     protected $fillable = [
         'first_name',
         'middle_name',
-        'email',
+        'last_name',
+        'username',
         'password',
+        'user_type',
+        'email_address',
+        'mobile',
     ];
+
+    // protected $table = 'users';
 
     /**
      * The attributes that should be hidden for arrays.

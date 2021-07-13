@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Alert from "@material-ui/lab/Alert";
 import {
   Button,
   TextField,
@@ -21,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  alertBox: {
+    margin: theme.spacing(2),
   },
 }));
 
@@ -48,7 +52,7 @@ export default function RegisterForm() {
 
   // Add User
   const addUser = async (user) => {
-    const res = await fetch("http://localhost/api/user/create", {
+    const res = await fetch("http://localhost/api/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -71,20 +75,22 @@ export default function RegisterForm() {
       lastName,
       username,
       password,
+      userType,
       emailAddress,
       mobile,
-      userType,
     };
 
-    handleClose();
-    console.log(userData);
+    // Add user to the server
+    addUser(userData);
+
+    // handleClose();
+    // console.log(userData);
     // if (!text) {
     //   alert("Please add a task");
     //   return;
     // }
 
     // onAdd({ text, day, reminder });
-
     // Clear the all form states
     setFirstName("");
     setMiddleName("");
@@ -113,6 +119,9 @@ export default function RegisterForm() {
       >
         <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
         <DialogContent>
+          <Alert severity="success" className={classes.alertBox}>
+            This is a success alert — check it out!
+          </Alert>
           <DialogContentText>
             Please fill up the neccessary required fields.
           </DialogContentText>
