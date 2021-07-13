@@ -126,3 +126,6 @@ dist
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+### Docker Folders & Files
+mysql/
