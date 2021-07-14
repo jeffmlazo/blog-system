@@ -36,52 +36,7 @@ class UserApiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    // public function store(User $user)
     {
-        // $data = json_decode($request->payload, true);
-
-        // $rules = [
-        //     'first_name' => 'required',
-        //     'middle_name' => 'required',
-        //     'last_name' => 'required',
-        //     'username' => 'required',
-        //     'password' => 'required',
-        //     'user_type' => 'required',
-        //     'email_addres' => 'required',
-        //     'mobile' => 'max:15',
-        // ];
-
-        // $validator = Validator::make($data, $rules);
-        // if ($validator->passes()) {
-        //     return [
-        //         'success' => true
-        //     ];
-        // } else {
-        //     dd($validator->errors()->all());
-        // }
-        // $validated = $user->validate([
-        //     'first_name' => 'required',
-        //     'middle_name' => 'required',
-        //     'last_name' => 'required',
-        //     'username' => 'required',
-        //     'password' => 'required',
-        //     'user_type' => 'required',
-        //     'email_addres' => 'required',
-        //     'mobile' => 'max:15|integer',
-        // ]);
-
-        // return User::create([
-        //     'first_name' => request('first_name'),
-        //     'middle_name' => request('middle_name'),
-        //     'last_name' => request('last_name'),
-        //     'username' => request('username'),
-        //     'password' => request('password'),
-        //     'user_type' => request('user_type'),
-        //     'email_address' => request('email_address'),
-        //     'mobile' => request('mobile'),
-        // ]);
-
-
         $validator = Validator::make($request->all(), [
             'firstName' => 'required',
             'middleName' => 'required',
@@ -95,20 +50,9 @@ class UserApiController extends Controller
 
         if ($validator->fails()) {
             $errors = $validator->errors();
-            return response()->json($errors->all(), 500);
+            return response()->json(['status' => 'error', 'message' => $errors->all()], 500);
         } else {
-            // $user = new User();
-            // $user->first_name = request('first_name');
-            // $user->middle_name = request('middle_name');
-            // $user->last_name = request('last_name');
-            // $user->username = request('username');
-            // $user->password = request('password');
-            // $user->user_type = request('user_type');
-            // $user->email_address = request('email_address');
-            // $user->mobile = request('mobile');
-            // $user->save();
-
-            return User::create([
+            User::create([
                 'first_name' => request('firstName'),
                 'middle_name' => request('middleName'),
                 'last_name' => request('lastName'),
@@ -119,9 +63,10 @@ class UserApiController extends Controller
                 'mobile' => request('mobile'),
             ]);
 
-            // return [
-            //     'success' => true
-            // ];
+            return [
+                'status' => 'success',
+                'message' => 'You have successfully registered!'
+            ];
         }
     }
 

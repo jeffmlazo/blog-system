@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Login from "./Login";
-import Register from "./Register";
+import RegisterModal from "./Signup/RegisterModal";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -48,7 +48,7 @@ export default function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Register />
+        <RegisterModal />
       </Toolbar>
       <Toolbar
         component="nav"
