@@ -601,17 +601,6 @@ module.exports.default = module.exports, module.exports.__esModule = true;
 
 /***/ }),
 
-/***/ "./node_modules/@babel/runtime/regenerator/index.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
-
-
-/***/ }),
-
 /***/ "./node_modules/@material-ui/core/esm/Backdrop/Backdrop.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/Backdrop/Backdrop.js ***!
@@ -2609,6 +2598,215 @@ var CardMedia = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef(funct
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_styles_withStyles__WEBPACK_IMPORTED_MODULE_6__.default)(styles, {
   name: 'MuiCardMedia'
 })(CardMedia));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utils_ownerDocument__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/ownerDocument */ "./node_modules/@material-ui/core/esm/utils/ownerDocument.js");
+/* harmony import */ var _utils_useForkRef__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utils/useForkRef */ "./node_modules/@material-ui/core/esm/utils/useForkRef.js");
+/* harmony import */ var _utils_useEventCallback__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils/useEventCallback */ "./node_modules/@material-ui/core/esm/utils/useEventCallback.js");
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/utils */ "./node_modules/@material-ui/utils/esm/elementAcceptingRef.js");
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/utils */ "./node_modules/@material-ui/utils/esm/exactProp.js");
+
+
+
+
+
+
+
+
+function mapEventPropToEvent(eventProp) {
+  return eventProp.substring(2).toLowerCase();
+}
+
+function clickedRootScrollbar(event) {
+  return document.documentElement.clientWidth < event.clientX || document.documentElement.clientHeight < event.clientY;
+}
+/**
+ * Listen for click events that occur somewhere in the document, outside of the element itself.
+ * For instance, if you need to hide a menu when people click anywhere else on your page.
+ */
+
+
+function ClickAwayListener(props) {
+  var children = props.children,
+      _props$disableReactTr = props.disableReactTree,
+      disableReactTree = _props$disableReactTr === void 0 ? false : _props$disableReactTr,
+      _props$mouseEvent = props.mouseEvent,
+      mouseEvent = _props$mouseEvent === void 0 ? 'onClick' : _props$mouseEvent,
+      onClickAway = props.onClickAway,
+      _props$touchEvent = props.touchEvent,
+      touchEvent = _props$touchEvent === void 0 ? 'onTouchEnd' : _props$touchEvent;
+  var movedRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+  var nodeRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(null);
+  var activatedRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+  var syntheticEventRef = react__WEBPACK_IMPORTED_MODULE_0__.useRef(false);
+  react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+    // Ensure that this component is not "activated" synchronously.
+    // https://github.com/facebook/react/issues/20074
+    setTimeout(function () {
+      activatedRef.current = true;
+    }, 0);
+    return function () {
+      activatedRef.current = false;
+    };
+  }, []); // can be removed once we drop support for non ref forwarding class components
+
+  var handleOwnRef = react__WEBPACK_IMPORTED_MODULE_0__.useCallback(function (instance) {
+    // #StrictMode ready
+    nodeRef.current = react_dom__WEBPACK_IMPORTED_MODULE_1__.findDOMNode(instance);
+  }, []);
+  var handleRef = (0,_utils_useForkRef__WEBPACK_IMPORTED_MODULE_3__.default)(children.ref, handleOwnRef); // The handler doesn't take event.defaultPrevented into account:
+  //
+  // event.preventDefault() is meant to stop default behaviours like
+  // clicking a checkbox to check it, hitting a button to submit a form,
+  // and hitting left arrow to move the cursor in a text input etc.
+  // Only special HTML elements have these default behaviors.
+
+  var handleClickAway = (0,_utils_useEventCallback__WEBPACK_IMPORTED_MODULE_4__.default)(function (event) {
+    // Given developers can stop the propagation of the synthetic event,
+    // we can only be confident with a positive value.
+    var insideReactTree = syntheticEventRef.current;
+    syntheticEventRef.current = false; // 1. IE 11 support, which trigger the handleClickAway even after the unbind
+    // 2. The child might render null.
+    // 3. Behave like a blur listener.
+
+    if (!activatedRef.current || !nodeRef.current || clickedRootScrollbar(event)) {
+      return;
+    } // Do not act if user performed touchmove
+
+
+    if (movedRef.current) {
+      movedRef.current = false;
+      return;
+    }
+
+    var insideDOM; // If not enough, can use https://github.com/DieterHolvoet/event-propagation-path/blob/master/propagationPath.js
+
+    if (event.composedPath) {
+      insideDOM = event.composedPath().indexOf(nodeRef.current) > -1;
+    } else {
+      // TODO v6 remove dead logic https://caniuse.com/#search=composedPath.
+      var doc = (0,_utils_ownerDocument__WEBPACK_IMPORTED_MODULE_5__.default)(nodeRef.current);
+      insideDOM = !doc.documentElement.contains(event.target) || nodeRef.current.contains(event.target);
+    }
+
+    if (!insideDOM && (disableReactTree || !insideReactTree)) {
+      onClickAway(event);
+    }
+  }); // Keep track of mouse/touch events that bubbled up through the portal.
+
+  var createHandleSynthetic = function createHandleSynthetic(handlerName) {
+    return function (event) {
+      syntheticEventRef.current = true;
+      var childrenPropsHandler = children.props[handlerName];
+
+      if (childrenPropsHandler) {
+        childrenPropsHandler(event);
+      }
+    };
+  };
+
+  var childrenProps = {
+    ref: handleRef
+  };
+
+  if (touchEvent !== false) {
+    childrenProps[touchEvent] = createHandleSynthetic(touchEvent);
+  }
+
+  react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+    if (touchEvent !== false) {
+      var mappedTouchEvent = mapEventPropToEvent(touchEvent);
+      var doc = (0,_utils_ownerDocument__WEBPACK_IMPORTED_MODULE_5__.default)(nodeRef.current);
+
+      var handleTouchMove = function handleTouchMove() {
+        movedRef.current = true;
+      };
+
+      doc.addEventListener(mappedTouchEvent, handleClickAway);
+      doc.addEventListener('touchmove', handleTouchMove);
+      return function () {
+        doc.removeEventListener(mappedTouchEvent, handleClickAway);
+        doc.removeEventListener('touchmove', handleTouchMove);
+      };
+    }
+
+    return undefined;
+  }, [handleClickAway, touchEvent]);
+
+  if (mouseEvent !== false) {
+    childrenProps[mouseEvent] = createHandleSynthetic(mouseEvent);
+  }
+
+  react__WEBPACK_IMPORTED_MODULE_0__.useEffect(function () {
+    if (mouseEvent !== false) {
+      var mappedMouseEvent = mapEventPropToEvent(mouseEvent);
+      var doc = (0,_utils_ownerDocument__WEBPACK_IMPORTED_MODULE_5__.default)(nodeRef.current);
+      doc.addEventListener(mappedMouseEvent, handleClickAway);
+      return function () {
+        doc.removeEventListener(mappedMouseEvent, handleClickAway);
+      };
+    }
+
+    return undefined;
+  }, [handleClickAway, mouseEvent]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.cloneElement(children, childrenProps));
+}
+
+ true ? ClickAwayListener.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The wrapped element.
+   */
+  children: _material_ui_utils__WEBPACK_IMPORTED_MODULE_6__.default.isRequired,
+
+  /**
+   * If `true`, the React tree is ignored and only the DOM tree is considered.
+   * This prop changes how portaled elements are handled.
+   */
+  disableReactTree: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+
+  /**
+   * The mouse event to listen to. You can disable the listener by providing `false`.
+   */
+  mouseEvent: prop_types__WEBPACK_IMPORTED_MODULE_2___default().oneOf(['onClick', 'onMouseDown', 'onMouseUp', false]),
+
+  /**
+   * Callback fired when a "click away" event is detected.
+   */
+  onClickAway: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func.isRequired),
+
+  /**
+   * The touch event to listen to. You can disable the listener by providing `false`.
+   */
+  touchEvent: prop_types__WEBPACK_IMPORTED_MODULE_2___default().oneOf(['onTouchEnd', 'onTouchStart', false])
+} : 0;
+
+if (true) {
+  // eslint-disable-next-line
+  ClickAwayListener['propTypes' + ''] = (0,_material_ui_utils__WEBPACK_IMPORTED_MODULE_7__.default)(ClickAwayListener.propTypes);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ClickAwayListener);
 
 /***/ }),
 
@@ -12796,6 +12994,567 @@ var SelectInput = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.forwardRef(fun
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/core/esm/Snackbar/Snackbar.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/Snackbar/Snackbar.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "styles": () => (/* binding */ styles),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../styles/withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
+/* harmony import */ var _styles_transitions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../styles/transitions */ "./node_modules/@material-ui/core/esm/styles/transitions.js");
+/* harmony import */ var _ClickAwayListener__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../ClickAwayListener */ "./node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js");
+/* harmony import */ var _utils_useEventCallback__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/useEventCallback */ "./node_modules/@material-ui/core/esm/utils/useEventCallback.js");
+/* harmony import */ var _utils_capitalize__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/capitalize */ "./node_modules/@material-ui/core/esm/utils/capitalize.js");
+/* harmony import */ var _utils_createChainedFunction__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/createChainedFunction */ "./node_modules/@material-ui/core/esm/utils/createChainedFunction.js");
+/* harmony import */ var _utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/deprecatedPropType */ "./node_modules/@material-ui/core/esm/utils/deprecatedPropType.js");
+/* harmony import */ var _Grow__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Grow */ "./node_modules/@material-ui/core/esm/Grow/Grow.js");
+/* harmony import */ var _SnackbarContent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../SnackbarContent */ "./node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var styles = function styles(theme) {
+  var top1 = {
+    top: 8
+  };
+  var bottom1 = {
+    bottom: 8
+  };
+  var right = {
+    justifyContent: 'flex-end'
+  };
+  var left = {
+    justifyContent: 'flex-start'
+  };
+  var top3 = {
+    top: 24
+  };
+  var bottom3 = {
+    bottom: 24
+  };
+  var right3 = {
+    right: 24
+  };
+  var left3 = {
+    left: 24
+  };
+  var center = {
+    left: '50%',
+    right: 'auto',
+    transform: 'translateX(-50%)'
+  };
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      zIndex: theme.zIndex.snackbar,
+      position: 'fixed',
+      display: 'flex',
+      left: 8,
+      right: 8,
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'center' }}`. */
+    anchorOriginTopCenter: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, top1, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, top3, center))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'center' }}`. */
+    anchorOriginBottomCenter: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, bottom1, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, bottom3, center))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'right' }}`. */
+    anchorOriginTopRight: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, top1, right, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
+      left: 'auto'
+    }, top3, right3))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'right' }}`. */
+    anchorOriginBottomRight: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, bottom1, right, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
+      left: 'auto'
+    }, bottom3, right3))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'left' }}`. */
+    anchorOriginTopLeft: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, top1, left, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
+      right: 'auto'
+    }, top3, left3))),
+
+    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'left' }}`. */
+    anchorOriginBottomLeft: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, bottom1, left, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
+      right: 'auto'
+    }, bottom3, left3)))
+  };
+};
+var Snackbar = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.forwardRef(function Snackbar(props, ref) {
+  var action = props.action,
+      _props$anchorOrigin = props.anchorOrigin;
+  _props$anchorOrigin = _props$anchorOrigin === void 0 ? {
+    vertical: 'bottom',
+    horizontal: 'center'
+  } : _props$anchorOrigin;
+
+  var vertical = _props$anchorOrigin.vertical,
+      horizontal = _props$anchorOrigin.horizontal,
+      _props$autoHideDurati = props.autoHideDuration,
+      autoHideDuration = _props$autoHideDurati === void 0 ? null : _props$autoHideDurati,
+      children = props.children,
+      classes = props.classes,
+      className = props.className,
+      ClickAwayListenerProps = props.ClickAwayListenerProps,
+      ContentProps = props.ContentProps,
+      _props$disableWindowB = props.disableWindowBlurListener,
+      disableWindowBlurListener = _props$disableWindowB === void 0 ? false : _props$disableWindowB,
+      message = props.message,
+      onClose = props.onClose,
+      onEnter = props.onEnter,
+      onEntered = props.onEntered,
+      onEntering = props.onEntering,
+      onExit = props.onExit,
+      onExited = props.onExited,
+      onExiting = props.onExiting,
+      onMouseEnter = props.onMouseEnter,
+      onMouseLeave = props.onMouseLeave,
+      open = props.open,
+      resumeHideDuration = props.resumeHideDuration,
+      _props$TransitionComp = props.TransitionComponent,
+      TransitionComponent = _props$TransitionComp === void 0 ? _Grow__WEBPACK_IMPORTED_MODULE_6__.default : _props$TransitionComp,
+      _props$transitionDura = props.transitionDuration,
+      transitionDuration = _props$transitionDura === void 0 ? {
+    enter: _styles_transitions__WEBPACK_IMPORTED_MODULE_7__.duration.enteringScreen,
+    exit: _styles_transitions__WEBPACK_IMPORTED_MODULE_7__.duration.leavingScreen
+  } : _props$transitionDura,
+      TransitionProps = props.TransitionProps,
+      other = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__.default)(props, ["action", "anchorOrigin", "autoHideDuration", "children", "classes", "className", "ClickAwayListenerProps", "ContentProps", "disableWindowBlurListener", "message", "onClose", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "TransitionComponent", "transitionDuration", "TransitionProps"]);
+
+  var timerAutoHide = react__WEBPACK_IMPORTED_MODULE_3__.useRef();
+
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_3__.useState(true),
+      exited = _React$useState[0],
+      setExited = _React$useState[1];
+
+  var handleClose = (0,_utils_useEventCallback__WEBPACK_IMPORTED_MODULE_8__.default)(function () {
+    if (onClose) {
+      onClose.apply(void 0, arguments);
+    }
+  });
+  var setAutoHideTimer = (0,_utils_useEventCallback__WEBPACK_IMPORTED_MODULE_8__.default)(function (autoHideDurationParam) {
+    if (!onClose || autoHideDurationParam == null) {
+      return;
+    }
+
+    clearTimeout(timerAutoHide.current);
+    timerAutoHide.current = setTimeout(function () {
+      handleClose(null, 'timeout');
+    }, autoHideDurationParam);
+  });
+  react__WEBPACK_IMPORTED_MODULE_3__.useEffect(function () {
+    if (open) {
+      setAutoHideTimer(autoHideDuration);
+    }
+
+    return function () {
+      clearTimeout(timerAutoHide.current);
+    };
+  }, [open, autoHideDuration, setAutoHideTimer]); // Pause the timer when the user is interacting with the Snackbar
+  // or when the user hide the window.
+
+  var handlePause = function handlePause() {
+    clearTimeout(timerAutoHide.current);
+  }; // Restart the timer when the user is no longer interacting with the Snackbar
+  // or when the window is shown back.
+
+
+  var handleResume = react__WEBPACK_IMPORTED_MODULE_3__.useCallback(function () {
+    if (autoHideDuration != null) {
+      setAutoHideTimer(resumeHideDuration != null ? resumeHideDuration : autoHideDuration * 0.5);
+    }
+  }, [autoHideDuration, resumeHideDuration, setAutoHideTimer]);
+
+  var handleMouseEnter = function handleMouseEnter(event) {
+    if (onMouseEnter) {
+      onMouseEnter(event);
+    }
+
+    handlePause();
+  };
+
+  var handleMouseLeave = function handleMouseLeave(event) {
+    if (onMouseLeave) {
+      onMouseLeave(event);
+    }
+
+    handleResume();
+  };
+
+  var handleClickAway = function handleClickAway(event) {
+    if (onClose) {
+      onClose(event, 'clickaway');
+    }
+  };
+
+  var handleExited = function handleExited() {
+    setExited(true);
+  };
+
+  var handleEnter = function handleEnter() {
+    setExited(false);
+  };
+
+  react__WEBPACK_IMPORTED_MODULE_3__.useEffect(function () {
+    if (!disableWindowBlurListener && open) {
+      window.addEventListener('focus', handleResume);
+      window.addEventListener('blur', handlePause);
+      return function () {
+        window.removeEventListener('focus', handleResume);
+        window.removeEventListener('blur', handlePause);
+      };
+    }
+
+    return undefined;
+  }, [disableWindowBlurListener, handleResume, open]); // So we only render active snackbars.
+
+  if (!open && exited) {
+    return null;
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_ClickAwayListener__WEBPACK_IMPORTED_MODULE_9__.default, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
+    onClickAway: handleClickAway
+  }, ClickAwayListenerProps), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_5__.default)(classes.root, classes["anchorOrigin".concat((0,_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__.default)(vertical)).concat((0,_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__.default)(horizontal))], className),
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    ref: ref
+  }, other), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(TransitionComponent, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
+    appear: true,
+    in: open,
+    onEnter: (0,_utils_createChainedFunction__WEBPACK_IMPORTED_MODULE_11__.default)(handleEnter, onEnter),
+    onEntered: onEntered,
+    onEntering: onEntering,
+    onExit: onExit,
+    onExited: (0,_utils_createChainedFunction__WEBPACK_IMPORTED_MODULE_11__.default)(handleExited, onExited),
+    onExiting: onExiting,
+    timeout: transitionDuration,
+    direction: vertical === 'top' ? 'down' : 'up'
+  }, TransitionProps), children || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_SnackbarContent__WEBPACK_IMPORTED_MODULE_12__.default, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
+    message: message,
+    action: action
+  }, ContentProps)))));
+});
+ true ? Snackbar.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The action to display. It renders after the message, at the end of the snackbar.
+   */
+  action: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().node),
+
+  /**
+   * The anchor of the `Snackbar`.
+   */
+  anchorOrigin: prop_types__WEBPACK_IMPORTED_MODULE_4___default().shape({
+    horizontal: prop_types__WEBPACK_IMPORTED_MODULE_4___default().oneOf(['center', 'left', 'right']).isRequired,
+    vertical: prop_types__WEBPACK_IMPORTED_MODULE_4___default().oneOf(['bottom', 'top']).isRequired
+  }),
+
+  /**
+   * The number of milliseconds to wait before automatically calling the
+   * `onClose` function. `onClose` should then set the state of the `open`
+   * prop to hide the Snackbar. This behavior is disabled by default with
+   * the `null` value.
+   */
+  autoHideDuration: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().number),
+
+  /**
+   * Replace the `SnackbarContent` component.
+   */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().element),
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().object),
+
+  /**
+   * @ignore
+   */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string),
+
+  /**
+   * Props applied to the `ClickAwayListener` element.
+   */
+  ClickAwayListenerProps: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().object),
+
+  /**
+   * Props applied to the [`SnackbarContent`](/api/snackbar-content/) element.
+   */
+  ContentProps: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().object),
+
+  /**
+   * If `true`, the `autoHideDuration` timer will expire even if the window is not focused.
+   */
+  disableWindowBlurListener: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().bool),
+
+  /**
+   * When displaying multiple consecutive Snackbars from a parent rendering a single
+   * <Snackbar/>, add the key prop to ensure independent treatment of each message.
+   * e.g. <Snackbar key={message} />, otherwise, the message may update-in-place and
+   * features such as autoHideDuration may be canceled.
+   */
+  key: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().any),
+
+  /**
+   * The message to display.
+   */
+  message: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().node),
+
+  /**
+   * Callback fired when the component requests to be closed.
+   * Typically `onClose` is used to set state in the parent component,
+   * which is used to control the `Snackbar` `open` prop.
+   * The `reason` parameter can optionally be used to control the response to `onClose`,
+   * for example ignoring `clickaway`.
+   *
+   * @param {object} event The event source of the callback.
+   * @param {string} reason Can be: `"timeout"` (`autoHideDuration` expired), `"clickaway"`.
+   */
+  onClose: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().func),
+
+  /**
+   * Callback fired before the transition is entering.
+   * @deprecated Use the `TransitionProps` prop instead.
+   */
+  onEnter: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
+
+  /**
+   * Callback fired when the transition has entered.
+   * @deprecated Use the `TransitionProps` prop instead.
+   */
+  onEntered: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
+
+  /**
+   * Callback fired when the transition is entering.
+   * @deprecated Use the `TransitionProps` prop instead.
+   */
+  onEntering: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
+
+  /**
+   * Callback fired before the transition is exiting.
+   * @deprecated Use the `TransitionProps` prop instead.
+   */
+  onExit: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
+
+  /**
+   * Callback fired when the transition has exited.
+   * @deprecated Use the `TransitionProps` prop instead.
+   */
+  onExited: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
+
+  /**
+   * Callback fired when the transition is exiting.
+   * @deprecated Use the `TransitionProps` prop instead.
+   */
+  onExiting: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
+
+  /**
+   * @ignore
+   */
+  onMouseEnter: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().func),
+
+  /**
+   * @ignore
+   */
+  onMouseLeave: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().func),
+
+  /**
+   * If `true`, `Snackbar` is open.
+   */
+  open: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().bool),
+
+  /**
+   * The number of milliseconds to wait before dismissing after user interaction.
+   * If `autoHideDuration` prop isn't specified, it does nothing.
+   * If `autoHideDuration` prop is specified but `resumeHideDuration` isn't,
+   * we default to `autoHideDuration / 2` ms.
+   */
+  resumeHideDuration: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().number),
+
+  /**
+   * The component used for the transition.
+   * [Follow this guide](/components/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
+   */
+  TransitionComponent: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().elementType),
+
+  /**
+   * The duration for the transition, in milliseconds.
+   * You may specify a single timeout for all transitions, or individually with an object.
+   */
+  transitionDuration: prop_types__WEBPACK_IMPORTED_MODULE_4___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_4___default().number), prop_types__WEBPACK_IMPORTED_MODULE_4___default().shape({
+    appear: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().number),
+    enter: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().number),
+    exit: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().number)
+  })]),
+
+  /**
+   * Props applied to the [`Transition`](http://reactcommunity.org/react-transition-group/transition#Transition-props) element.
+   */
+  TransitionProps: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().object)
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_styles_withStyles__WEBPACK_IMPORTED_MODULE_14__.default)(styles, {
+  flip: false,
+  name: 'MuiSnackbar'
+})(Snackbar));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "styles": () => (/* binding */ styles),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../styles/withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
+/* harmony import */ var _Paper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Paper */ "./node_modules/@material-ui/core/esm/Paper/Paper.js");
+/* harmony import */ var _styles_colorManipulator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/colorManipulator */ "./node_modules/@material-ui/core/esm/styles/colorManipulator.js");
+
+
+
+
+
+
+
+
+
+var styles = function styles(theme) {
+  var emphasis = theme.palette.type === 'light' ? 0.8 : 0.98;
+  var backgroundColor = (0,_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_6__.emphasize)(theme.palette.background.default, emphasis);
+  return {
+    /* Styles applied to the root element. */
+    root: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, theme.typography.body2, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({
+      color: theme.palette.getContrastText(backgroundColor),
+      backgroundColor: backgroundColor,
+      display: 'flex',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+      padding: '6px 16px',
+      borderRadius: theme.shape.borderRadius,
+      flexGrow: 1
+    }, theme.breakpoints.up('sm'), {
+      flexGrow: 'initial',
+      minWidth: 288
+    })),
+
+    /* Styles applied to the message wrapper element. */
+    message: {
+      padding: '8px 0'
+    },
+
+    /* Styles applied to the action wrapper element if `action` is provided. */
+    action: {
+      display: 'flex',
+      alignItems: 'center',
+      marginLeft: 'auto',
+      paddingLeft: 16,
+      marginRight: -8
+    }
+  };
+};
+var SnackbarContent = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.forwardRef(function SnackbarContent(props, ref) {
+  var action = props.action,
+      classes = props.classes,
+      className = props.className,
+      message = props.message,
+      _props$role = props.role,
+      role = _props$role === void 0 ? 'alert' : _props$role,
+      other = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__.default)(props, ["action", "classes", "className", "message", "role"]);
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_Paper__WEBPACK_IMPORTED_MODULE_7__.default, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
+    role: role,
+    square: true,
+    elevation: 6,
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_5__.default)(classes.root, className),
+    ref: ref
+  }, other), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
+    className: classes.message
+  }, message), action ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
+    className: classes.action
+  }, action) : null);
+});
+ true ? SnackbarContent.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The action to display. It renders after the message, at the end of the snackbar.
+   */
+  action: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().node),
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().object),
+
+  /**
+   * @ignore
+   */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string),
+
+  /**
+   * The message to display.
+   */
+  message: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().node),
+
+  /**
+   * The ARIA role attribute of the element.
+   */
+  role: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string)
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_styles_withStyles__WEBPACK_IMPORTED_MODULE_8__.default)(styles, {
+  name: 'MuiSnackbarContent'
+})(SnackbarContent));
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/core/esm/SvgIcon/SvgIcon.js":
 /*!***************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/SvgIcon/SvgIcon.js ***!
@@ -16976,6 +17735,457 @@ var _utils = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/lab/esm/Alert/Alert.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/@material-ui/lab/esm/Alert/Alert.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "styles": () => (/* binding */ styles),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/colorManipulator.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
+/* harmony import */ var _material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/core/Paper */ "./node_modules/@material-ui/core/esm/Paper/Paper.js");
+/* harmony import */ var _internal_svg_icons_SuccessOutlined__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../internal/svg-icons/SuccessOutlined */ "./node_modules/@material-ui/lab/esm/internal/svg-icons/SuccessOutlined.js");
+/* harmony import */ var _internal_svg_icons_ReportProblemOutlined__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../internal/svg-icons/ReportProblemOutlined */ "./node_modules/@material-ui/lab/esm/internal/svg-icons/ReportProblemOutlined.js");
+/* harmony import */ var _internal_svg_icons_ErrorOutline__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../internal/svg-icons/ErrorOutline */ "./node_modules/@material-ui/lab/esm/internal/svg-icons/ErrorOutline.js");
+/* harmony import */ var _internal_svg_icons_InfoOutlined__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../internal/svg-icons/InfoOutlined */ "./node_modules/@material-ui/lab/esm/internal/svg-icons/InfoOutlined.js");
+/* harmony import */ var _internal_svg_icons_Close__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../internal/svg-icons/Close */ "./node_modules/@material-ui/lab/esm/internal/svg-icons/Close.js");
+/* harmony import */ var _material_ui_core_IconButton__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @material-ui/core/IconButton */ "./node_modules/@material-ui/core/esm/IconButton/IconButton.js");
+/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/capitalize.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var styles = function styles(theme) {
+  var getColor = theme.palette.type === 'light' ? _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.darken : _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.lighten;
+  var getBackgroundColor = theme.palette.type === 'light' ? _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.lighten : _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.darken;
+  return {
+    /* Styles applied to the root element. */
+    root: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.typography.body2, {
+      borderRadius: theme.shape.borderRadius,
+      backgroundColor: 'transparent',
+      display: 'flex',
+      padding: '6px 16px'
+    }),
+
+    /* Styles applied to the root element if `variant="standard"` and `color="success"`. */
+    standardSuccess: {
+      color: getColor(theme.palette.success.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.success.main, 0.9),
+      '& $icon': {
+        color: theme.palette.success.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="info"`. */
+    standardInfo: {
+      color: getColor(theme.palette.info.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.info.main, 0.9),
+      '& $icon': {
+        color: theme.palette.info.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="warning"`. */
+    standardWarning: {
+      color: getColor(theme.palette.warning.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.9),
+      '& $icon': {
+        color: theme.palette.warning.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="standard"` and `color="error"`. */
+    standardError: {
+      color: getColor(theme.palette.error.main, 0.6),
+      backgroundColor: getBackgroundColor(theme.palette.error.main, 0.9),
+      '& $icon': {
+        color: theme.palette.error.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="success"`. */
+    outlinedSuccess: {
+      color: getColor(theme.palette.success.main, 0.6),
+      border: "1px solid ".concat(theme.palette.success.main),
+      '& $icon': {
+        color: theme.palette.success.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="info"`. */
+    outlinedInfo: {
+      color: getColor(theme.palette.info.main, 0.6),
+      border: "1px solid ".concat(theme.palette.info.main),
+      '& $icon': {
+        color: theme.palette.info.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="warning"`. */
+    outlinedWarning: {
+      color: getColor(theme.palette.warning.main, 0.6),
+      border: "1px solid ".concat(theme.palette.warning.main),
+      '& $icon': {
+        color: theme.palette.warning.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="outlined"` and `color="error"`. */
+    outlinedError: {
+      color: getColor(theme.palette.error.main, 0.6),
+      border: "1px solid ".concat(theme.palette.error.main),
+      '& $icon': {
+        color: theme.palette.error.main
+      }
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="success"`. */
+    filledSuccess: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.success.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="info"`. */
+    filledInfo: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.info.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="warning"`. */
+    filledWarning: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.warning.main
+    },
+
+    /* Styles applied to the root element if `variant="filled"` and `color="error"`. */
+    filledError: {
+      color: '#fff',
+      fontWeight: theme.typography.fontWeightMedium,
+      backgroundColor: theme.palette.error.main
+    },
+
+    /* Styles applied to the icon wrapper element. */
+    icon: {
+      marginRight: 12,
+      padding: '7px 0',
+      display: 'flex',
+      fontSize: 22,
+      opacity: 0.9
+    },
+
+    /* Styles applied to the message wrapper element. */
+    message: {
+      padding: '8px 0'
+    },
+
+    /* Styles applied to the action wrapper element if `action` is provided. */
+    action: {
+      display: 'flex',
+      alignItems: 'center',
+      marginLeft: 'auto',
+      paddingLeft: 16,
+      marginRight: -8
+    }
+  };
+};
+var defaultIconMapping = {
+  success: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_internal_svg_icons_SuccessOutlined__WEBPACK_IMPORTED_MODULE_6__.default, {
+    fontSize: "inherit"
+  }),
+  warning: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_internal_svg_icons_ReportProblemOutlined__WEBPACK_IMPORTED_MODULE_7__.default, {
+    fontSize: "inherit"
+  }),
+  error: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_internal_svg_icons_ErrorOutline__WEBPACK_IMPORTED_MODULE_8__.default, {
+    fontSize: "inherit"
+  }),
+  info: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_internal_svg_icons_InfoOutlined__WEBPACK_IMPORTED_MODULE_9__.default, {
+    fontSize: "inherit"
+  })
+};
+
+var _ref = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_internal_svg_icons_Close__WEBPACK_IMPORTED_MODULE_10__.default, {
+  fontSize: "small"
+});
+
+var Alert = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef(function Alert(props, ref) {
+  var action = props.action,
+      children = props.children,
+      classes = props.classes,
+      className = props.className,
+      _props$closeText = props.closeText,
+      closeText = _props$closeText === void 0 ? 'Close' : _props$closeText,
+      color = props.color,
+      icon = props.icon,
+      _props$iconMapping = props.iconMapping,
+      iconMapping = _props$iconMapping === void 0 ? defaultIconMapping : _props$iconMapping,
+      onClose = props.onClose,
+      _props$role = props.role,
+      role = _props$role === void 0 ? 'alert' : _props$role,
+      _props$severity = props.severity,
+      severity = _props$severity === void 0 ? 'success' : _props$severity,
+      _props$variant = props.variant,
+      variant = _props$variant === void 0 ? 'standard' : _props$variant,
+      other = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__.default)(props, ["action", "children", "classes", "className", "closeText", "color", "icon", "iconMapping", "onClose", "role", "severity", "variant"]);
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_11__.default, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__.default)({
+    role: role,
+    square: true,
+    elevation: 0,
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_4__.default)(classes.root, classes["".concat(variant).concat((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_12__.default)(color || severity))], className),
+    ref: ref
+  }, other), icon !== false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    className: classes.icon
+  }, icon || iconMapping[severity] || defaultIconMapping[severity]) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    className: classes.message
+  }, children), action != null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    className: classes.action
+  }, action) : null, action == null && onClose ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    className: classes.action
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_material_ui_core_IconButton__WEBPACK_IMPORTED_MODULE_13__.default, {
+    size: "small",
+    "aria-label": closeText,
+    title: closeText,
+    color: "inherit",
+    onClick: onClose
+  }, _ref)) : null);
+});
+ true ? Alert.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The action to display. It renders after the message, at the end of the alert.
+   */
+  action: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
+
+  /**
+   * The content of the component.
+   */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().object),
+
+  /**
+   * @ignore
+   */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().string),
+
+  /**
+   * Override the default label for the *close popup* icon button.
+   *
+   * For localization purposes, you can use the provided [translations](/guides/localization/).
+   */
+  closeText: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().string),
+
+  /**
+   * The main color for the alert. Unless provided, the value is taken from the `severity` prop.
+   */
+  color: prop_types__WEBPACK_IMPORTED_MODULE_3___default().oneOf(['error', 'info', 'success', 'warning']),
+
+  /**
+   * Override the icon displayed before the children.
+   * Unless provided, the icon is mapped to the value of the `severity` prop.
+   */
+  icon: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
+
+  /**
+   * The component maps the `severity` prop to a range of different icons,
+   * for instance success to `<SuccessOutlined>`.
+   * If you wish to change this mapping, you can provide your own.
+   * Alternatively, you can use the `icon` prop to override the icon displayed.
+   */
+  iconMapping: prop_types__WEBPACK_IMPORTED_MODULE_3___default().shape({
+    error: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
+    info: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
+    success: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
+    warning: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node)
+  }),
+
+  /**
+   * Callback fired when the component requests to be closed.
+   * When provided and no `action` prop is set, a close icon button is displayed that triggers the callback when clicked.
+   *
+   * @param {object} event The event source of the callback.
+   */
+  onClose: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().func),
+
+  /**
+   * The ARIA role attribute of the element.
+   */
+  role: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().string),
+
+  /**
+   * The severity of the alert. This defines the color and icon used.
+   */
+  severity: prop_types__WEBPACK_IMPORTED_MODULE_3___default().oneOf(['error', 'info', 'success', 'warning']),
+
+  /**
+   * The variant to use.
+   */
+  variant: prop_types__WEBPACK_IMPORTED_MODULE_3___default().oneOf(['filled', 'outlined', 'standard'])
+} : 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_14__.default)(styles, {
+  name: 'MuiAlert'
+})(Alert));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/lab/esm/internal/svg-icons/Close.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/@material-ui/lab/esm/internal/svg-icons/Close.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+  d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+}), 'Close'));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/lab/esm/internal/svg-icons/ErrorOutline.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@material-ui/lab/esm/internal/svg-icons/ErrorOutline.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+  d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+}), 'ErrorOutline'));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/lab/esm/internal/svg-icons/InfoOutlined.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@material-ui/lab/esm/internal/svg-icons/InfoOutlined.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+  d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
+}), 'InfoOutlined'));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/lab/esm/internal/svg-icons/ReportProblemOutlined.js":
+/*!***************************************************************************************!*\
+  !*** ./node_modules/@material-ui/lab/esm/internal/svg-icons/ReportProblemOutlined.js ***!
+  \***************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+  d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
+}), 'ReportProblemOutlined'));
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/lab/esm/internal/svg-icons/SuccessOutlined.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@material-ui/lab/esm/internal/svg-icons/SuccessOutlined.js ***!
+  \*********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+  d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
+}), 'SuccessOutlined'));
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/styles/esm/StylesProvider/StylesProvider.js":
 /*!*******************************************************************************!*\
   !*** ./node_modules/@material-ui/styles/esm/StylesProvider/StylesProvider.js ***!
@@ -19590,6 +20800,18 @@ var refType = prop_types__WEBPACK_IMPORTED_MODULE_0___default().oneOfType([(prop
 
 /***/ }),
 
+/***/ "./node_modules/apisauce/dist/apisauce.js":
+/*!************************************************!*\
+  !*** ./node_modules/apisauce/dist/apisauce.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+function _interopDefault(e){return e&&"object"==typeof e&&"default"in e?e.default:e}Object.defineProperty(exports, "__esModule", ({value:!0}));var _partial=_interopDefault(__webpack_require__(/*! ramda/src/partial */ "./node_modules/ramda/src/partial.js")),_curry=_interopDefault(__webpack_require__(/*! ramda/src/curry */ "./node_modules/ramda/src/curry.js")),_pipeP=_interopDefault(__webpack_require__(/*! ramda/src/pipeP */ "./node_modules/ramda/src/pipeP.js")),_keys=_interopDefault(__webpack_require__(/*! ramda/src/keys */ "./node_modules/ramda/src/keys.js")),_forEach=_interopDefault(__webpack_require__(/*! ramda/src/forEach */ "./node_modules/ramda/src/forEach.js")),_dissoc=_interopDefault(__webpack_require__(/*! ramda/src/dissoc */ "./node_modules/ramda/src/dissoc.js")),_merge=_interopDefault(__webpack_require__(/*! ramda/src/merge */ "./node_modules/ramda/src/merge.js")),_prop=_interopDefault(__webpack_require__(/*! ramda/src/prop */ "./node_modules/ramda/src/prop.js")),_always=_interopDefault(__webpack_require__(/*! ramda/src/always */ "./node_modules/ramda/src/always.js")),_ifElse=_interopDefault(__webpack_require__(/*! ramda/src/ifElse */ "./node_modules/ramda/src/ifElse.js")),_contains=_interopDefault(__webpack_require__(/*! ramda/src/contains */ "./node_modules/ramda/src/contains.js")),_gte=_interopDefault(__webpack_require__(/*! ramda/src/gte */ "./node_modules/ramda/src/gte.js")),_curryN=_interopDefault(__webpack_require__(/*! ramda/src/curryN */ "./node_modules/ramda/src/curryN.js")),_T=_interopDefault(__webpack_require__(/*! ramda/src/T */ "./node_modules/ramda/src/T.js")),_is=_interopDefault(__webpack_require__(/*! ramda/src/is */ "./node_modules/ramda/src/is.js")),_identity=_interopDefault(__webpack_require__(/*! ramda/src/identity */ "./node_modules/ramda/src/identity.js")),_isNil=_interopDefault(__webpack_require__(/*! ramda/src/isNil */ "./node_modules/ramda/src/isNil.js")),_cond=_interopDefault(__webpack_require__(/*! ramda/src/cond */ "./node_modules/ramda/src/cond.js")),axios=_interopDefault(__webpack_require__(/*! axios */ "./node_modules/axios/index.js")),__assign=function(){return(__assign=Object.assign||function(e){for(var r,t=1,n=arguments.length;t<n;t++)for(var a in r=arguments[t])Object.prototype.hasOwnProperty.call(r,a)&&(e[a]=r[a]);return e}).apply(this,arguments)},__awaiter=function(e,r,t,n){return new(t||(t=Promise))(function(a,i){function s(e){try{u(n.next(e))}catch(e){i(e)}}function o(e){try{u(n.throw(e))}catch(e){i(e)}}function u(e){e.done?a(e.value):new t(function(r){r(e.value)}).then(s,o)}u((n=n.apply(e,r||[])).next())})},__generator=function(e,r){var t,n,a,i,s={label:0,sent:function(){if(1&a[0])throw a[1];return a[1]},trys:[],ops:[]};return i={next:o(0),throw:o(1),return:o(2)},"function"==typeof Symbol&&(i[Symbol.iterator]=function(){return this}),i;function o(i){return function(o){return function(i){if(t)throw new TypeError("Generator is already executing.");for(;s;)try{if(t=1,n&&(a=2&i[0]?n.return:i[0]?n.throw||((a=n.return)&&a.call(n),0):n.next)&&!(a=a.call(n,i[1])).done)return a;switch(n=0,a&&(i=[2&i[0],a.value]),i[0]){case 0:case 1:a=i;break;case 4:return s.label++,{value:i[1],done:!1};case 5:s.label++,n=i[1],i=[0];continue;case 7:i=s.ops.pop(),s.trys.pop();continue;default:if(!(a=(a=s.trys).length>0&&a[a.length-1])&&(6===i[0]||2===i[0])){s=0;continue}if(3===i[0]&&(!a||i[1]>a[0]&&i[1]<a[3])){s.label=i[1];break}if(6===i[0]&&s.label<a[1]){s.label=a[1],a=i;break}if(a&&s.label<a[2]){s.label=a[2],s.ops.push(i);break}a[2]&&s.ops.pop(),s.trys.pop();continue}i=r.call(e,s)}catch(e){i=[6,e],n=0}finally{t=a=0}if(5&i[0])throw i[1];return{value:i[0]?i[1]:void 0,done:!0}}([i,o])}}},_this=void 0,toNumber=_cond([[_isNil,_identity],[_is(Number),_identity],[_T,function(e){return Number(e)}]]),isWithin=_curryN(3,function(e,r,t){var n=_is(Number);return n(e)&&n(r)&&n(t)&&_gte(t,e)&&_gte(r,t)}),containsText=_curryN(2,function(e,r){return _contains(r,e)}),isPromise=function(e){return!!e&&("object"==typeof e||"function"==typeof e)&&"function"==typeof e.then},DEFAULT_HEADERS={Accept:"application/json","Content-Type":"application/json"},DEFAULT_CONFIG={timeout:0},NONE=null,CLIENT_ERROR="CLIENT_ERROR",SERVER_ERROR="SERVER_ERROR",TIMEOUT_ERROR="TIMEOUT_ERROR",CONNECTION_ERROR="CONNECTION_ERROR",NETWORK_ERROR="NETWORK_ERROR",UNKNOWN_ERROR="UNKNOWN_ERROR",CANCEL_ERROR="CANCEL_ERROR",TIMEOUT_ERROR_CODES=["ECONNABORTED"],NODEJS_CONNECTION_ERROR_CODES=["ENOTFOUND","ECONNREFUSED","ECONNRESET"],in200s=isWithin(200,299),in400s=isWithin(400,499),in500s=isWithin(500,599),statusNil=_ifElse(_isNil,_always(void 0),_prop("status")),getProblemFromError=function(e){return"Network Error"===e.message?NETWORK_ERROR:axios.isCancel(e)?CANCEL_ERROR:_cond([[_isNil,function(){return getProblemFromStatus(statusNil(e.response))}],[containsText(TIMEOUT_ERROR_CODES),_always(TIMEOUT_ERROR)],[containsText(NODEJS_CONNECTION_ERROR_CODES),_always(CONNECTION_ERROR)],[_T,_always(UNKNOWN_ERROR)]])(e.code)},getProblemFromStatus=function(e){return _cond([[_isNil,_always(UNKNOWN_ERROR)],[in200s,_always(NONE)],[in400s,_always(CLIENT_ERROR)],[in500s,_always(SERVER_ERROR)],[_T,_always(UNKNOWN_ERROR)]])(e)},create=function(e){var r,t=_merge(DEFAULT_HEADERS,e.headers||{});if(e.axiosInstance)r=e.axiosInstance;else{var n=_merge(DEFAULT_CONFIG,_dissoc("headers",e));r=axios.create(n)}var a=[],i=[],s=[],o=[],u=[],R=function(e,n){return t[e]=n,r},c=function(e,r,t,n){return void 0===t&&(t={}),void 0===n&&(n={}),l(_merge({url:r,params:t,method:e},n))},_=function(e,r,t,n){return void 0===t&&(t=null),void 0===n&&(n={}),l(_merge({url:r,method:e,data:t},n))},l=function(e){return __awaiter(_this,void 0,void 0,function(){var n,a,o;return __generator(this,function(u){switch(u.label){case 0:if(e.headers=__assign({},t,e.headers),i.length>0&&_forEach(function(r){return r(e)},i),!(s.length>0))return[3,6];n=0,u.label=1;case 1:return n<s.length?(a=s[n](e),isPromise(a)?[4,a]:[3,3]):[3,6];case 2:return u.sent(),[3,5];case 3:return[4,a(e)];case 4:u.sent(),u.label=5;case 5:return n++,[3,1];case 6:return o=_pipeP(O(toNumber(new Date)),E),[2,r.request(e).then(o).catch(o)]}})})},E=function(e){return a.forEach(function(r){try{r(e)}catch(e){}}),e},O=_curry(function(e,r){return __awaiter(_this,void 0,void 0,function(){var t,n,a,i,s,R,c,_,l,E,O,f,N,p,d,T;return __generator(this,function(m){switch(m.label){case 0:if(t=toNumber(new Date),n=t-e,a=r instanceof Error||axios.isCancel(r),i=r,s=r,R=a?s.response:i,c=R&&R.status||null,_=a?getProblemFromError(r):getProblemFromStatus(c),l=a?s:null,E=in200s(c),O=r.config||null,f=R&&R.headers||null,N=R&&R.data||null,p={duration:n,problem:_,originalError:l,ok:E,status:c,headers:f,config:O,data:N},o.length>0&&_forEach(function(e){return e(p)},o),!(u.length>0))return[3,6];d=0,m.label=1;case 1:return d<u.length?(T=u[d](p),isPromise(T)?[4,T]:[3,3]):[3,6];case 2:return m.sent(),[3,5];case 3:return[4,T(p)];case 4:m.sent(),m.label=5;case 5:return d++,[3,1];case 6:return[2,p]}})})});return{axiosInstance:r,monitors:a,addMonitor:function(e){a.push(e)},requestTransforms:i,asyncRequestTransforms:s,responseTransforms:o,asyncResponseTransforms:u,addRequestTransform:function(e){return i.push(e)},addAsyncRequestTransform:function(e){return s.push(e)},addResponseTransform:function(e){return o.push(e)},addAsyncResponseTransform:function(e){return u.push(e)},setHeader:R,setHeaders:function(e){return _forEach(function(r){return R(r,e[r])},_keys(e)),r},deleteHeader:function(e){return delete t[e],r},headers:t,setBaseURL:function(e){return r.defaults.baseURL=e,r},getBaseURL:function(){return r.defaults.baseURL},any:l,get:_partial(c,["get"]),delete:_partial(c,["delete"]),head:_partial(c,["head"]),post:_partial(_,["post"]),put:_partial(_,["put"]),patch:_partial(_,["patch"]),link:_partial(c,["link"]),unlink:_partial(c,["unlink"])}},isCancel=axios.isCancel,CancelToken=axios.CancelToken,apisauce={DEFAULT_HEADERS:DEFAULT_HEADERS,NONE:NONE,CLIENT_ERROR:CLIENT_ERROR,SERVER_ERROR:SERVER_ERROR,TIMEOUT_ERROR:TIMEOUT_ERROR,CONNECTION_ERROR:CONNECTION_ERROR,NETWORK_ERROR:NETWORK_ERROR,UNKNOWN_ERROR:UNKNOWN_ERROR,create:create,isCancel:isCancel,CancelToken:CancelToken};exports.DEFAULT_HEADERS=DEFAULT_HEADERS,exports.NONE=NONE,exports.CLIENT_ERROR=CLIENT_ERROR,exports.SERVER_ERROR=SERVER_ERROR,exports.TIMEOUT_ERROR=TIMEOUT_ERROR,exports.CONNECTION_ERROR=CONNECTION_ERROR,exports.NETWORK_ERROR=NETWORK_ERROR,exports.UNKNOWN_ERROR=UNKNOWN_ERROR,exports.CANCEL_ERROR=CANCEL_ERROR,exports.getProblemFromError=getProblemFromError,exports.getProblemFromStatus=getProblemFromStatus,exports.create=create,exports.isCancel=isCancel,exports.CancelToken=CancelToken,exports.default=apisauce;
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -21989,7 +23211,7 @@ var SelectWrapper = function SelectWrapper(_ref) {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__.default, _objectSpread(_objectSpread({}, configSelect), {}, {
     children: Object.keys(options).map(function (item, pos) {
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.default, {
-        value: item,
+        value: options[item],
         children: (0,_material_ui_core__WEBPACK_IMPORTED_MODULE_4__.default)(options[item])
       }, pos);
     })
@@ -22554,15 +23776,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ RegisterForm)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
-/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/lab/Alert */ "./node_modules/@material-ui/lab/esm/Alert/Alert.js");
+/* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
+/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
+/* harmony import */ var apisauce__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! apisauce */ "./node_modules/apisauce/dist/apisauce.js");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Grid/Grid.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/DialogActions/DialogActions.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Button/Button.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Snackbar/Snackbar.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/DialogActions/DialogActions.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Button/Button.js");
 /* harmony import */ var _FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../FormsUI/Textfield */ "./resources/js/components/FormsUI/Textfield.js");
 /* harmony import */ var _FormsUI_Select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../FormsUI/Select */ "./resources/js/components/FormsUI/Select.js");
 /* harmony import */ var _FormsUI_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../FormsUI/Button */ "./resources/js/components/FormsUI/Button.js");
@@ -22572,12 +23795,6 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -22591,8 +23808,9 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
- // import Alert from "@material-ui/lab/Alert";
-// import AlertDisplay from "./AlertDisplay";
+
+ // import AlertDisplay from "./AlertDisplay";
+
 
 
 
@@ -22626,118 +23844,142 @@ var INITIAL_FORM_STATE = {
   emailAddress: "",
   mobile: ""
 };
-var FORM_VALIDATION = yup__WEBPACK_IMPORTED_MODULE_3__.object().shape({
-  firstName: yup__WEBPACK_IMPORTED_MODULE_3__.string().required("Required"),
-  middleName: yup__WEBPACK_IMPORTED_MODULE_3__.string().required("Required"),
-  lastName: yup__WEBPACK_IMPORTED_MODULE_3__.string().required("Required"),
-  username: yup__WEBPACK_IMPORTED_MODULE_3__.string().required("Required"),
-  password: yup__WEBPACK_IMPORTED_MODULE_3__.string().required("Required"),
-  userType: yup__WEBPACK_IMPORTED_MODULE_3__.string().required("Required"),
-  emailAddress: yup__WEBPACK_IMPORTED_MODULE_3__.string().email("Invalid email address.").required("Required"),
-  mobile: yup__WEBPACK_IMPORTED_MODULE_3__.number().integer().typeError("Please enter a valid mobile number").required("Required")
+var FORM_VALIDATION = yup__WEBPACK_IMPORTED_MODULE_2__.object().shape({
+  firstName: yup__WEBPACK_IMPORTED_MODULE_2__.string().required("Required"),
+  middleName: yup__WEBPACK_IMPORTED_MODULE_2__.string().required("Required"),
+  lastName: yup__WEBPACK_IMPORTED_MODULE_2__.string().required("Required"),
+  username: yup__WEBPACK_IMPORTED_MODULE_2__.string().required("Required"),
+  password: yup__WEBPACK_IMPORTED_MODULE_2__.string().required("Required"),
+  userType: yup__WEBPACK_IMPORTED_MODULE_2__.string().required("Required"),
+  emailAddress: yup__WEBPACK_IMPORTED_MODULE_2__.string().email("Invalid email address.").required("Required"),
+  mobile: yup__WEBPACK_IMPORTED_MODULE_2__.number().integer().typeError("Please enter a valid mobile number").required("Required")
 });
 function RegisterForm(props) {
   var classes = useStyles();
 
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
       _useState2 = _slicedToArray(_useState, 2),
       open = _useState2[0],
       setOpen = _useState2[1];
 
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState4 = _slicedToArray(_useState3, 2),
       showAlertBox = _useState4[0],
       setAlertBox = _useState4[1];
 
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)("success"),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("success"),
       _useState6 = _slicedToArray(_useState5, 2),
       severity = _useState6[0],
       setSeverity = _useState6[1];
 
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
       _useState8 = _slicedToArray(_useState7, 2),
       alertMessage = _useState8[0],
       setAlertMessage = _useState8[1];
 
-  var onClose = props.onClose; // Add User
+  var onClose = props.onClose;
 
-  var addUser = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(user) {
-      var res, data;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.next = 2;
-              return fetch("http://localhost/api/user", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify(user)
-              });
+  var handleClose = function handleClose() {
+    setOpen(false);
+  }; // Add User
+  // const addUser = async (user) => {
+  //   const res = await fetch("http://localhost/api/user", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(user),
+  //   });
+  //   const data = await res.json();
+  //   setSeverity(data.status);
+  //   setAlertMessage(data.message);
+  // console.log(data.status);
+  // console.log(data.message);
+  // const data = await res.json();
+  // setUsers([...users, data]);
+  // Show alert box
+  // setAlertBox(true);
+  // };
+  // Form submit
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   const userData = {
+  //     firstName,
+  //     middleName,
+  //     lastName,
+  //     username,
+  //     password,
+  //     userType,
+  //     emailAddress,
+  //     mobile,
+  //   };
+  // Add user to the server
+  // addUser(userData);
+  // handleClose();
+  // Reset alert box useStates
+  // setAlertBox(false);
+  // setSeverity("success");
+  // setAlertMessage({});
+  // };
+  // define the api
 
-            case 2:
-              res = _context.sent;
-              _context.next = 5;
-              return res.json();
 
-            case 5:
-              data = _context.sent;
-              setSeverity(data.status);
-              setAlertMessage(data.message); // console.log(data.status);
-              // console.log(data.message);
-              // const data = await res.json();
-              // setUsers([...users, data]);
-              // Show alert box
-              // setAlertBox(true);
-
-            case 8:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function addUser(_x) {
-      return _ref.apply(this, arguments);
-    };
-  }(); // Form submit
-
-
-  var onSubmit = function onSubmit(e) {
-    e.preventDefault();
-    var userData = {
-      firstName: firstName,
-      middleName: middleName,
-      lastName: lastName,
-      username: username,
-      password: password,
-      userType: userType,
-      emailAddress: emailAddress,
-      mobile: mobile
-    }; // Add user to the server
-
-    addUser(userData); // handleClose();
-    // Reset alert box useStates
-    // setAlertBox(false);
-    // setSeverity("success");
-    // setAlertMessage({});
-  };
+  var api = (0,apisauce__WEBPACK_IMPORTED_MODULE_3__.create)({
+    baseURL: "http://localhost/api",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }); // start making calls
+  // api
+  //   .get("/repos/skellock/apisauce/commits")
+  //   .then((response) => response.data[0].commit.message)
+  //   .then(console.log);
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(formik__WEBPACK_IMPORTED_MODULE_2__.Formik, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Formik, {
       initialValues: _objectSpread({}, INITIAL_FORM_STATE),
       validationSchema: FORM_VALIDATION,
       onSubmit: function onSubmit(values) {
-        console.log(values);
+        // Send data to the server
+        api.post("/user", values).then(function (response) {
+          return response.data;
+        }).then(function (data) {
+          console.log(data.status);
+          console.log(data.message);
+        });
       },
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(formik__WEBPACK_IMPORTED_MODULE_2__.Form, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Form, {
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
           container: true,
           spacing: 2,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
+            open: open,
+            autoHideDuration: 6000,
+            onClose: handleClose,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_11__.default, {
+              onClose: handleClose,
+              severity: "success",
+              children: "This is a success message!"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
+            open: open,
+            autoHideDuration: 6000,
+            onClose: handleClose,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_11__.default, {
+              onClose: handleClose,
+              severity: "success",
+              children: "This is a success message!"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
+            open: open,
+            autoHideDuration: 6000,
+            onClose: handleClose,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_11__.default, {
+              onClose: handleClose,
+              severity: "success",
+              children: "This is a success message!"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
             item: true,
             xs: 12,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
@@ -22806,8 +24048,8 @@ function RegisterForm(props) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_11__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_12__.default, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__.default, {
                 onClick: onClose,
                 variant: "contained",
                 color: "primary",
@@ -58279,6 +59521,2424 @@ function shouldBeQuoted(part) {
 
 /***/ }),
 
+/***/ "./node_modules/ramda/src/T.js":
+/*!*************************************!*\
+  !*** ./node_modules/ramda/src/T.js ***!
+  \*************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var always = /*#__PURE__*/__webpack_require__(/*! ./always */ "./node_modules/ramda/src/always.js");
+
+/**
+ * A function that always returns `true`. Any passed in parameters are ignored.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.9.0
+ * @category Function
+ * @sig * -> Boolean
+ * @param {*}
+ * @return {Boolean}
+ * @see R.always, R.F
+ * @example
+ *
+ *      R.T(); //=> true
+ */
+
+
+var T = /*#__PURE__*/always(true);
+module.exports = T;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/always.js":
+/*!******************************************!*\
+  !*** ./node_modules/ramda/src/always.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+/**
+ * Returns a function that always returns the given value. Note that for
+ * non-primitives the value returned is a reference to the original value.
+ *
+ * This function is known as `const`, `constant`, or `K` (for K combinator) in
+ * other languages and libraries.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Function
+ * @sig a -> (* -> a)
+ * @param {*} val The value to wrap in a function
+ * @return {Function} A Function :: * -> val.
+ * @example
+ *
+ *      var t = R.always('Tee');
+ *      t(); //=> 'Tee'
+ */
+
+
+var always = /*#__PURE__*/_curry1(function always(val) {
+  return function () {
+    return val;
+  };
+});
+module.exports = always;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/bind.js":
+/*!****************************************!*\
+  !*** ./node_modules/ramda/src/bind.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _arity = /*#__PURE__*/__webpack_require__(/*! ./internal/_arity */ "./node_modules/ramda/src/internal/_arity.js");
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+/**
+ * Creates a function that is bound to a context.
+ * Note: `R.bind` does not provide the additional argument-binding capabilities of
+ * [Function.prototype.bind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind).
+ *
+ * @func
+ * @memberOf R
+ * @since v0.6.0
+ * @category Function
+ * @category Object
+ * @sig (* -> *) -> {*} -> (* -> *)
+ * @param {Function} fn The function to bind to context
+ * @param {Object} thisObj The context to bind `fn` to
+ * @return {Function} A function that will execute in the context of `thisObj`.
+ * @see R.partial
+ * @example
+ *
+ *      var log = R.bind(console.log, console);
+ *      R.pipe(R.assoc('a', 2), R.tap(log), R.assoc('a', 3))({a: 1}); //=> {a: 3}
+ *      // logs {a: 2}
+ * @symb R.bind(f, o)(a, b) = f.call(o, a, b)
+ */
+
+
+var bind = /*#__PURE__*/_curry2(function bind(fn, thisObj) {
+  return _arity(fn.length, function () {
+    return fn.apply(thisObj, arguments);
+  });
+});
+module.exports = bind;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/cond.js":
+/*!****************************************!*\
+  !*** ./node_modules/ramda/src/cond.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _arity = /*#__PURE__*/__webpack_require__(/*! ./internal/_arity */ "./node_modules/ramda/src/internal/_arity.js");
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+var map = /*#__PURE__*/__webpack_require__(/*! ./map */ "./node_modules/ramda/src/map.js");
+
+var max = /*#__PURE__*/__webpack_require__(/*! ./max */ "./node_modules/ramda/src/max.js");
+
+var reduce = /*#__PURE__*/__webpack_require__(/*! ./reduce */ "./node_modules/ramda/src/reduce.js");
+
+/**
+ * Returns a function, `fn`, which encapsulates `if/else, if/else, ...` logic.
+ * `R.cond` takes a list of [predicate, transformer] pairs. All of the arguments
+ * to `fn` are applied to each of the predicates in turn until one returns a
+ * "truthy" value, at which point `fn` returns the result of applying its
+ * arguments to the corresponding transformer. If none of the predicates
+ * matches, `fn` returns undefined.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.6.0
+ * @category Logic
+ * @sig [[(*... -> Boolean),(*... -> *)]] -> (*... -> *)
+ * @param {Array} pairs A list of [predicate, transformer]
+ * @return {Function}
+ * @example
+ *
+ *      var fn = R.cond([
+ *        [R.equals(0),   R.always('water freezes at 0°C')],
+ *        [R.equals(100), R.always('water boils at 100°C')],
+ *        [R.T,           temp => 'nothing special happens at ' + temp + '°C']
+ *      ]);
+ *      fn(0); //=> 'water freezes at 0°C'
+ *      fn(50); //=> 'nothing special happens at 50°C'
+ *      fn(100); //=> 'water boils at 100°C'
+ */
+
+
+var cond = /*#__PURE__*/_curry1(function cond(pairs) {
+  var arity = reduce(max, 0, map(function (pair) {
+    return pair[0].length;
+  }, pairs));
+  return _arity(arity, function () {
+    var idx = 0;
+    while (idx < pairs.length) {
+      if (pairs[idx][0].apply(this, arguments)) {
+        return pairs[idx][1].apply(this, arguments);
+      }
+      idx += 1;
+    }
+  });
+});
+module.exports = cond;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/contains.js":
+/*!********************************************!*\
+  !*** ./node_modules/ramda/src/contains.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _contains = /*#__PURE__*/__webpack_require__(/*! ./internal/_contains */ "./node_modules/ramda/src/internal/_contains.js");
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+/**
+ * Returns `true` if the specified value is equal, in [`R.equals`](#equals)
+ * terms, to at least one element of the given list; `false` otherwise.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category List
+ * @sig a -> [a] -> Boolean
+ * @param {Object} a The item to compare against.
+ * @param {Array} list The array to consider.
+ * @return {Boolean} `true` if an equivalent item is in the list, `false` otherwise.
+ * @see R.any
+ * @example
+ *
+ *      R.contains(3, [1, 2, 3]); //=> true
+ *      R.contains(4, [1, 2, 3]); //=> false
+ *      R.contains({ name: 'Fred' }, [{ name: 'Fred' }]); //=> true
+ *      R.contains([42], [[42]]); //=> true
+ */
+
+
+var contains = /*#__PURE__*/_curry2(_contains);
+module.exports = contains;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/curry.js":
+/*!*****************************************!*\
+  !*** ./node_modules/ramda/src/curry.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+var curryN = /*#__PURE__*/__webpack_require__(/*! ./curryN */ "./node_modules/ramda/src/curryN.js");
+
+/**
+ * Returns a curried equivalent of the provided function. The curried function
+ * has two unusual capabilities. First, its arguments needn't be provided one
+ * at a time. If `f` is a ternary function and `g` is `R.curry(f)`, the
+ * following are equivalent:
+ *
+ *   - `g(1)(2)(3)`
+ *   - `g(1)(2, 3)`
+ *   - `g(1, 2)(3)`
+ *   - `g(1, 2, 3)`
+ *
+ * Secondly, the special placeholder value [`R.__`](#__) may be used to specify
+ * "gaps", allowing partial application of any combination of arguments,
+ * regardless of their positions. If `g` is as above and `_` is [`R.__`](#__),
+ * the following are equivalent:
+ *
+ *   - `g(1, 2, 3)`
+ *   - `g(_, 2, 3)(1)`
+ *   - `g(_, _, 3)(1)(2)`
+ *   - `g(_, _, 3)(1, 2)`
+ *   - `g(_, 2)(1)(3)`
+ *   - `g(_, 2)(1, 3)`
+ *   - `g(_, 2)(_, 3)(1)`
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Function
+ * @sig (* -> a) -> (* -> a)
+ * @param {Function} fn The function to curry.
+ * @return {Function} A new, curried function.
+ * @see R.curryN
+ * @example
+ *
+ *      var addFourNumbers = (a, b, c, d) => a + b + c + d;
+ *
+ *      var curriedAddFourNumbers = R.curry(addFourNumbers);
+ *      var f = curriedAddFourNumbers(1, 2);
+ *      var g = f(3);
+ *      g(4); //=> 10
+ */
+
+
+var curry = /*#__PURE__*/_curry1(function curry(fn) {
+  return curryN(fn.length, fn);
+});
+module.exports = curry;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/curryN.js":
+/*!******************************************!*\
+  !*** ./node_modules/ramda/src/curryN.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _arity = /*#__PURE__*/__webpack_require__(/*! ./internal/_arity */ "./node_modules/ramda/src/internal/_arity.js");
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+var _curryN = /*#__PURE__*/__webpack_require__(/*! ./internal/_curryN */ "./node_modules/ramda/src/internal/_curryN.js");
+
+/**
+ * Returns a curried equivalent of the provided function, with the specified
+ * arity. The curried function has two unusual capabilities. First, its
+ * arguments needn't be provided one at a time. If `g` is `R.curryN(3, f)`, the
+ * following are equivalent:
+ *
+ *   - `g(1)(2)(3)`
+ *   - `g(1)(2, 3)`
+ *   - `g(1, 2)(3)`
+ *   - `g(1, 2, 3)`
+ *
+ * Secondly, the special placeholder value [`R.__`](#__) may be used to specify
+ * "gaps", allowing partial application of any combination of arguments,
+ * regardless of their positions. If `g` is as above and `_` is [`R.__`](#__),
+ * the following are equivalent:
+ *
+ *   - `g(1, 2, 3)`
+ *   - `g(_, 2, 3)(1)`
+ *   - `g(_, _, 3)(1)(2)`
+ *   - `g(_, _, 3)(1, 2)`
+ *   - `g(_, 2)(1)(3)`
+ *   - `g(_, 2)(1, 3)`
+ *   - `g(_, 2)(_, 3)(1)`
+ *
+ * @func
+ * @memberOf R
+ * @since v0.5.0
+ * @category Function
+ * @sig Number -> (* -> a) -> (* -> a)
+ * @param {Number} length The arity for the returned function.
+ * @param {Function} fn The function to curry.
+ * @return {Function} A new, curried function.
+ * @see R.curry
+ * @example
+ *
+ *      var sumArgs = (...args) => R.sum(args);
+ *
+ *      var curriedAddFourNumbers = R.curryN(4, sumArgs);
+ *      var f = curriedAddFourNumbers(1, 2);
+ *      var g = f(3);
+ *      g(4); //=> 10
+ */
+
+
+var curryN = /*#__PURE__*/_curry2(function curryN(length, fn) {
+  if (length === 1) {
+    return _curry1(fn);
+  }
+  return _arity(length, _curryN(length, [], fn));
+});
+module.exports = curryN;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/dissoc.js":
+/*!******************************************!*\
+  !*** ./node_modules/ramda/src/dissoc.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+/**
+ * Returns a new object that does not contain a `prop` property.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.10.0
+ * @category Object
+ * @sig String -> {k: v} -> {k: v}
+ * @param {String} prop The name of the property to dissociate
+ * @param {Object} obj The object to clone
+ * @return {Object} A new object equivalent to the original but without the specified property
+ * @see R.assoc
+ * @example
+ *
+ *      R.dissoc('b', {a: 1, b: 2, c: 3}); //=> {a: 1, c: 3}
+ */
+
+
+var dissoc = /*#__PURE__*/_curry2(function dissoc(prop, obj) {
+  var result = {};
+  for (var p in obj) {
+    result[p] = obj[p];
+  }
+  delete result[prop];
+  return result;
+});
+module.exports = dissoc;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/equals.js":
+/*!******************************************!*\
+  !*** ./node_modules/ramda/src/equals.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+var _equals = /*#__PURE__*/__webpack_require__(/*! ./internal/_equals */ "./node_modules/ramda/src/internal/_equals.js");
+
+/**
+ * Returns `true` if its arguments are equivalent, `false` otherwise. Handles
+ * cyclical data structures.
+ *
+ * Dispatches symmetrically to the `equals` methods of both arguments, if
+ * present.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.15.0
+ * @category Relation
+ * @sig a -> b -> Boolean
+ * @param {*} a
+ * @param {*} b
+ * @return {Boolean}
+ * @example
+ *
+ *      R.equals(1, 1); //=> true
+ *      R.equals(1, '1'); //=> false
+ *      R.equals([1, 2, 3], [1, 2, 3]); //=> true
+ *
+ *      var a = {}; a.v = a;
+ *      var b = {}; b.v = b;
+ *      R.equals(a, b); //=> true
+ */
+
+
+var equals = /*#__PURE__*/_curry2(function equals(a, b) {
+  return _equals(a, b, [], []);
+});
+module.exports = equals;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/forEach.js":
+/*!*******************************************!*\
+  !*** ./node_modules/ramda/src/forEach.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _checkForMethod = /*#__PURE__*/__webpack_require__(/*! ./internal/_checkForMethod */ "./node_modules/ramda/src/internal/_checkForMethod.js");
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+/**
+ * Iterate over an input `list`, calling a provided function `fn` for each
+ * element in the list.
+ *
+ * `fn` receives one argument: *(value)*.
+ *
+ * Note: `R.forEach` does not skip deleted or unassigned indices (sparse
+ * arrays), unlike the native `Array.prototype.forEach` method. For more
+ * details on this behavior, see:
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach#Description
+ *
+ * Also note that, unlike `Array.prototype.forEach`, Ramda's `forEach` returns
+ * the original array. In some libraries this function is named `each`.
+ *
+ * Dispatches to the `forEach` method of the second argument, if present.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.1
+ * @category List
+ * @sig (a -> *) -> [a] -> [a]
+ * @param {Function} fn The function to invoke. Receives one argument, `value`.
+ * @param {Array} list The list to iterate over.
+ * @return {Array} The original list.
+ * @see R.addIndex
+ * @example
+ *
+ *      var printXPlusFive = x => console.log(x + 5);
+ *      R.forEach(printXPlusFive, [1, 2, 3]); //=> [1, 2, 3]
+ *      // logs 6
+ *      // logs 7
+ *      // logs 8
+ * @symb R.forEach(f, [a, b, c]) = [a, b, c]
+ */
+
+
+var forEach = /*#__PURE__*/_curry2( /*#__PURE__*/_checkForMethod('forEach', function forEach(fn, list) {
+  var len = list.length;
+  var idx = 0;
+  while (idx < len) {
+    fn(list[idx]);
+    idx += 1;
+  }
+  return list;
+}));
+module.exports = forEach;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/gte.js":
+/*!***************************************!*\
+  !*** ./node_modules/ramda/src/gte.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+/**
+ * Returns `true` if the first argument is greater than or equal to the second;
+ * `false` otherwise.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Relation
+ * @sig Ord a => a -> a -> Boolean
+ * @param {Number} a
+ * @param {Number} b
+ * @return {Boolean}
+ * @see R.lte
+ * @example
+ *
+ *      R.gte(2, 1); //=> true
+ *      R.gte(2, 2); //=> true
+ *      R.gte(2, 3); //=> false
+ *      R.gte('a', 'z'); //=> false
+ *      R.gte('z', 'a'); //=> true
+ */
+
+
+var gte = /*#__PURE__*/_curry2(function gte(a, b) {
+  return a >= b;
+});
+module.exports = gte;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/identical.js":
+/*!*********************************************!*\
+  !*** ./node_modules/ramda/src/identical.js ***!
+  \*********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+/**
+ * Returns true if its arguments are identical, false otherwise. Values are
+ * identical if they reference the same memory. `NaN` is identical to `NaN`;
+ * `0` and `-0` are not identical.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.15.0
+ * @category Relation
+ * @sig a -> a -> Boolean
+ * @param {*} a
+ * @param {*} b
+ * @return {Boolean}
+ * @example
+ *
+ *      var o = {};
+ *      R.identical(o, o); //=> true
+ *      R.identical(1, 1); //=> true
+ *      R.identical(1, '1'); //=> false
+ *      R.identical([], []); //=> false
+ *      R.identical(0, -0); //=> false
+ *      R.identical(NaN, NaN); //=> true
+ */
+
+
+var identical = /*#__PURE__*/_curry2(function identical(a, b) {
+  // SameValue algorithm
+  if (a === b) {
+    // Steps 1-5, 7-10
+    // Steps 6.b-6.e: +0 != -0
+    return a !== 0 || 1 / a === 1 / b;
+  } else {
+    // Step 6.a: NaN == NaN
+    return a !== a && b !== b;
+  }
+});
+module.exports = identical;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/identity.js":
+/*!********************************************!*\
+  !*** ./node_modules/ramda/src/identity.js ***!
+  \********************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+var _identity = /*#__PURE__*/__webpack_require__(/*! ./internal/_identity */ "./node_modules/ramda/src/internal/_identity.js");
+
+/**
+ * A function that does nothing but return the parameter supplied to it. Good
+ * as a default or placeholder function.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Function
+ * @sig a -> a
+ * @param {*} x The value to return.
+ * @return {*} The input value, `x`.
+ * @example
+ *
+ *      R.identity(1); //=> 1
+ *
+ *      var obj = {};
+ *      R.identity(obj) === obj; //=> true
+ * @symb R.identity(a) = a
+ */
+
+
+var identity = /*#__PURE__*/_curry1(_identity);
+module.exports = identity;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/ifElse.js":
+/*!******************************************!*\
+  !*** ./node_modules/ramda/src/ifElse.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry3 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry3 */ "./node_modules/ramda/src/internal/_curry3.js");
+
+var curryN = /*#__PURE__*/__webpack_require__(/*! ./curryN */ "./node_modules/ramda/src/curryN.js");
+
+/**
+ * Creates a function that will process either the `onTrue` or the `onFalse`
+ * function depending upon the result of the `condition` predicate.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.8.0
+ * @category Logic
+ * @sig (*... -> Boolean) -> (*... -> *) -> (*... -> *) -> (*... -> *)
+ * @param {Function} condition A predicate function
+ * @param {Function} onTrue A function to invoke when the `condition` evaluates to a truthy value.
+ * @param {Function} onFalse A function to invoke when the `condition` evaluates to a falsy value.
+ * @return {Function} A new unary function that will process either the `onTrue` or the `onFalse`
+ *                    function depending upon the result of the `condition` predicate.
+ * @see R.unless, R.when
+ * @example
+ *
+ *      var incCount = R.ifElse(
+ *        R.has('count'),
+ *        R.over(R.lensProp('count'), R.inc),
+ *        R.assoc('count', 1)
+ *      );
+ *      incCount({});           //=> { count: 1 }
+ *      incCount({ count: 1 }); //=> { count: 2 }
+ */
+
+
+var ifElse = /*#__PURE__*/_curry3(function ifElse(condition, onTrue, onFalse) {
+  return curryN(Math.max(condition.length, onTrue.length, onFalse.length), function _ifElse() {
+    return condition.apply(this, arguments) ? onTrue.apply(this, arguments) : onFalse.apply(this, arguments);
+  });
+});
+module.exports = ifElse;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_arity.js":
+/*!***************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_arity.js ***!
+  \***************************************************/
+/***/ ((module) => {
+
+function _arity(n, fn) {
+  /* eslint-disable no-unused-vars */
+  switch (n) {
+    case 0:
+      return function () {
+        return fn.apply(this, arguments);
+      };
+    case 1:
+      return function (a0) {
+        return fn.apply(this, arguments);
+      };
+    case 2:
+      return function (a0, a1) {
+        return fn.apply(this, arguments);
+      };
+    case 3:
+      return function (a0, a1, a2) {
+        return fn.apply(this, arguments);
+      };
+    case 4:
+      return function (a0, a1, a2, a3) {
+        return fn.apply(this, arguments);
+      };
+    case 5:
+      return function (a0, a1, a2, a3, a4) {
+        return fn.apply(this, arguments);
+      };
+    case 6:
+      return function (a0, a1, a2, a3, a4, a5) {
+        return fn.apply(this, arguments);
+      };
+    case 7:
+      return function (a0, a1, a2, a3, a4, a5, a6) {
+        return fn.apply(this, arguments);
+      };
+    case 8:
+      return function (a0, a1, a2, a3, a4, a5, a6, a7) {
+        return fn.apply(this, arguments);
+      };
+    case 9:
+      return function (a0, a1, a2, a3, a4, a5, a6, a7, a8) {
+        return fn.apply(this, arguments);
+      };
+    case 10:
+      return function (a0, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+        return fn.apply(this, arguments);
+      };
+    default:
+      throw new Error('First argument to _arity must be a non-negative integer no greater than ten');
+  }
+}
+module.exports = _arity;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_arrayFromIterator.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_arrayFromIterator.js ***!
+  \***************************************************************/
+/***/ ((module) => {
+
+function _arrayFromIterator(iter) {
+  var list = [];
+  var next;
+  while (!(next = iter.next()).done) {
+    list.push(next.value);
+  }
+  return list;
+}
+module.exports = _arrayFromIterator;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_assign.js":
+/*!****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_assign.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _objectAssign = /*#__PURE__*/__webpack_require__(/*! ./_objectAssign */ "./node_modules/ramda/src/internal/_objectAssign.js");
+
+module.exports = typeof Object.assign === 'function' ? Object.assign : _objectAssign;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_checkForMethod.js":
+/*!************************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_checkForMethod.js ***!
+  \************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _isArray = /*#__PURE__*/__webpack_require__(/*! ./_isArray */ "./node_modules/ramda/src/internal/_isArray.js");
+
+/**
+ * This checks whether a function has a [methodname] function. If it isn't an
+ * array it will execute that function otherwise it will default to the ramda
+ * implementation.
+ *
+ * @private
+ * @param {Function} fn ramda implemtation
+ * @param {String} methodname property to check for a custom implementation
+ * @return {Object} Whatever the return value of the method is.
+ */
+
+
+function _checkForMethod(methodname, fn) {
+  return function () {
+    var length = arguments.length;
+    if (length === 0) {
+      return fn();
+    }
+    var obj = arguments[length - 1];
+    return _isArray(obj) || typeof obj[methodname] !== 'function' ? fn.apply(this, arguments) : obj[methodname].apply(obj, Array.prototype.slice.call(arguments, 0, length - 1));
+  };
+}
+module.exports = _checkForMethod;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_concat.js":
+/*!****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_concat.js ***!
+  \****************************************************/
+/***/ ((module) => {
+
+/**
+ * Private `concat` function to merge two array-like objects.
+ *
+ * @private
+ * @param {Array|Arguments} [set1=[]] An array-like object.
+ * @param {Array|Arguments} [set2=[]] An array-like object.
+ * @return {Array} A new, merged array.
+ * @example
+ *
+ *      _concat([4, 5, 6], [1, 2, 3]); //=> [4, 5, 6, 1, 2, 3]
+ */
+function _concat(set1, set2) {
+  set1 = set1 || [];
+  set2 = set2 || [];
+  var idx;
+  var len1 = set1.length;
+  var len2 = set2.length;
+  var result = [];
+
+  idx = 0;
+  while (idx < len1) {
+    result[result.length] = set1[idx];
+    idx += 1;
+  }
+  idx = 0;
+  while (idx < len2) {
+    result[result.length] = set2[idx];
+    idx += 1;
+  }
+  return result;
+}
+module.exports = _concat;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_contains.js":
+/*!******************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_contains.js ***!
+  \******************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _indexOf = /*#__PURE__*/__webpack_require__(/*! ./_indexOf */ "./node_modules/ramda/src/internal/_indexOf.js");
+
+function _contains(a, list) {
+  return _indexOf(list, a, 0) >= 0;
+}
+module.exports = _contains;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_containsWith.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_containsWith.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+function _containsWith(pred, x, list) {
+  var idx = 0;
+  var len = list.length;
+
+  while (idx < len) {
+    if (pred(x, list[idx])) {
+      return true;
+    }
+    idx += 1;
+  }
+  return false;
+}
+module.exports = _containsWith;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_createPartialApplicator.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_createPartialApplicator.js ***!
+  \*********************************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _arity = /*#__PURE__*/__webpack_require__(/*! ./_arity */ "./node_modules/ramda/src/internal/_arity.js");
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+function _createPartialApplicator(concat) {
+  return _curry2(function (fn, args) {
+    return _arity(Math.max(0, fn.length - args.length), function () {
+      return fn.apply(this, concat(args, arguments));
+    });
+  });
+}
+module.exports = _createPartialApplicator;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_curry1.js":
+/*!****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_curry1.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _isPlaceholder = /*#__PURE__*/__webpack_require__(/*! ./_isPlaceholder */ "./node_modules/ramda/src/internal/_isPlaceholder.js");
+
+/**
+ * Optimized internal one-arity curry function.
+ *
+ * @private
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+
+
+function _curry1(fn) {
+  return function f1(a) {
+    if (arguments.length === 0 || _isPlaceholder(a)) {
+      return f1;
+    } else {
+      return fn.apply(this, arguments);
+    }
+  };
+}
+module.exports = _curry1;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_curry2.js":
+/*!****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_curry2.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+var _isPlaceholder = /*#__PURE__*/__webpack_require__(/*! ./_isPlaceholder */ "./node_modules/ramda/src/internal/_isPlaceholder.js");
+
+/**
+ * Optimized internal two-arity curry function.
+ *
+ * @private
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+
+
+function _curry2(fn) {
+  return function f2(a, b) {
+    switch (arguments.length) {
+      case 0:
+        return f2;
+      case 1:
+        return _isPlaceholder(a) ? f2 : _curry1(function (_b) {
+          return fn(a, _b);
+        });
+      default:
+        return _isPlaceholder(a) && _isPlaceholder(b) ? f2 : _isPlaceholder(a) ? _curry1(function (_a) {
+          return fn(_a, b);
+        }) : _isPlaceholder(b) ? _curry1(function (_b) {
+          return fn(a, _b);
+        }) : fn(a, b);
+    }
+  };
+}
+module.exports = _curry2;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_curry3.js":
+/*!****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_curry3.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+var _isPlaceholder = /*#__PURE__*/__webpack_require__(/*! ./_isPlaceholder */ "./node_modules/ramda/src/internal/_isPlaceholder.js");
+
+/**
+ * Optimized internal three-arity curry function.
+ *
+ * @private
+ * @category Function
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+
+
+function _curry3(fn) {
+  return function f3(a, b, c) {
+    switch (arguments.length) {
+      case 0:
+        return f3;
+      case 1:
+        return _isPlaceholder(a) ? f3 : _curry2(function (_b, _c) {
+          return fn(a, _b, _c);
+        });
+      case 2:
+        return _isPlaceholder(a) && _isPlaceholder(b) ? f3 : _isPlaceholder(a) ? _curry2(function (_a, _c) {
+          return fn(_a, b, _c);
+        }) : _isPlaceholder(b) ? _curry2(function (_b, _c) {
+          return fn(a, _b, _c);
+        }) : _curry1(function (_c) {
+          return fn(a, b, _c);
+        });
+      default:
+        return _isPlaceholder(a) && _isPlaceholder(b) && _isPlaceholder(c) ? f3 : _isPlaceholder(a) && _isPlaceholder(b) ? _curry2(function (_a, _b) {
+          return fn(_a, _b, c);
+        }) : _isPlaceholder(a) && _isPlaceholder(c) ? _curry2(function (_a, _c) {
+          return fn(_a, b, _c);
+        }) : _isPlaceholder(b) && _isPlaceholder(c) ? _curry2(function (_b, _c) {
+          return fn(a, _b, _c);
+        }) : _isPlaceholder(a) ? _curry1(function (_a) {
+          return fn(_a, b, c);
+        }) : _isPlaceholder(b) ? _curry1(function (_b) {
+          return fn(a, _b, c);
+        }) : _isPlaceholder(c) ? _curry1(function (_c) {
+          return fn(a, b, _c);
+        }) : fn(a, b, c);
+    }
+  };
+}
+module.exports = _curry3;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_curryN.js":
+/*!****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_curryN.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _arity = /*#__PURE__*/__webpack_require__(/*! ./_arity */ "./node_modules/ramda/src/internal/_arity.js");
+
+var _isPlaceholder = /*#__PURE__*/__webpack_require__(/*! ./_isPlaceholder */ "./node_modules/ramda/src/internal/_isPlaceholder.js");
+
+/**
+ * Internal curryN function.
+ *
+ * @private
+ * @category Function
+ * @param {Number} length The arity of the curried function.
+ * @param {Array} received An array of arguments received thus far.
+ * @param {Function} fn The function to curry.
+ * @return {Function} The curried function.
+ */
+
+
+function _curryN(length, received, fn) {
+  return function () {
+    var combined = [];
+    var argsIdx = 0;
+    var left = length;
+    var combinedIdx = 0;
+    while (combinedIdx < received.length || argsIdx < arguments.length) {
+      var result;
+      if (combinedIdx < received.length && (!_isPlaceholder(received[combinedIdx]) || argsIdx >= arguments.length)) {
+        result = received[combinedIdx];
+      } else {
+        result = arguments[argsIdx];
+        argsIdx += 1;
+      }
+      combined[combinedIdx] = result;
+      if (!_isPlaceholder(result)) {
+        left -= 1;
+      }
+      combinedIdx += 1;
+    }
+    return left <= 0 ? fn.apply(this, combined) : _arity(left, _curryN(length, combined, fn));
+  };
+}
+module.exports = _curryN;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_dispatchable.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_dispatchable.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _isArray = /*#__PURE__*/__webpack_require__(/*! ./_isArray */ "./node_modules/ramda/src/internal/_isArray.js");
+
+var _isTransformer = /*#__PURE__*/__webpack_require__(/*! ./_isTransformer */ "./node_modules/ramda/src/internal/_isTransformer.js");
+
+/**
+ * Returns a function that dispatches with different strategies based on the
+ * object in list position (last argument). If it is an array, executes [fn].
+ * Otherwise, if it has a function with one of the given method names, it will
+ * execute that function (functor case). Otherwise, if it is a transformer,
+ * uses transducer [xf] to return a new transformer (transducer case).
+ * Otherwise, it will default to executing [fn].
+ *
+ * @private
+ * @param {Array} methodNames properties to check for a custom implementation
+ * @param {Function} xf transducer to initialize if object is transformer
+ * @param {Function} fn default ramda implementation
+ * @return {Function} A function that dispatches on object in list position
+ */
+
+
+function _dispatchable(methodNames, xf, fn) {
+  return function () {
+    if (arguments.length === 0) {
+      return fn();
+    }
+    var args = Array.prototype.slice.call(arguments, 0);
+    var obj = args.pop();
+    if (!_isArray(obj)) {
+      var idx = 0;
+      while (idx < methodNames.length) {
+        if (typeof obj[methodNames[idx]] === 'function') {
+          return obj[methodNames[idx]].apply(obj, args);
+        }
+        idx += 1;
+      }
+      if (_isTransformer(obj)) {
+        var transducer = xf.apply(null, args);
+        return transducer(obj);
+      }
+    }
+    return fn.apply(this, arguments);
+  };
+}
+module.exports = _dispatchable;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_equals.js":
+/*!****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_equals.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _arrayFromIterator = /*#__PURE__*/__webpack_require__(/*! ./_arrayFromIterator */ "./node_modules/ramda/src/internal/_arrayFromIterator.js");
+
+var _containsWith = /*#__PURE__*/__webpack_require__(/*! ./_containsWith */ "./node_modules/ramda/src/internal/_containsWith.js");
+
+var _functionName = /*#__PURE__*/__webpack_require__(/*! ./_functionName */ "./node_modules/ramda/src/internal/_functionName.js");
+
+var _has = /*#__PURE__*/__webpack_require__(/*! ./_has */ "./node_modules/ramda/src/internal/_has.js");
+
+var identical = /*#__PURE__*/__webpack_require__(/*! ../identical */ "./node_modules/ramda/src/identical.js");
+
+var keys = /*#__PURE__*/__webpack_require__(/*! ../keys */ "./node_modules/ramda/src/keys.js");
+
+var type = /*#__PURE__*/__webpack_require__(/*! ../type */ "./node_modules/ramda/src/type.js");
+
+/**
+ * private _uniqContentEquals function.
+ * That function is checking equality of 2 iterator contents with 2 assumptions
+ * - iterators lengths are the same
+ * - iterators values are unique
+ *
+ * false-positive result will be returned for comparision of, e.g.
+ * - [1,2,3] and [1,2,3,4]
+ * - [1,1,1] and [1,2,3]
+ * */
+
+function _uniqContentEquals(aIterator, bIterator, stackA, stackB) {
+  var a = _arrayFromIterator(aIterator);
+  var b = _arrayFromIterator(bIterator);
+
+  function eq(_a, _b) {
+    return _equals(_a, _b, stackA.slice(), stackB.slice());
+  }
+
+  // if *a* array contains any element that is not included in *b*
+  return !_containsWith(function (b, aItem) {
+    return !_containsWith(eq, aItem, b);
+  }, b, a);
+}
+
+function _equals(a, b, stackA, stackB) {
+  if (identical(a, b)) {
+    return true;
+  }
+
+  var typeA = type(a);
+
+  if (typeA !== type(b)) {
+    return false;
+  }
+
+  if (a == null || b == null) {
+    return false;
+  }
+
+  if (typeof a['fantasy-land/equals'] === 'function' || typeof b['fantasy-land/equals'] === 'function') {
+    return typeof a['fantasy-land/equals'] === 'function' && a['fantasy-land/equals'](b) && typeof b['fantasy-land/equals'] === 'function' && b['fantasy-land/equals'](a);
+  }
+
+  if (typeof a.equals === 'function' || typeof b.equals === 'function') {
+    return typeof a.equals === 'function' && a.equals(b) && typeof b.equals === 'function' && b.equals(a);
+  }
+
+  switch (typeA) {
+    case 'Arguments':
+    case 'Array':
+    case 'Object':
+      if (typeof a.constructor === 'function' && _functionName(a.constructor) === 'Promise') {
+        return a === b;
+      }
+      break;
+    case 'Boolean':
+    case 'Number':
+    case 'String':
+      if (!(typeof a === typeof b && identical(a.valueOf(), b.valueOf()))) {
+        return false;
+      }
+      break;
+    case 'Date':
+      if (!identical(a.valueOf(), b.valueOf())) {
+        return false;
+      }
+      break;
+    case 'Error':
+      return a.name === b.name && a.message === b.message;
+    case 'RegExp':
+      if (!(a.source === b.source && a.global === b.global && a.ignoreCase === b.ignoreCase && a.multiline === b.multiline && a.sticky === b.sticky && a.unicode === b.unicode)) {
+        return false;
+      }
+      break;
+  }
+
+  var idx = stackA.length - 1;
+  while (idx >= 0) {
+    if (stackA[idx] === a) {
+      return stackB[idx] === b;
+    }
+    idx -= 1;
+  }
+
+  switch (typeA) {
+    case 'Map':
+      if (a.size !== b.size) {
+        return false;
+      }
+
+      return _uniqContentEquals(a.entries(), b.entries(), stackA.concat([a]), stackB.concat([b]));
+    case 'Set':
+      if (a.size !== b.size) {
+        return false;
+      }
+
+      return _uniqContentEquals(a.values(), b.values(), stackA.concat([a]), stackB.concat([b]));
+    case 'Arguments':
+    case 'Array':
+    case 'Object':
+    case 'Boolean':
+    case 'Number':
+    case 'String':
+    case 'Date':
+    case 'Error':
+    case 'RegExp':
+    case 'Int8Array':
+    case 'Uint8Array':
+    case 'Uint8ClampedArray':
+    case 'Int16Array':
+    case 'Uint16Array':
+    case 'Int32Array':
+    case 'Uint32Array':
+    case 'Float32Array':
+    case 'Float64Array':
+    case 'ArrayBuffer':
+      break;
+    default:
+      // Values of other types are only equal if identical.
+      return false;
+  }
+
+  var keysA = keys(a);
+  if (keysA.length !== keys(b).length) {
+    return false;
+  }
+
+  var extendedStackA = stackA.concat([a]);
+  var extendedStackB = stackB.concat([b]);
+
+  idx = keysA.length - 1;
+  while (idx >= 0) {
+    var key = keysA[idx];
+    if (!(_has(key, b) && _equals(b[key], a[key], extendedStackA, extendedStackB))) {
+      return false;
+    }
+    idx -= 1;
+  }
+  return true;
+}
+module.exports = _equals;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_functionName.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_functionName.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+function _functionName(f) {
+  // String(x => x) evaluates to "x => x", so the pattern may not match.
+  var match = String(f).match(/^function (\w*)/);
+  return match == null ? '' : match[1];
+}
+module.exports = _functionName;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_has.js":
+/*!*************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_has.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+function _has(prop, obj) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+module.exports = _has;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_identity.js":
+/*!******************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_identity.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+function _identity(x) {
+  return x;
+}
+module.exports = _identity;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_indexOf.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_indexOf.js ***!
+  \*****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var equals = /*#__PURE__*/__webpack_require__(/*! ../equals */ "./node_modules/ramda/src/equals.js");
+
+function _indexOf(list, a, idx) {
+  var inf, item;
+  // Array.prototype.indexOf doesn't exist below IE9
+  if (typeof list.indexOf === 'function') {
+    switch (typeof a) {
+      case 'number':
+        if (a === 0) {
+          // manually crawl the list to distinguish between +0 and -0
+          inf = 1 / a;
+          while (idx < list.length) {
+            item = list[idx];
+            if (item === 0 && 1 / item === inf) {
+              return idx;
+            }
+            idx += 1;
+          }
+          return -1;
+        } else if (a !== a) {
+          // NaN
+          while (idx < list.length) {
+            item = list[idx];
+            if (typeof item === 'number' && item !== item) {
+              return idx;
+            }
+            idx += 1;
+          }
+          return -1;
+        }
+        // non-zero numbers can utilise Set
+        return list.indexOf(a, idx);
+
+      // all these types can utilise Set
+      case 'string':
+      case 'boolean':
+      case 'function':
+      case 'undefined':
+        return list.indexOf(a, idx);
+
+      case 'object':
+        if (a === null) {
+          // null can utilise Set
+          return list.indexOf(a, idx);
+        }
+    }
+  }
+  // anything else not covered above, defer to R.equals
+  while (idx < list.length) {
+    if (equals(list[idx], a)) {
+      return idx;
+    }
+    idx += 1;
+  }
+  return -1;
+}
+module.exports = _indexOf;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_isArguments.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_isArguments.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _has = /*#__PURE__*/__webpack_require__(/*! ./_has */ "./node_modules/ramda/src/internal/_has.js");
+
+var toString = Object.prototype.toString;
+var _isArguments = function () {
+  return toString.call(arguments) === '[object Arguments]' ? function _isArguments(x) {
+    return toString.call(x) === '[object Arguments]';
+  } : function _isArguments(x) {
+    return _has('callee', x);
+  };
+};
+
+module.exports = _isArguments;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_isArray.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_isArray.js ***!
+  \*****************************************************/
+/***/ ((module) => {
+
+/**
+ * Tests whether or not an object is an array.
+ *
+ * @private
+ * @param {*} val The object to test.
+ * @return {Boolean} `true` if `val` is an array, `false` otherwise.
+ * @example
+ *
+ *      _isArray([]); //=> true
+ *      _isArray(null); //=> false
+ *      _isArray({}); //=> false
+ */
+module.exports = Array.isArray || function _isArray(val) {
+  return val != null && val.length >= 0 && Object.prototype.toString.call(val) === '[object Array]';
+};
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_isArrayLike.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_isArrayLike.js ***!
+  \*********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+var _isArray = /*#__PURE__*/__webpack_require__(/*! ./_isArray */ "./node_modules/ramda/src/internal/_isArray.js");
+
+var _isString = /*#__PURE__*/__webpack_require__(/*! ./_isString */ "./node_modules/ramda/src/internal/_isString.js");
+
+/**
+ * Tests whether or not an object is similar to an array.
+ *
+ * @private
+ * @category Type
+ * @category List
+ * @sig * -> Boolean
+ * @param {*} x The object to test.
+ * @return {Boolean} `true` if `x` has a numeric length property and extreme indices defined; `false` otherwise.
+ * @example
+ *
+ *      _isArrayLike([]); //=> true
+ *      _isArrayLike(true); //=> false
+ *      _isArrayLike({}); //=> false
+ *      _isArrayLike({length: 10}); //=> false
+ *      _isArrayLike({0: 'zero', 9: 'nine', length: 10}); //=> true
+ */
+
+
+var _isArrayLike = /*#__PURE__*/_curry1(function isArrayLike(x) {
+  if (_isArray(x)) {
+    return true;
+  }
+  if (!x) {
+    return false;
+  }
+  if (typeof x !== 'object') {
+    return false;
+  }
+  if (_isString(x)) {
+    return false;
+  }
+  if (x.nodeType === 1) {
+    return !!x.length;
+  }
+  if (x.length === 0) {
+    return true;
+  }
+  if (x.length > 0) {
+    return x.hasOwnProperty(0) && x.hasOwnProperty(x.length - 1);
+  }
+  return false;
+});
+module.exports = _isArrayLike;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_isPlaceholder.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_isPlaceholder.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+function _isPlaceholder(a) {
+       return a != null && typeof a === 'object' && a['@@functional/placeholder'] === true;
+}
+module.exports = _isPlaceholder;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_isString.js":
+/*!******************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_isString.js ***!
+  \******************************************************/
+/***/ ((module) => {
+
+function _isString(x) {
+  return Object.prototype.toString.call(x) === '[object String]';
+}
+module.exports = _isString;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_isTransformer.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_isTransformer.js ***!
+  \***********************************************************/
+/***/ ((module) => {
+
+function _isTransformer(obj) {
+  return typeof obj['@@transducer/step'] === 'function';
+}
+module.exports = _isTransformer;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_map.js":
+/*!*************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_map.js ***!
+  \*************************************************/
+/***/ ((module) => {
+
+function _map(fn, functor) {
+  var idx = 0;
+  var len = functor.length;
+  var result = Array(len);
+  while (idx < len) {
+    result[idx] = fn(functor[idx]);
+    idx += 1;
+  }
+  return result;
+}
+module.exports = _map;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_objectAssign.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_objectAssign.js ***!
+  \**********************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _has = /*#__PURE__*/__webpack_require__(/*! ./_has */ "./node_modules/ramda/src/internal/_has.js");
+
+// Based on https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
+
+
+function _objectAssign(target) {
+  if (target == null) {
+    throw new TypeError('Cannot convert undefined or null to object');
+  }
+
+  var output = Object(target);
+  var idx = 1;
+  var length = arguments.length;
+  while (idx < length) {
+    var source = arguments[idx];
+    if (source != null) {
+      for (var nextKey in source) {
+        if (_has(nextKey, source)) {
+          output[nextKey] = source[nextKey];
+        }
+      }
+    }
+    idx += 1;
+  }
+  return output;
+}
+module.exports = _objectAssign;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_pipeP.js":
+/*!***************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_pipeP.js ***!
+  \***************************************************/
+/***/ ((module) => {
+
+function _pipeP(f, g) {
+  return function () {
+    var ctx = this;
+    return f.apply(ctx, arguments).then(function (x) {
+      return g.call(ctx, x);
+    });
+  };
+}
+module.exports = _pipeP;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_reduce.js":
+/*!****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_reduce.js ***!
+  \****************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _isArrayLike = /*#__PURE__*/__webpack_require__(/*! ./_isArrayLike */ "./node_modules/ramda/src/internal/_isArrayLike.js");
+
+var _xwrap = /*#__PURE__*/__webpack_require__(/*! ./_xwrap */ "./node_modules/ramda/src/internal/_xwrap.js");
+
+var bind = /*#__PURE__*/__webpack_require__(/*! ../bind */ "./node_modules/ramda/src/bind.js");
+
+function _arrayReduce(xf, acc, list) {
+  var idx = 0;
+  var len = list.length;
+  while (idx < len) {
+    acc = xf['@@transducer/step'](acc, list[idx]);
+    if (acc && acc['@@transducer/reduced']) {
+      acc = acc['@@transducer/value'];
+      break;
+    }
+    idx += 1;
+  }
+  return xf['@@transducer/result'](acc);
+}
+
+function _iterableReduce(xf, acc, iter) {
+  var step = iter.next();
+  while (!step.done) {
+    acc = xf['@@transducer/step'](acc, step.value);
+    if (acc && acc['@@transducer/reduced']) {
+      acc = acc['@@transducer/value'];
+      break;
+    }
+    step = iter.next();
+  }
+  return xf['@@transducer/result'](acc);
+}
+
+function _methodReduce(xf, acc, obj, methodName) {
+  return xf['@@transducer/result'](obj[methodName](bind(xf['@@transducer/step'], xf), acc));
+}
+
+var symIterator = typeof Symbol !== 'undefined' ? Symbol.iterator : '@@iterator';
+
+function _reduce(fn, acc, list) {
+  if (typeof fn === 'function') {
+    fn = _xwrap(fn);
+  }
+  if (_isArrayLike(list)) {
+    return _arrayReduce(fn, acc, list);
+  }
+  if (typeof list['fantasy-land/reduce'] === 'function') {
+    return _methodReduce(fn, acc, list, 'fantasy-land/reduce');
+  }
+  if (list[symIterator] != null) {
+    return _iterableReduce(fn, acc, list[symIterator]());
+  }
+  if (typeof list.next === 'function') {
+    return _iterableReduce(fn, acc, list);
+  }
+  if (typeof list.reduce === 'function') {
+    return _methodReduce(fn, acc, list, 'reduce');
+  }
+
+  throw new TypeError('reduce: list must be array or iterable');
+}
+module.exports = _reduce;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_xfBase.js":
+/*!****************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_xfBase.js ***!
+  \****************************************************/
+/***/ ((module) => {
+
+module.exports = {
+  init: function () {
+    return this.xf['@@transducer/init']();
+  },
+  result: function (result) {
+    return this.xf['@@transducer/result'](result);
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_xmap.js":
+/*!**************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_xmap.js ***!
+  \**************************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+var _xfBase = /*#__PURE__*/__webpack_require__(/*! ./_xfBase */ "./node_modules/ramda/src/internal/_xfBase.js");
+
+var XMap = /*#__PURE__*/function () {
+
+  function XMap(f, xf) {
+    this.xf = xf;
+    this.f = f;
+  }
+  XMap.prototype['@@transducer/init'] = _xfBase.init;
+  XMap.prototype['@@transducer/result'] = _xfBase.result;
+  XMap.prototype['@@transducer/step'] = function (result, input) {
+    return this.xf['@@transducer/step'](result, this.f(input));
+  };
+
+  return XMap;
+}();
+
+var _xmap = /*#__PURE__*/_curry2(function _xmap(f, xf) {
+  return new XMap(f, xf);
+});
+module.exports = _xmap;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/internal/_xwrap.js":
+/*!***************************************************!*\
+  !*** ./node_modules/ramda/src/internal/_xwrap.js ***!
+  \***************************************************/
+/***/ ((module) => {
+
+var XWrap = /*#__PURE__*/function () {
+  function XWrap(fn) {
+    this.f = fn;
+  }
+  XWrap.prototype['@@transducer/init'] = function () {
+    throw new Error('init not implemented on XWrap');
+  };
+  XWrap.prototype['@@transducer/result'] = function (acc) {
+    return acc;
+  };
+  XWrap.prototype['@@transducer/step'] = function (acc, x) {
+    return this.f(acc, x);
+  };
+
+  return XWrap;
+}();
+
+function _xwrap(fn) {
+  return new XWrap(fn);
+}
+module.exports = _xwrap;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/is.js":
+/*!**************************************!*\
+  !*** ./node_modules/ramda/src/is.js ***!
+  \**************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+/**
+ * See if an object (`val`) is an instance of the supplied constructor. This
+ * function will check up the inheritance chain, if any.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.3.0
+ * @category Type
+ * @sig (* -> {*}) -> a -> Boolean
+ * @param {Object} ctor A constructor
+ * @param {*} val The value to test
+ * @return {Boolean}
+ * @example
+ *
+ *      R.is(Object, {}); //=> true
+ *      R.is(Number, 1); //=> true
+ *      R.is(Object, 1); //=> false
+ *      R.is(String, 's'); //=> true
+ *      R.is(String, new String('')); //=> true
+ *      R.is(Object, new String('')); //=> true
+ *      R.is(Object, 's'); //=> false
+ *      R.is(Number, {}); //=> false
+ */
+
+
+var is = /*#__PURE__*/_curry2(function is(Ctor, val) {
+  return val != null && val.constructor === Ctor || val instanceof Ctor;
+});
+module.exports = is;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/isNil.js":
+/*!*****************************************!*\
+  !*** ./node_modules/ramda/src/isNil.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+/**
+ * Checks if the input value is `null` or `undefined`.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.9.0
+ * @category Type
+ * @sig * -> Boolean
+ * @param {*} x The value to test.
+ * @return {Boolean} `true` if `x` is `undefined` or `null`, otherwise `false`.
+ * @example
+ *
+ *      R.isNil(null); //=> true
+ *      R.isNil(undefined); //=> true
+ *      R.isNil(0); //=> false
+ *      R.isNil([]); //=> false
+ */
+
+
+var isNil = /*#__PURE__*/_curry1(function isNil(x) {
+  return x == null;
+});
+module.exports = isNil;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/keys.js":
+/*!****************************************!*\
+  !*** ./node_modules/ramda/src/keys.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+var _has = /*#__PURE__*/__webpack_require__(/*! ./internal/_has */ "./node_modules/ramda/src/internal/_has.js");
+
+var _isArguments = /*#__PURE__*/__webpack_require__(/*! ./internal/_isArguments */ "./node_modules/ramda/src/internal/_isArguments.js");
+
+// cover IE < 9 keys issues
+
+
+var hasEnumBug = ! /*#__PURE__*/{ toString: null }.propertyIsEnumerable('toString');
+var nonEnumerableProps = ['constructor', 'valueOf', 'isPrototypeOf', 'toString', 'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
+// Safari bug
+var hasArgsEnumBug = /*#__PURE__*/function () {
+  'use strict';
+
+  return arguments.propertyIsEnumerable('length');
+}();
+
+var contains = function contains(list, item) {
+  var idx = 0;
+  while (idx < list.length) {
+    if (list[idx] === item) {
+      return true;
+    }
+    idx += 1;
+  }
+  return false;
+};
+
+/**
+ * Returns a list containing the names of all the enumerable own properties of
+ * the supplied object.
+ * Note that the order of the output array is not guaranteed to be consistent
+ * across different JS platforms.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Object
+ * @sig {k: v} -> [k]
+ * @param {Object} obj The object to extract properties from
+ * @return {Array} An array of the object's own properties.
+ * @see R.keysIn, R.values
+ * @example
+ *
+ *      R.keys({a: 1, b: 2, c: 3}); //=> ['a', 'b', 'c']
+ */
+var _keys = typeof Object.keys === 'function' && !hasArgsEnumBug ? function keys(obj) {
+  return Object(obj) !== obj ? [] : Object.keys(obj);
+} : function keys(obj) {
+  if (Object(obj) !== obj) {
+    return [];
+  }
+  var prop, nIdx;
+  var ks = [];
+  var checkArgsLength = hasArgsEnumBug && _isArguments(obj);
+  for (prop in obj) {
+    if (_has(prop, obj) && (!checkArgsLength || prop !== 'length')) {
+      ks[ks.length] = prop;
+    }
+  }
+  if (hasEnumBug) {
+    nIdx = nonEnumerableProps.length - 1;
+    while (nIdx >= 0) {
+      prop = nonEnumerableProps[nIdx];
+      if (_has(prop, obj) && !contains(ks, prop)) {
+        ks[ks.length] = prop;
+      }
+      nIdx -= 1;
+    }
+  }
+  return ks;
+};
+var keys = /*#__PURE__*/_curry1(_keys);
+module.exports = keys;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/map.js":
+/*!***************************************!*\
+  !*** ./node_modules/ramda/src/map.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+var _dispatchable = /*#__PURE__*/__webpack_require__(/*! ./internal/_dispatchable */ "./node_modules/ramda/src/internal/_dispatchable.js");
+
+var _map = /*#__PURE__*/__webpack_require__(/*! ./internal/_map */ "./node_modules/ramda/src/internal/_map.js");
+
+var _reduce = /*#__PURE__*/__webpack_require__(/*! ./internal/_reduce */ "./node_modules/ramda/src/internal/_reduce.js");
+
+var _xmap = /*#__PURE__*/__webpack_require__(/*! ./internal/_xmap */ "./node_modules/ramda/src/internal/_xmap.js");
+
+var curryN = /*#__PURE__*/__webpack_require__(/*! ./curryN */ "./node_modules/ramda/src/curryN.js");
+
+var keys = /*#__PURE__*/__webpack_require__(/*! ./keys */ "./node_modules/ramda/src/keys.js");
+
+/**
+ * Takes a function and
+ * a [functor](https://github.com/fantasyland/fantasy-land#functor),
+ * applies the function to each of the functor's values, and returns
+ * a functor of the same shape.
+ *
+ * Ramda provides suitable `map` implementations for `Array` and `Object`,
+ * so this function may be applied to `[1, 2, 3]` or `{x: 1, y: 2, z: 3}`.
+ *
+ * Dispatches to the `map` method of the second argument, if present.
+ *
+ * Acts as a transducer if a transformer is given in list position.
+ *
+ * Also treats functions as functors and will compose them together.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category List
+ * @sig Functor f => (a -> b) -> f a -> f b
+ * @param {Function} fn The function to be called on every element of the input `list`.
+ * @param {Array} list The list to be iterated over.
+ * @return {Array} The new list.
+ * @see R.transduce, R.addIndex
+ * @example
+ *
+ *      var double = x => x * 2;
+ *
+ *      R.map(double, [1, 2, 3]); //=> [2, 4, 6]
+ *
+ *      R.map(double, {x: 1, y: 2, z: 3}); //=> {x: 2, y: 4, z: 6}
+ * @symb R.map(f, [a, b]) = [f(a), f(b)]
+ * @symb R.map(f, { x: a, y: b }) = { x: f(a), y: f(b) }
+ * @symb R.map(f, functor_o) = functor_o.map(f)
+ */
+
+
+var map = /*#__PURE__*/_curry2( /*#__PURE__*/_dispatchable(['fantasy-land/map', 'map'], _xmap, function map(fn, functor) {
+  switch (Object.prototype.toString.call(functor)) {
+    case '[object Function]':
+      return curryN(functor.length, function () {
+        return fn.call(this, functor.apply(this, arguments));
+      });
+    case '[object Object]':
+      return _reduce(function (acc, key) {
+        acc[key] = fn(functor[key]);
+        return acc;
+      }, {}, keys(functor));
+    default:
+      return _map(fn, functor);
+  }
+}));
+module.exports = map;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/max.js":
+/*!***************************************!*\
+  !*** ./node_modules/ramda/src/max.js ***!
+  \***************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+/**
+ * Returns the larger of its two arguments.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Relation
+ * @sig Ord a => a -> a -> a
+ * @param {*} a
+ * @param {*} b
+ * @return {*}
+ * @see R.maxBy, R.min
+ * @example
+ *
+ *      R.max(789, 123); //=> 789
+ *      R.max('a', 'b'); //=> 'b'
+ */
+
+
+var max = /*#__PURE__*/_curry2(function max(a, b) {
+  return b > a ? b : a;
+});
+module.exports = max;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/merge.js":
+/*!*****************************************!*\
+  !*** ./node_modules/ramda/src/merge.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _assign = /*#__PURE__*/__webpack_require__(/*! ./internal/_assign */ "./node_modules/ramda/src/internal/_assign.js");
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+/**
+ * Create a new object with the own properties of the first object merged with
+ * the own properties of the second object. If a key exists in both objects,
+ * the value from the second object will be used.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Object
+ * @sig {k: v} -> {k: v} -> {k: v}
+ * @param {Object} l
+ * @param {Object} r
+ * @return {Object}
+ * @see R.mergeDeepRight, R.mergeWith, R.mergeWithKey
+ * @example
+ *
+ *      R.merge({ 'name': 'fred', 'age': 10 }, { 'age': 40 });
+ *      //=> { 'name': 'fred', 'age': 40 }
+ *
+ *      var resetToDefault = R.merge(R.__, {x: 0});
+ *      resetToDefault({x: 5, y: 2}); //=> {x: 0, y: 2}
+ * @symb R.merge({ x: 1, y: 2 }, { y: 5, z: 3 }) = { x: 1, y: 5, z: 3 }
+ */
+
+
+var merge = /*#__PURE__*/_curry2(function merge(l, r) {
+  return _assign({}, l, r);
+});
+module.exports = merge;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/partial.js":
+/*!*******************************************!*\
+  !*** ./node_modules/ramda/src/partial.js ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _concat = /*#__PURE__*/__webpack_require__(/*! ./internal/_concat */ "./node_modules/ramda/src/internal/_concat.js");
+
+var _createPartialApplicator = /*#__PURE__*/__webpack_require__(/*! ./internal/_createPartialApplicator */ "./node_modules/ramda/src/internal/_createPartialApplicator.js");
+
+/**
+ * Takes a function `f` and a list of arguments, and returns a function `g`.
+ * When applied, `g` returns the result of applying `f` to the arguments
+ * provided initially followed by the arguments provided to `g`.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.10.0
+ * @category Function
+ * @sig ((a, b, c, ..., n) -> x) -> [a, b, c, ...] -> ((d, e, f, ..., n) -> x)
+ * @param {Function} f
+ * @param {Array} args
+ * @return {Function}
+ * @see R.partialRight
+ * @example
+ *
+ *      var multiply2 = (a, b) => a * b;
+ *      var double = R.partial(multiply2, [2]);
+ *      double(2); //=> 4
+ *
+ *      var greet = (salutation, title, firstName, lastName) =>
+ *        salutation + ', ' + title + ' ' + firstName + ' ' + lastName + '!';
+ *
+ *      var sayHello = R.partial(greet, ['Hello']);
+ *      var sayHelloToMs = R.partial(sayHello, ['Ms.']);
+ *      sayHelloToMs('Jane', 'Jones'); //=> 'Hello, Ms. Jane Jones!'
+ * @symb R.partial(f, [a, b])(c, d) = f(a, b, c, d)
+ */
+
+
+var partial = /*#__PURE__*/_createPartialApplicator(_concat);
+module.exports = partial;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/path.js":
+/*!****************************************!*\
+  !*** ./node_modules/ramda/src/path.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+/**
+ * Retrieve the value at a given path.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.2.0
+ * @category Object
+ * @typedefn Idx = String | Int
+ * @sig [Idx] -> {a} -> a | Undefined
+ * @param {Array} path The path to use.
+ * @param {Object} obj The object to retrieve the nested property from.
+ * @return {*} The data at `path`.
+ * @see R.prop
+ * @example
+ *
+ *      R.path(['a', 'b'], {a: {b: 2}}); //=> 2
+ *      R.path(['a', 'b'], {c: {b: 2}}); //=> undefined
+ */
+
+
+var path = /*#__PURE__*/_curry2(function path(paths, obj) {
+  var val = obj;
+  var idx = 0;
+  while (idx < paths.length) {
+    if (val == null) {
+      return;
+    }
+    val = val[paths[idx]];
+    idx += 1;
+  }
+  return val;
+});
+module.exports = path;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/pipeP.js":
+/*!*****************************************!*\
+  !*** ./node_modules/ramda/src/pipeP.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _arity = /*#__PURE__*/__webpack_require__(/*! ./internal/_arity */ "./node_modules/ramda/src/internal/_arity.js");
+
+var _pipeP = /*#__PURE__*/__webpack_require__(/*! ./internal/_pipeP */ "./node_modules/ramda/src/internal/_pipeP.js");
+
+var reduce = /*#__PURE__*/__webpack_require__(/*! ./reduce */ "./node_modules/ramda/src/reduce.js");
+
+var tail = /*#__PURE__*/__webpack_require__(/*! ./tail */ "./node_modules/ramda/src/tail.js");
+
+/**
+ * Performs left-to-right composition of one or more Promise-returning
+ * functions. The leftmost function may have any arity; the remaining functions
+ * must be unary.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.10.0
+ * @category Function
+ * @sig ((a -> Promise b), (b -> Promise c), ..., (y -> Promise z)) -> (a -> Promise z)
+ * @param {...Function} functions
+ * @return {Function}
+ * @see R.composeP
+ * @example
+ *
+ *      //  followersForUser :: String -> Promise [User]
+ *      var followersForUser = R.pipeP(db.getUserById, db.getFollowers);
+ */
+
+
+function pipeP() {
+  if (arguments.length === 0) {
+    throw new Error('pipeP requires at least one argument');
+  }
+  return _arity(arguments[0].length, reduce(_pipeP, arguments[0], tail(arguments)));
+}
+module.exports = pipeP;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/prop.js":
+/*!****************************************!*\
+  !*** ./node_modules/ramda/src/prop.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry2 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry2 */ "./node_modules/ramda/src/internal/_curry2.js");
+
+var path = /*#__PURE__*/__webpack_require__(/*! ./path */ "./node_modules/ramda/src/path.js");
+
+/**
+ * Returns a function that when supplied an object returns the indicated
+ * property of that object, if it exists.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category Object
+ * @sig s -> {s: a} -> a | Undefined
+ * @param {String} p The property name
+ * @param {Object} obj The object to query
+ * @return {*} The value at `obj.p`.
+ * @see R.path
+ * @example
+ *
+ *      R.prop('x', {x: 100}); //=> 100
+ *      R.prop('x', {}); //=> undefined
+ */
+
+var prop = /*#__PURE__*/_curry2(function prop(p, obj) {
+  return path([p], obj);
+});
+module.exports = prop;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/reduce.js":
+/*!******************************************!*\
+  !*** ./node_modules/ramda/src/reduce.js ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry3 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry3 */ "./node_modules/ramda/src/internal/_curry3.js");
+
+var _reduce = /*#__PURE__*/__webpack_require__(/*! ./internal/_reduce */ "./node_modules/ramda/src/internal/_reduce.js");
+
+/**
+ * Returns a single item by iterating through the list, successively calling
+ * the iterator function and passing it an accumulator value and the current
+ * value from the array, and then passing the result to the next call.
+ *
+ * The iterator function receives two values: *(acc, value)*. It may use
+ * [`R.reduced`](#reduced) to shortcut the iteration.
+ *
+ * The arguments' order of [`reduceRight`](#reduceRight)'s iterator function
+ * is *(value, acc)*.
+ *
+ * Note: `R.reduce` does not skip deleted or unassigned indices (sparse
+ * arrays), unlike the native `Array.prototype.reduce` method. For more details
+ * on this behavior, see:
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce#Description
+ *
+ * Dispatches to the `reduce` method of the third argument, if present. When
+ * doing so, it is up to the user to handle the [`R.reduced`](#reduced)
+ * shortcuting, as this is not implemented by `reduce`.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category List
+ * @sig ((a, b) -> a) -> a -> [b] -> a
+ * @param {Function} fn The iterator function. Receives two values, the accumulator and the
+ *        current element from the array.
+ * @param {*} acc The accumulator value.
+ * @param {Array} list The list to iterate over.
+ * @return {*} The final, accumulated value.
+ * @see R.reduced, R.addIndex, R.reduceRight
+ * @example
+ *
+ *      R.reduce(R.subtract, 0, [1, 2, 3, 4]) // => ((((0 - 1) - 2) - 3) - 4) = -10
+ *      //          -               -10
+ *      //         / \              / \
+ *      //        -   4           -6   4
+ *      //       / \              / \
+ *      //      -   3   ==>     -3   3
+ *      //     / \              / \
+ *      //    -   2           -1   2
+ *      //   / \              / \
+ *      //  0   1            0   1
+ *
+ * @symb R.reduce(f, a, [b, c, d]) = f(f(f(a, b), c), d)
+ */
+
+
+var reduce = /*#__PURE__*/_curry3(_reduce);
+module.exports = reduce;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/slice.js":
+/*!*****************************************!*\
+  !*** ./node_modules/ramda/src/slice.js ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _checkForMethod = /*#__PURE__*/__webpack_require__(/*! ./internal/_checkForMethod */ "./node_modules/ramda/src/internal/_checkForMethod.js");
+
+var _curry3 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry3 */ "./node_modules/ramda/src/internal/_curry3.js");
+
+/**
+ * Returns the elements of the given list or string (or object with a `slice`
+ * method) from `fromIndex` (inclusive) to `toIndex` (exclusive).
+ *
+ * Dispatches to the `slice` method of the third argument, if present.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.4
+ * @category List
+ * @sig Number -> Number -> [a] -> [a]
+ * @sig Number -> Number -> String -> String
+ * @param {Number} fromIndex The start index (inclusive).
+ * @param {Number} toIndex The end index (exclusive).
+ * @param {*} list
+ * @return {*}
+ * @example
+ *
+ *      R.slice(1, 3, ['a', 'b', 'c', 'd']);        //=> ['b', 'c']
+ *      R.slice(1, Infinity, ['a', 'b', 'c', 'd']); //=> ['b', 'c', 'd']
+ *      R.slice(0, -1, ['a', 'b', 'c', 'd']);       //=> ['a', 'b', 'c']
+ *      R.slice(-3, -1, ['a', 'b', 'c', 'd']);      //=> ['b', 'c']
+ *      R.slice(0, 3, 'ramda');                     //=> 'ram'
+ */
+
+
+var slice = /*#__PURE__*/_curry3( /*#__PURE__*/_checkForMethod('slice', function slice(fromIndex, toIndex, list) {
+  return Array.prototype.slice.call(list, fromIndex, toIndex);
+}));
+module.exports = slice;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/tail.js":
+/*!****************************************!*\
+  !*** ./node_modules/ramda/src/tail.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _checkForMethod = /*#__PURE__*/__webpack_require__(/*! ./internal/_checkForMethod */ "./node_modules/ramda/src/internal/_checkForMethod.js");
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+var slice = /*#__PURE__*/__webpack_require__(/*! ./slice */ "./node_modules/ramda/src/slice.js");
+
+/**
+ * Returns all but the first element of the given list or string (or object
+ * with a `tail` method).
+ *
+ * Dispatches to the `slice` method of the first argument, if present.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.1.0
+ * @category List
+ * @sig [a] -> [a]
+ * @sig String -> String
+ * @param {*} list
+ * @return {*}
+ * @see R.head, R.init, R.last
+ * @example
+ *
+ *      R.tail([1, 2, 3]);  //=> [2, 3]
+ *      R.tail([1, 2]);     //=> [2]
+ *      R.tail([1]);        //=> []
+ *      R.tail([]);         //=> []
+ *
+ *      R.tail('abc');  //=> 'bc'
+ *      R.tail('ab');   //=> 'b'
+ *      R.tail('a');    //=> ''
+ *      R.tail('');     //=> ''
+ */
+
+
+var tail = /*#__PURE__*/_curry1( /*#__PURE__*/_checkForMethod('tail', /*#__PURE__*/slice(1, Infinity)));
+module.exports = tail;
+
+/***/ }),
+
+/***/ "./node_modules/ramda/src/type.js":
+/*!****************************************!*\
+  !*** ./node_modules/ramda/src/type.js ***!
+  \****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var _curry1 = /*#__PURE__*/__webpack_require__(/*! ./internal/_curry1 */ "./node_modules/ramda/src/internal/_curry1.js");
+
+/**
+ * Gives a single-word string description of the (native) type of a value,
+ * returning such answers as 'Object', 'Number', 'Array', or 'Null'. Does not
+ * attempt to distinguish user Object types any further, reporting them all as
+ * 'Object'.
+ *
+ * @func
+ * @memberOf R
+ * @since v0.8.0
+ * @category Type
+ * @sig (* -> {*}) -> String
+ * @param {*} val The value to test
+ * @return {String}
+ * @example
+ *
+ *      R.type({}); //=> "Object"
+ *      R.type(1); //=> "Number"
+ *      R.type(false); //=> "Boolean"
+ *      R.type('s'); //=> "String"
+ *      R.type(null); //=> "Null"
+ *      R.type([]); //=> "Array"
+ *      R.type(/[A-z]/); //=> "RegExp"
+ *      R.type(() => {}); //=> "Function"
+ *      R.type(undefined); //=> "Undefined"
+ */
+
+
+var type = /*#__PURE__*/_curry1(function type(val) {
+  return val === null ? 'Null' : val === undefined ? 'Undefined' : Object.prototype.toString.call(val).slice(8, -1);
+});
+module.exports = type;
+
+/***/ }),
+
 /***/ "./node_modules/react-dom/cjs/react-dom.development.js":
 /*!*************************************************************!*\
   !*** ./node_modules/react-dom/cjs/react-dom.development.js ***!
@@ -89635,764 +93295,6 @@ if (false) {} else {
 
 if (false) {} else {
   module.exports = __webpack_require__(/*! ./cjs/react-jsx-runtime.development.js */ "./node_modules/react/cjs/react-jsx-runtime.development.js");
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/regenerator-runtime/runtime.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime.js ***!
-  \*****************************************************/
-/***/ ((module) => {
-
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-var runtime = (function (exports) {
-  "use strict";
-
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  function define(obj, key, value) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-    return obj[key];
-  }
-  try {
-    // IE 8 has a broken Object.defineProperty that only works on DOM objects.
-    define({}, "");
-  } catch (err) {
-    define = function(obj, key, value) {
-      return obj[key] = value;
-    };
-  }
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  exports.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
-    return this;
-  };
-
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  if (NativeIteratorPrototype &&
-      NativeIteratorPrototype !== Op &&
-      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-    // This environment has a native %IteratorPrototype%; use it instead
-    // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
-  }
-
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunction.displayName = define(
-    GeneratorFunctionPrototype,
-    toStringTagSymbol,
-    "GeneratorFunction"
-  );
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      define(prototype, method, function(arg) {
-        return this._invoke(method, arg);
-      });
-    });
-  }
-
-  exports.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  exports.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      define(genFun, toStringTagSymbol, "GeneratorFunction");
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  exports.awrap = function(arg) {
-    return { __await: arg };
-  };
-
-  function AsyncIterator(generator, PromiseImpl) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return PromiseImpl.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return PromiseImpl.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration.
-          result.value = unwrapped;
-          resolve(result);
-        }, function(error) {
-          // If a rejected Promise was yielded, throw the rejection back
-          // into the async generator function so it can be handled there.
-          return invoke("throw", error, resolve, reject);
-        });
-      }
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
-    return this;
-  };
-  exports.AsyncIterator = AsyncIterator;
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  exports.async = function(innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-    if (PromiseImpl === void 0) PromiseImpl = Promise;
-
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList),
-      PromiseImpl
-    );
-
-    return exports.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      context.method = method;
-      context.arg = arg;
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-
-        if (context.method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = context.arg;
-
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
-          }
-
-          context.dispatchException(context.arg);
-
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          if (record.arg === ContinueSentinel) {
-            continue;
-          }
-
-          return {
-            value: record.arg,
-            done: context.done
-          };
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (method === undefined) {
-      // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
-      context.delegate = null;
-
-      if (context.method === "throw") {
-        // Note: ["return"] must be used for ES3 parsing compatibility.
-        if (delegate.iterator["return"]) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
-
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
-        }
-
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    var info = record.arg;
-
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    if (info.done) {
-      // Assign the result of the finished delegate to the temporary
-      // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
-
-      // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
-
-      // If context.method was "throw" but the delegate handled the
-      // exception, let the outer generator proceed normally. If
-      // context.method was "next", forget context.arg since it has been
-      // "consumed" by the delegate iterator. If context.method was
-      // "return", allow the original .return call to continue in the
-      // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined;
-      }
-
-    } else {
-      // Re-yield the result returned by the delegate method.
-      return info;
-    }
-
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  define(Gp, toStringTagSymbol, "Generator");
-
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
-    return this;
-  };
-
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  exports.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  exports.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.method = "next";
-      this.arg = undefined;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-
-        if (caught) {
-          // If the dispatched exception was caught by a catch block,
-          // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined;
-        }
-
-        return !! caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
-      }
-
-      return this.complete(record);
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-
-      return ContinueSentinel;
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
-        // accidentally pass it on to the delegate.
-        this.arg = undefined;
-      }
-
-      return ContinueSentinel;
-    }
-  };
-
-  // Regardless of whether this script is executing as a CommonJS module
-  // or not, return the runtime object so that we can declare the variable
-  // regeneratorRuntime in the outer scope, which allows this module to be
-  // injected easily by `bin/regenerator --include-runtime script.js`.
-  return exports;
-
-}(
-  // If this script is executing as a CommonJS module, use module.exports
-  // as the regeneratorRuntime namespace. Otherwise create a new empty
-  // object. Either way, the resulting object will be used to initialize
-  // the regeneratorRuntime variable at the top of this file.
-   true ? module.exports : 0
-));
-
-try {
-  regeneratorRuntime = runtime;
-} catch (accidentalStrictMode) {
-  // This module should not be running in strict mode, so the above
-  // assignment should always work unless something is misconfigured. Just
-  // in case runtime.js accidentally runs in strict mode, we can escape
-  // strict mode using a global Function call. This could conceivably fail
-  // if a Content Security Policy forbids using Function, but in that case
-  // the proper solution is to fix the accidental strict mode problem. If
-  // you've misconfigured your bundler to force strict mode and applied a
-  // CSP to forbid Function, and you're not willing to fix either of those
-  // problems, please detail your unique predicament in a GitHub issue.
-  Function("r", "regeneratorRuntime = r")(runtime);
 }
 
 

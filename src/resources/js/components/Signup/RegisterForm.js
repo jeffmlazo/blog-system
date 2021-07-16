@@ -1,16 +1,12 @@
 import { useState } from "react";
-// import Alert from "@material-ui/lab/Alert";
+import Alert from "@material-ui/lab/Alert";
 // import AlertDisplay from "./AlertDisplay";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { create } from "apisauce";
 import {
-  // TextField,
-  // FormControl,
-  // InputLabel,
-  // Select,
-  // MenuItem,
   makeStyles,
-  // Snackbar,
+  Snackbar,
   Grid,
   DialogActions,
   Button,
@@ -62,59 +58,27 @@ const FORM_VALIDATION = Yup.object().shape({
 
 export default function RegisterForm(props) {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [showAlertBox, setAlertBox] = useState(false);
   const [severity, setSeverity] = useState("success");
   const [alertMessage, setAlertMessage] = useState({});
   const { onClose } = props;
 
-  // Add User
-  const addUser = async (user) => {
-    const res = await fetch("http://localhost/api/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-
-    const data = await res.json();
-    setSeverity(data.status);
-    setAlertMessage(data.message);
-    // console.log(data.status);
-    // console.log(data.message);
-    // const data = await res.json();
-    // setUsers([...users, data]);
-
-    // Show alert box
-    // setAlertBox(true);
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  // Form submit
-  const onSubmit = (e) => {
-    e.preventDefault();
+  // Api base Url
+  const api = create({
+    baseURL: "http://localhost/api",
+    headers: { "Content-Type": "application/json" },
+  });
 
-    const userData = {
-      firstName,
-      middleName,
-      lastName,
-      username,
-      password,
-      userType,
-      emailAddress,
-      mobile,
-    };
-
-    // Add user to the server
-    addUser(userData);
-
-    // handleClose();
-
-    // Reset alert box useStates
-    // setAlertBox(false);
-    // setSeverity("success");
-    // setAlertMessage({});
-  };
+  // get
+  // api
+  //   .get("/repos/skellock/apisauce/commits")
+  //   .then((response) => response.data[0].commit.message)
+  //   .then(console.log);
 
   return (
     <div>
@@ -124,11 +88,33 @@ export default function RegisterForm(props) {
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={(values) => {
-          console.log(values);
+          // Send data to the server
+          api
+            .post("/user", values)
+            .then((response) => response.data)
+            .then((data) => {
+              console.log(data.status);
+              console.log(data.message);
+            });
         }}
       >
         <Form>
           <Grid container spacing={2}>
+            {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity="success">
+                This is a success message!
+              </Alert>
+            </Snackbar>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity="success">
+                This is a success message!
+              </Alert>
+            </Snackbar>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+              <Alert onClose={handleClose} severity="success">
+                This is a success message!
+              </Alert>
+            </Snackbar> */}
             <Grid item xs={12}>
               <Textfield
                 autoFocus

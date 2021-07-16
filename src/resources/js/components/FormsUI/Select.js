@@ -28,7 +28,7 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
     <TextField {...configSelect}>
       {Object.keys(options).map((item, pos) => {
         return (
-          <MenuItem key={pos} value={item}>
+          <MenuItem key={pos} value={options[item]}>
             {capitalize(options[item])}
           </MenuItem>
         );
