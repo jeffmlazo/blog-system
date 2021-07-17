@@ -4,13 +4,8 @@ import Alert from "@material-ui/lab/Alert";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { create } from "apisauce";
-import {
-  makeStyles,
-  Snackbar,
-  Grid,
-  DialogActions,
-  Button,
-} from "@material-ui/core";
+import { useSnackbar } from "notistack";
+import { makeStyles, Grid, DialogActions, Button } from "@material-ui/core";
 
 import Textfield from "../FormsUI/Textfield";
 import Select from "../FormsUI/Select";
@@ -24,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  // cancelButton: {
+  //   marginRight: "20px",
+  // },
   // alertBox: {
   //   margin: theme.spacing(2),
   // },
@@ -63,12 +61,40 @@ export default function RegisterForm(props) {
   const [severity, setSeverity] = useState("success");
   const [alertMessage, setAlertMessage] = useState({});
   const { onClose } = props;
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  // Api base Url
+  const handleSnackbarMessage = (msg, variant) => {
+    enqueueSnackbar(msg, {
+      variant,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center",
+        autoHideDuration: 99999999,
+      },
+    });
+    enqueueSnackbar(msg, {
+      variant,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center",
+        autoHideDuration: 99999999,
+      },
+    });
+    enqueueSnackbar(msg, {
+      variant,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center",
+        autoHideDuration: 99999999,
+      },
+    });
+  };
+
+  // API base Url
   const api = create({
     baseURL: "http://localhost/api",
     headers: { "Content-Type": "application/json" },
@@ -95,26 +121,12 @@ export default function RegisterForm(props) {
             .then((data) => {
               console.log(data.status);
               console.log(data.message);
+              handleSnackbarMessage(data.message, data.status);
             });
         }}
       >
         <Form>
           <Grid container spacing={2}>
-            {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity="success">
-                This is a success message!
-              </Alert>
-            </Snackbar>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity="success">
-                This is a success message!
-              </Alert>
-            </Snackbar>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-              <Alert onClose={handleClose} severity="success">
-                This is a success message!
-              </Alert>
-            </Snackbar> */}
             <Grid item xs={12}>
               <Textfield
                 autoFocus
@@ -123,19 +135,15 @@ export default function RegisterForm(props) {
                 type="text"
               />
             </Grid>
-
             <Grid item xs={12}>
               <Textfield name="middleName" label="Middle Name" type="text" />
             </Grid>
-
             <Grid item xs={12}>
               <Textfield name="lastName" label="Last Name" type="text" />
             </Grid>
-
             <Grid item xs={12}>
               <Textfield name="username" label="Username" type="text" />
             </Grid>
-
             <Grid item xs={12}>
               <Textfield
                 name="password"
@@ -144,7 +152,6 @@ export default function RegisterForm(props) {
                 autoComplete="new-password"
               />
             </Grid>
-
             <Grid item xs={12}>
               <Select
                 name="userType"
@@ -152,7 +159,6 @@ export default function RegisterForm(props) {
                 options={["user", "author", "admin"]}
               />
             </Grid>
-
             <Grid item xs={12}>
               <Textfield
                 name="emailAddress"
@@ -160,14 +166,17 @@ export default function RegisterForm(props) {
                 type="email"
               />
             </Grid>
-
             <Grid item xs={12}>
               <Textfield name="mobile" label="Mobile" type="text" />
             </Grid>
-
             <Grid item xs={12}>
               <DialogActions>
-                <Button onClick={onClose} variant="contained" color="primary">
+                <Button
+                  onClick={onClose}
+                  variant="contained"
+                  color="primary"
+                  className={classes.cancelButton}
+                >
                   Cancel
                 </Button>
                 <ButtonForm>Register</ButtonForm>

@@ -9,8 +9,8 @@ import {
   DialogContentText,
   DialogTitle,
   makeStyles,
-  // Snackbar,
 } from "@material-ui/core";
+import { SnackbarProvider } from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   // alertBox: {
@@ -31,29 +31,31 @@ export default function RegisterModal() {
   };
 
   return (
-    <div>
-      <Button
-        variant="outlined"
-        color="primary"
-        size="small"
-        onClick={handleClickOpen}
-      >
-        Sign Up
-      </Button>
+    <SnackbarProvider>
+      <div>
+        <Button
+          variant="outlined"
+          color="primary"
+          size="small"
+          onClick={handleClickOpen}
+        >
+          Sign Up
+        </Button>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please fill up the neccessary required fields.
-          </DialogContentText>
-          <RegisterForm onClose={handleClose} />
-        </DialogContent>
-      </Dialog>
-    </div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Sign Up</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please fill up the neccessary required fields.
+            </DialogContentText>
+            <RegisterForm onClose={handleClose} />
+          </DialogContent>
+        </Dialog>
+      </div>
+    </SnackbarProvider>
   );
 }

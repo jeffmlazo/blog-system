@@ -2810,6 +2810,364 @@ if (true) {
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/core/esm/Collapse/Collapse.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/Collapse/Collapse.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "styles": () => (/* binding */ styles),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/slicedToArray */ "./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/utils */ "./node_modules/@material-ui/utils/esm/chainPropTypes.js");
+/* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/Transition.js");
+/* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../styles/withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
+/* harmony import */ var _styles_transitions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/transitions */ "./node_modules/@material-ui/core/esm/styles/transitions.js");
+/* harmony import */ var _utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../utils/deprecatedPropType */ "./node_modules/@material-ui/core/esm/utils/deprecatedPropType.js");
+/* harmony import */ var _transitions_utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../transitions/utils */ "./node_modules/@material-ui/core/esm/transitions/utils.js");
+/* harmony import */ var _styles_useTheme__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../styles/useTheme */ "./node_modules/@material-ui/core/esm/styles/useTheme.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../utils */ "./node_modules/@material-ui/core/esm/utils/useForkRef.js");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var styles = function styles(theme) {
+  return {
+    /* Styles applied to the root element. */
+    root: {
+      height: 0,
+      overflow: 'hidden',
+      transition: theme.transitions.create('height')
+    },
+
+    /* Styles applied to the root element when the transition has entered. */
+    entered: {
+      height: 'auto',
+      overflow: 'visible'
+    },
+
+    /* Styles applied to the root element when the transition has exited and `collapsedSize` != 0px. */
+    hidden: {
+      visibility: 'hidden'
+    },
+
+    /* Styles applied to the outer wrapper element. */
+    wrapper: {
+      // Hack to get children with a negative margin to not falsify the height computation.
+      display: 'flex'
+    },
+
+    /* Styles applied to the inner wrapper element. */
+    wrapperInner: {
+      width: '100%'
+    }
+  };
+};
+/**
+ * The Collapse transition is used by the
+ * [Vertical Stepper](/components/steppers/#vertical-stepper) StepContent component.
+ * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
+ */
+
+var Collapse = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.forwardRef(function Collapse(props, ref) {
+  var children = props.children,
+      classes = props.classes,
+      className = props.className,
+      collapsedHeight = props.collapsedHeight,
+      _props$collapsedSize = props.collapsedSize,
+      collapsedSizeProp = _props$collapsedSize === void 0 ? '0px' : _props$collapsedSize,
+      _props$component = props.component,
+      Component = _props$component === void 0 ? 'div' : _props$component,
+      _props$disableStrictM = props.disableStrictModeCompat,
+      disableStrictModeCompat = _props$disableStrictM === void 0 ? false : _props$disableStrictM,
+      inProp = props.in,
+      onEnter = props.onEnter,
+      onEntered = props.onEntered,
+      onEntering = props.onEntering,
+      onExit = props.onExit,
+      onExited = props.onExited,
+      onExiting = props.onExiting,
+      style = props.style,
+      _props$timeout = props.timeout,
+      timeout = _props$timeout === void 0 ? _styles_transitions__WEBPACK_IMPORTED_MODULE_6__.duration.standard : _props$timeout,
+      _props$TransitionComp = props.TransitionComponent,
+      TransitionComponent = _props$TransitionComp === void 0 ? react_transition_group__WEBPACK_IMPORTED_MODULE_7__.default : _props$TransitionComp,
+      other = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__.default)(props, ["children", "classes", "className", "collapsedHeight", "collapsedSize", "component", "disableStrictModeCompat", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"]);
+
+  var theme = (0,_styles_useTheme__WEBPACK_IMPORTED_MODULE_8__.default)();
+  var timer = react__WEBPACK_IMPORTED_MODULE_3__.useRef();
+  var wrapperRef = react__WEBPACK_IMPORTED_MODULE_3__.useRef(null);
+  var autoTransitionDuration = react__WEBPACK_IMPORTED_MODULE_3__.useRef();
+  var collapsedSize = typeof (collapsedHeight || collapsedSizeProp) === 'number' ? "".concat(collapsedHeight || collapsedSizeProp, "px") : collapsedHeight || collapsedSizeProp;
+  react__WEBPACK_IMPORTED_MODULE_3__.useEffect(function () {
+    return function () {
+      clearTimeout(timer.current);
+    };
+  }, []);
+  var enableStrictModeCompat = theme.unstable_strictMode && !disableStrictModeCompat;
+  var nodeRef = react__WEBPACK_IMPORTED_MODULE_3__.useRef(null);
+  var handleRef = (0,_utils__WEBPACK_IMPORTED_MODULE_9__.default)(ref, enableStrictModeCompat ? nodeRef : undefined);
+
+  var normalizedTransitionCallback = function normalizedTransitionCallback(callback) {
+    return function (nodeOrAppearing, maybeAppearing) {
+      if (callback) {
+        var _ref = enableStrictModeCompat ? [nodeRef.current, nodeOrAppearing] : [nodeOrAppearing, maybeAppearing],
+            _ref2 = (0,_babel_runtime_helpers_esm_slicedToArray__WEBPACK_IMPORTED_MODULE_1__.default)(_ref, 2),
+            node = _ref2[0],
+            isAppearing = _ref2[1]; // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
+
+
+        if (isAppearing === undefined) {
+          callback(node);
+        } else {
+          callback(node, isAppearing);
+        }
+      }
+    };
+  };
+
+  var handleEnter = normalizedTransitionCallback(function (node, isAppearing) {
+    node.style.height = collapsedSize;
+
+    if (onEnter) {
+      onEnter(node, isAppearing);
+    }
+  });
+  var handleEntering = normalizedTransitionCallback(function (node, isAppearing) {
+    var wrapperHeight = wrapperRef.current ? wrapperRef.current.clientHeight : 0;
+
+    var _getTransitionProps = (0,_transitions_utils__WEBPACK_IMPORTED_MODULE_10__.getTransitionProps)({
+      style: style,
+      timeout: timeout
+    }, {
+      mode: 'enter'
+    }),
+        transitionDuration = _getTransitionProps.duration;
+
+    if (timeout === 'auto') {
+      var duration2 = theme.transitions.getAutoHeightDuration(wrapperHeight);
+      node.style.transitionDuration = "".concat(duration2, "ms");
+      autoTransitionDuration.current = duration2;
+    } else {
+      node.style.transitionDuration = typeof transitionDuration === 'string' ? transitionDuration : "".concat(transitionDuration, "ms");
+    }
+
+    node.style.height = "".concat(wrapperHeight, "px");
+
+    if (onEntering) {
+      onEntering(node, isAppearing);
+    }
+  });
+  var handleEntered = normalizedTransitionCallback(function (node, isAppearing) {
+    node.style.height = 'auto';
+
+    if (onEntered) {
+      onEntered(node, isAppearing);
+    }
+  });
+  var handleExit = normalizedTransitionCallback(function (node) {
+    var wrapperHeight = wrapperRef.current ? wrapperRef.current.clientHeight : 0;
+    node.style.height = "".concat(wrapperHeight, "px");
+
+    if (onExit) {
+      onExit(node);
+    }
+  });
+  var handleExited = normalizedTransitionCallback(onExited);
+  var handleExiting = normalizedTransitionCallback(function (node) {
+    var wrapperHeight = wrapperRef.current ? wrapperRef.current.clientHeight : 0;
+
+    var _getTransitionProps2 = (0,_transitions_utils__WEBPACK_IMPORTED_MODULE_10__.getTransitionProps)({
+      style: style,
+      timeout: timeout
+    }, {
+      mode: 'exit'
+    }),
+        transitionDuration = _getTransitionProps2.duration;
+
+    if (timeout === 'auto') {
+      var duration2 = theme.transitions.getAutoHeightDuration(wrapperHeight);
+      node.style.transitionDuration = "".concat(duration2, "ms");
+      autoTransitionDuration.current = duration2;
+    } else {
+      node.style.transitionDuration = typeof transitionDuration === 'string' ? transitionDuration : "".concat(transitionDuration, "ms");
+    }
+
+    node.style.height = collapsedSize;
+
+    if (onExiting) {
+      onExiting(node);
+    }
+  });
+
+  var addEndListener = function addEndListener(nodeOrNext, maybeNext) {
+    var next = enableStrictModeCompat ? nodeOrNext : maybeNext;
+
+    if (timeout === 'auto') {
+      timer.current = setTimeout(next, autoTransitionDuration.current || 0);
+    }
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(TransitionComponent, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+    in: inProp,
+    onEnter: handleEnter,
+    onEntered: handleEntered,
+    onEntering: handleEntering,
+    onExit: handleExit,
+    onExited: handleExited,
+    onExiting: handleExiting,
+    addEndListener: addEndListener,
+    nodeRef: enableStrictModeCompat ? nodeRef : undefined,
+    timeout: timeout === 'auto' ? null : timeout
+  }, other), function (state, childProps) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(Component, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+      className: (0,clsx__WEBPACK_IMPORTED_MODULE_4__.default)(classes.root, classes.container, className, {
+        'entered': classes.entered,
+        'exited': !inProp && collapsedSize === '0px' && classes.hidden
+      }[state]),
+      style: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+        minHeight: collapsedSize
+      }, style),
+      ref: handleRef
+    }, childProps), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
+      className: classes.wrapper,
+      ref: wrapperRef
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
+      className: classes.wrapperInner
+    }, children)));
+  });
+});
+ true ? Collapse.propTypes = {
+  // ----------------------------- Warning --------------------------------
+  // | These PropTypes are generated from the TypeScript type definitions |
+  // |     To update them edit the d.ts file and run "yarn proptypes"     |
+  // ----------------------------------------------------------------------
+
+  /**
+   * The content node to be collapsed.
+   */
+  children: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().node),
+
+  /**
+   * Override or extend the styles applied to the component.
+   * See [CSS API](#css) below for more details.
+   */
+  classes: (0,_material_ui_utils__WEBPACK_IMPORTED_MODULE_11__.default)((prop_types__WEBPACK_IMPORTED_MODULE_5___default().object), function (props) {
+    if (props.classes && props.classes.container) {
+      throw new Error(['Material-UI: the classes.container key is deprecated.', 'Use `classes.root` instead', 'The name of the pseudo-class was changed for consistency.']).join('\n');
+    }
+
+    return null;
+  }),
+
+  /**
+   * @ignore
+   */
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().string),
+
+  /**
+   * The height of the container when collapsed.
+   * @deprecated The prop was renamed to support the addition of horizontal orientation, use `collapsedSize` instead.
+   */
+  collapsedHeight: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_12__.default)(prop_types__WEBPACK_IMPORTED_MODULE_5___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_5___default().number), (prop_types__WEBPACK_IMPORTED_MODULE_5___default().string)]), 'The prop was renamed to support the vertical orientation, use `collapsedSize` instead'),
+
+  /**
+   * The height of the container when collapsed.
+   */
+  collapsedSize: prop_types__WEBPACK_IMPORTED_MODULE_5___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_5___default().number), (prop_types__WEBPACK_IMPORTED_MODULE_5___default().string)]),
+
+  /**
+   * The component used for the root node.
+   * Either a string to use a HTML element or a component.
+   */
+  component: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().elementType),
+
+  /**
+   * Enable this prop if you encounter 'Function components cannot be given refs',
+   * use `unstable_createStrictModeTheme`,
+   * and can't forward the ref in the passed `Component`.
+   */
+  disableStrictModeCompat: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
+
+  /**
+   * If `true`, the component will transition in.
+   */
+  in: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().bool),
+
+  /**
+   * @ignore
+   */
+  onEnter: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func),
+
+  /**
+   * @ignore
+   */
+  onEntered: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func),
+
+  /**
+   * @ignore
+   */
+  onEntering: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func),
+
+  /**
+   * @ignore
+   */
+  onExit: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func),
+
+  /**
+   * @ignore
+   */
+  onExited: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func),
+
+  /**
+   * @ignore
+   */
+  onExiting: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().func),
+
+  /**
+   * @ignore
+   */
+  style: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().object),
+
+  /**
+   * The duration for the transition, in milliseconds.
+   * You may specify a single timeout for all transitions, or individually with an object.
+   *
+   * Set to 'auto' to automatically calculate transition time based on height.
+   */
+  timeout: prop_types__WEBPACK_IMPORTED_MODULE_5___default().oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_5___default().oneOf(['auto']), (prop_types__WEBPACK_IMPORTED_MODULE_5___default().number), prop_types__WEBPACK_IMPORTED_MODULE_5___default().shape({
+    appear: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().number),
+    enter: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().number),
+    exit: (prop_types__WEBPACK_IMPORTED_MODULE_5___default().number)
+  })])
+} : 0;
+Collapse.muiSupportAuto = true;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_styles_withStyles__WEBPACK_IMPORTED_MODULE_13__.default)(styles, {
+  name: 'MuiCollapse'
+})(Collapse));
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/core/esm/Container/Container.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/Container/Container.js ***!
@@ -12994,34 +13352,31 @@ var SelectInput = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.forwardRef(fun
 
 /***/ }),
 
-/***/ "./node_modules/@material-ui/core/esm/Snackbar/Snackbar.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/Snackbar/Snackbar.js ***!
-  \*****************************************************************/
+/***/ "./node_modules/@material-ui/core/esm/Slide/Slide.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/Slide/Slide.js ***!
+  \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "styles": () => (/* binding */ styles),
+/* harmony export */   "setTranslateValue": () => (/* binding */ setTranslateValue),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
-/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
-/* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../styles/withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
-/* harmony import */ var _styles_transitions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../styles/transitions */ "./node_modules/@material-ui/core/esm/styles/transitions.js");
-/* harmony import */ var _ClickAwayListener__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../ClickAwayListener */ "./node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js");
-/* harmony import */ var _utils_useEventCallback__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/useEventCallback */ "./node_modules/@material-ui/core/esm/utils/useEventCallback.js");
-/* harmony import */ var _utils_capitalize__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/capitalize */ "./node_modules/@material-ui/core/esm/utils/capitalize.js");
-/* harmony import */ var _utils_createChainedFunction__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../utils/createChainedFunction */ "./node_modules/@material-ui/core/esm/utils/createChainedFunction.js");
-/* harmony import */ var _utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../utils/deprecatedPropType */ "./node_modules/@material-ui/core/esm/utils/deprecatedPropType.js");
-/* harmony import */ var _Grow__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Grow */ "./node_modules/@material-ui/core/esm/Grow/Grow.js");
-/* harmony import */ var _SnackbarContent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../SnackbarContent */ "./node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js");
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var _utils_debounce__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../utils/debounce */ "./node_modules/@material-ui/core/esm/utils/debounce.js");
+/* harmony import */ var react_transition_group__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/esm/Transition.js");
+/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/utils */ "./node_modules/@material-ui/utils/esm/elementAcceptingRef.js");
+/* harmony import */ var _utils_useForkRef__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utils/useForkRef */ "./node_modules/@material-ui/core/esm/utils/useForkRef.js");
+/* harmony import */ var _styles_useTheme__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../styles/useTheme */ "./node_modules/@material-ui/core/esm/styles/useTheme.js");
+/* harmony import */ var _styles_transitions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../styles/transitions */ "./node_modules/@material-ui/core/esm/styles/transitions.js");
+/* harmony import */ var _transitions_utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../transitions/utils */ "./node_modules/@material-ui/core/esm/transitions/utils.js");
 
 
 
@@ -13033,525 +13388,281 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // Translate the node so he can't be seen on the screen.
+// Later, we gonna translate back the node to his original location
+// with `none`.`
+
+function getTranslateValue(direction, node) {
+  var rect = node.getBoundingClientRect();
+  var transform;
+
+  if (node.fakeTransform) {
+    transform = node.fakeTransform;
+  } else {
+    var computedStyle = window.getComputedStyle(node);
+    transform = computedStyle.getPropertyValue('-webkit-transform') || computedStyle.getPropertyValue('transform');
+  }
+
+  var offsetX = 0;
+  var offsetY = 0;
+
+  if (transform && transform !== 'none' && typeof transform === 'string') {
+    var transformValues = transform.split('(')[1].split(')')[0].split(',');
+    offsetX = parseInt(transformValues[4], 10);
+    offsetY = parseInt(transformValues[5], 10);
+  }
+
+  if (direction === 'left') {
+    return "translateX(".concat(window.innerWidth, "px) translateX(").concat(offsetX - rect.left, "px)");
+  }
+
+  if (direction === 'right') {
+    return "translateX(-".concat(rect.left + rect.width - offsetX, "px)");
+  }
+
+  if (direction === 'up') {
+    return "translateY(".concat(window.innerHeight, "px) translateY(").concat(offsetY - rect.top, "px)");
+  } // direction === 'down'
 
 
+  return "translateY(-".concat(rect.top + rect.height - offsetY, "px)");
+}
 
+function setTranslateValue(direction, node) {
+  var transform = getTranslateValue(direction, node);
 
-var styles = function styles(theme) {
-  var top1 = {
-    top: 8
-  };
-  var bottom1 = {
-    bottom: 8
-  };
-  var right = {
-    justifyContent: 'flex-end'
-  };
-  var left = {
-    justifyContent: 'flex-start'
-  };
-  var top3 = {
-    top: 24
-  };
-  var bottom3 = {
-    bottom: 24
-  };
-  var right3 = {
-    right: 24
-  };
-  var left3 = {
-    left: 24
-  };
-  var center = {
-    left: '50%',
-    right: 'auto',
-    transform: 'translateX(-50%)'
-  };
-  return {
-    /* Styles applied to the root element. */
-    root: {
-      zIndex: theme.zIndex.snackbar,
-      position: 'fixed',
-      display: 'flex',
-      left: 8,
-      right: 8,
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'center' }}`. */
-    anchorOriginTopCenter: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, top1, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, top3, center))),
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'center' }}`. */
-    anchorOriginBottomCenter: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, bottom1, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, bottom3, center))),
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'right' }}`. */
-    anchorOriginTopRight: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, top1, right, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
-      left: 'auto'
-    }, top3, right3))),
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'right' }}`. */
-    anchorOriginBottomRight: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, bottom1, right, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
-      left: 'auto'
-    }, bottom3, right3))),
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'top', 'left' }}`. */
-    anchorOriginTopLeft: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, top1, left, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
-      right: 'auto'
-    }, top3, left3))),
-
-    /* Styles applied to the root element if `anchorOrigin={{ 'bottom', 'left' }}`. */
-    anchorOriginBottomLeft: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, bottom1, left, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.breakpoints.up('sm'), (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
-      right: 'auto'
-    }, bottom3, left3)))
-  };
+  if (transform) {
+    node.style.webkitTransform = transform;
+    node.style.transform = transform;
+  }
+}
+var defaultTimeout = {
+  enter: _styles_transitions__WEBPACK_IMPORTED_MODULE_5__.duration.enteringScreen,
+  exit: _styles_transitions__WEBPACK_IMPORTED_MODULE_5__.duration.leavingScreen
 };
-var Snackbar = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.forwardRef(function Snackbar(props, ref) {
-  var action = props.action,
-      _props$anchorOrigin = props.anchorOrigin;
-  _props$anchorOrigin = _props$anchorOrigin === void 0 ? {
-    vertical: 'bottom',
-    horizontal: 'center'
-  } : _props$anchorOrigin;
+/**
+ * The Slide transition is used by the [Drawer](/components/drawers/) component.
+ * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
+ */
 
-  var vertical = _props$anchorOrigin.vertical,
-      horizontal = _props$anchorOrigin.horizontal,
-      _props$autoHideDurati = props.autoHideDuration,
-      autoHideDuration = _props$autoHideDurati === void 0 ? null : _props$autoHideDurati,
-      children = props.children,
-      classes = props.classes,
-      className = props.className,
-      ClickAwayListenerProps = props.ClickAwayListenerProps,
-      ContentProps = props.ContentProps,
-      _props$disableWindowB = props.disableWindowBlurListener,
-      disableWindowBlurListener = _props$disableWindowB === void 0 ? false : _props$disableWindowB,
-      message = props.message,
-      onClose = props.onClose,
+var Slide = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef(function Slide(props, ref) {
+  var children = props.children,
+      _props$direction = props.direction,
+      direction = _props$direction === void 0 ? 'down' : _props$direction,
+      inProp = props.in,
       onEnter = props.onEnter,
       onEntered = props.onEntered,
       onEntering = props.onEntering,
       onExit = props.onExit,
       onExited = props.onExited,
       onExiting = props.onExiting,
-      onMouseEnter = props.onMouseEnter,
-      onMouseLeave = props.onMouseLeave,
-      open = props.open,
-      resumeHideDuration = props.resumeHideDuration,
+      style = props.style,
+      _props$timeout = props.timeout,
+      timeout = _props$timeout === void 0 ? defaultTimeout : _props$timeout,
       _props$TransitionComp = props.TransitionComponent,
-      TransitionComponent = _props$TransitionComp === void 0 ? _Grow__WEBPACK_IMPORTED_MODULE_6__.default : _props$TransitionComp,
-      _props$transitionDura = props.transitionDuration,
-      transitionDuration = _props$transitionDura === void 0 ? {
-    enter: _styles_transitions__WEBPACK_IMPORTED_MODULE_7__.duration.enteringScreen,
-    exit: _styles_transitions__WEBPACK_IMPORTED_MODULE_7__.duration.leavingScreen
-  } : _props$transitionDura,
-      TransitionProps = props.TransitionProps,
-      other = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__.default)(props, ["action", "anchorOrigin", "autoHideDuration", "children", "classes", "className", "ClickAwayListenerProps", "ContentProps", "disableWindowBlurListener", "message", "onClose", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration", "TransitionComponent", "transitionDuration", "TransitionProps"]);
+      TransitionComponent = _props$TransitionComp === void 0 ? react_transition_group__WEBPACK_IMPORTED_MODULE_6__.default : _props$TransitionComp,
+      other = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_1__.default)(props, ["children", "direction", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"]);
 
-  var timerAutoHide = react__WEBPACK_IMPORTED_MODULE_3__.useRef();
+  var theme = (0,_styles_useTheme__WEBPACK_IMPORTED_MODULE_7__.default)();
+  var childrenRef = react__WEBPACK_IMPORTED_MODULE_2__.useRef(null);
+  /**
+   * used in cloneElement(children, { ref: handleRef })
+   */
 
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_3__.useState(true),
-      exited = _React$useState[0],
-      setExited = _React$useState[1];
+  var handleOwnRef = react__WEBPACK_IMPORTED_MODULE_2__.useCallback(function (instance) {
+    // #StrictMode ready
+    childrenRef.current = react_dom__WEBPACK_IMPORTED_MODULE_4__.findDOMNode(instance);
+  }, []);
+  var handleRefIntermediary = (0,_utils_useForkRef__WEBPACK_IMPORTED_MODULE_8__.default)(children.ref, handleOwnRef);
+  var handleRef = (0,_utils_useForkRef__WEBPACK_IMPORTED_MODULE_8__.default)(handleRefIntermediary, ref);
 
-  var handleClose = (0,_utils_useEventCallback__WEBPACK_IMPORTED_MODULE_8__.default)(function () {
-    if (onClose) {
-      onClose.apply(void 0, arguments);
-    }
-  });
-  var setAutoHideTimer = (0,_utils_useEventCallback__WEBPACK_IMPORTED_MODULE_8__.default)(function (autoHideDurationParam) {
-    if (!onClose || autoHideDurationParam == null) {
-      return;
-    }
-
-    clearTimeout(timerAutoHide.current);
-    timerAutoHide.current = setTimeout(function () {
-      handleClose(null, 'timeout');
-    }, autoHideDurationParam);
-  });
-  react__WEBPACK_IMPORTED_MODULE_3__.useEffect(function () {
-    if (open) {
-      setAutoHideTimer(autoHideDuration);
-    }
-
-    return function () {
-      clearTimeout(timerAutoHide.current);
+  var normalizedTransitionCallback = function normalizedTransitionCallback(callback) {
+    return function (isAppearing) {
+      if (callback) {
+        // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
+        if (isAppearing === undefined) {
+          callback(childrenRef.current);
+        } else {
+          callback(childrenRef.current, isAppearing);
+        }
+      }
     };
-  }, [open, autoHideDuration, setAutoHideTimer]); // Pause the timer when the user is interacting with the Snackbar
-  // or when the user hide the window.
-
-  var handlePause = function handlePause() {
-    clearTimeout(timerAutoHide.current);
-  }; // Restart the timer when the user is no longer interacting with the Snackbar
-  // or when the window is shown back.
-
-
-  var handleResume = react__WEBPACK_IMPORTED_MODULE_3__.useCallback(function () {
-    if (autoHideDuration != null) {
-      setAutoHideTimer(resumeHideDuration != null ? resumeHideDuration : autoHideDuration * 0.5);
-    }
-  }, [autoHideDuration, resumeHideDuration, setAutoHideTimer]);
-
-  var handleMouseEnter = function handleMouseEnter(event) {
-    if (onMouseEnter) {
-      onMouseEnter(event);
-    }
-
-    handlePause();
   };
 
-  var handleMouseLeave = function handleMouseLeave(event) {
-    if (onMouseLeave) {
-      onMouseLeave(event);
+  var handleEnter = normalizedTransitionCallback(function (node, isAppearing) {
+    setTranslateValue(direction, node);
+    (0,_transitions_utils__WEBPACK_IMPORTED_MODULE_9__.reflow)(node);
+
+    if (onEnter) {
+      onEnter(node, isAppearing);
+    }
+  });
+  var handleEntering = normalizedTransitionCallback(function (node, isAppearing) {
+    var transitionProps = (0,_transitions_utils__WEBPACK_IMPORTED_MODULE_9__.getTransitionProps)({
+      timeout: timeout,
+      style: style
+    }, {
+      mode: 'enter'
+    });
+    node.style.webkitTransition = theme.transitions.create('-webkit-transform', (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({}, transitionProps, {
+      easing: theme.transitions.easing.easeOut
+    }));
+    node.style.transition = theme.transitions.create('transform', (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({}, transitionProps, {
+      easing: theme.transitions.easing.easeOut
+    }));
+    node.style.webkitTransform = 'none';
+    node.style.transform = 'none';
+
+    if (onEntering) {
+      onEntering(node, isAppearing);
+    }
+  });
+  var handleEntered = normalizedTransitionCallback(onEntered);
+  var handleExiting = normalizedTransitionCallback(onExiting);
+  var handleExit = normalizedTransitionCallback(function (node) {
+    var transitionProps = (0,_transitions_utils__WEBPACK_IMPORTED_MODULE_9__.getTransitionProps)({
+      timeout: timeout,
+      style: style
+    }, {
+      mode: 'exit'
+    });
+    node.style.webkitTransition = theme.transitions.create('-webkit-transform', (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({}, transitionProps, {
+      easing: theme.transitions.easing.sharp
+    }));
+    node.style.transition = theme.transitions.create('transform', (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({}, transitionProps, {
+      easing: theme.transitions.easing.sharp
+    }));
+    setTranslateValue(direction, node);
+
+    if (onExit) {
+      onExit(node);
+    }
+  });
+  var handleExited = normalizedTransitionCallback(function (node) {
+    // No need for transitions when the component is hidden
+    node.style.webkitTransition = '';
+    node.style.transition = '';
+
+    if (onExited) {
+      onExited(node);
+    }
+  });
+  var updatePosition = react__WEBPACK_IMPORTED_MODULE_2__.useCallback(function () {
+    if (childrenRef.current) {
+      setTranslateValue(direction, childrenRef.current);
+    }
+  }, [direction]);
+  react__WEBPACK_IMPORTED_MODULE_2__.useEffect(function () {
+    // Skip configuration where the position is screen size invariant.
+    if (inProp || direction === 'down' || direction === 'right') {
+      return undefined;
     }
 
-    handleResume();
-  };
-
-  var handleClickAway = function handleClickAway(event) {
-    if (onClose) {
-      onClose(event, 'clickaway');
+    var handleResize = (0,_utils_debounce__WEBPACK_IMPORTED_MODULE_10__.default)(function () {
+      if (childrenRef.current) {
+        setTranslateValue(direction, childrenRef.current);
+      }
+    });
+    window.addEventListener('resize', handleResize);
+    return function () {
+      handleResize.clear();
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [direction, inProp]);
+  react__WEBPACK_IMPORTED_MODULE_2__.useEffect(function () {
+    if (!inProp) {
+      // We need to update the position of the drawer when the direction change and
+      // when it's hidden.
+      updatePosition();
     }
-  };
-
-  var handleExited = function handleExited() {
-    setExited(true);
-  };
-
-  var handleEnter = function handleEnter() {
-    setExited(false);
-  };
-
-  react__WEBPACK_IMPORTED_MODULE_3__.useEffect(function () {
-    if (!disableWindowBlurListener && open) {
-      window.addEventListener('focus', handleResume);
-      window.addEventListener('blur', handlePause);
-      return function () {
-        window.removeEventListener('focus', handleResume);
-        window.removeEventListener('blur', handlePause);
-      };
-    }
-
-    return undefined;
-  }, [disableWindowBlurListener, handleResume, open]); // So we only render active snackbars.
-
-  if (!open && exited) {
-    return null;
-  }
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_ClickAwayListener__WEBPACK_IMPORTED_MODULE_9__.default, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
-    onClickAway: handleClickAway
-  }, ClickAwayListenerProps), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
-    className: (0,clsx__WEBPACK_IMPORTED_MODULE_5__.default)(classes.root, classes["anchorOrigin".concat((0,_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__.default)(vertical)).concat((0,_utils_capitalize__WEBPACK_IMPORTED_MODULE_10__.default)(horizontal))], className),
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
-    ref: ref
-  }, other), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(TransitionComponent, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
+  }, [inProp, updatePosition]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(TransitionComponent, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+    nodeRef: childrenRef,
+    onEnter: handleEnter,
+    onEntered: handleEntered,
+    onEntering: handleEntering,
+    onExit: handleExit,
+    onExited: handleExited,
+    onExiting: handleExiting,
     appear: true,
-    in: open,
-    onEnter: (0,_utils_createChainedFunction__WEBPACK_IMPORTED_MODULE_11__.default)(handleEnter, onEnter),
-    onEntered: onEntered,
-    onEntering: onEntering,
-    onExit: onExit,
-    onExited: (0,_utils_createChainedFunction__WEBPACK_IMPORTED_MODULE_11__.default)(handleExited, onExited),
-    onExiting: onExiting,
-    timeout: transitionDuration,
-    direction: vertical === 'top' ? 'down' : 'up'
-  }, TransitionProps), children || /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_SnackbarContent__WEBPACK_IMPORTED_MODULE_12__.default, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
-    message: message,
-    action: action
-  }, ContentProps)))));
+    in: inProp,
+    timeout: timeout
+  }, other), function (state, childProps) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.cloneElement(children, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+      ref: handleRef,
+      style: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__.default)({
+        visibility: state === 'exited' && !inProp ? 'hidden' : undefined
+      }, style, children.props.style)
+    }, childProps));
+  });
 });
- true ? Snackbar.propTypes = {
+ true ? Slide.propTypes = {
   // ----------------------------- Warning --------------------------------
   // | These PropTypes are generated from the TypeScript type definitions |
   // |     To update them edit the d.ts file and run "yarn proptypes"     |
   // ----------------------------------------------------------------------
 
   /**
-   * The action to display. It renders after the message, at the end of the snackbar.
+   * A single child content element.
    */
-  action: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().node),
+  children: _material_ui_utils__WEBPACK_IMPORTED_MODULE_11__.default,
 
   /**
-   * The anchor of the `Snackbar`.
+   * Direction the child node will enter from.
    */
-  anchorOrigin: prop_types__WEBPACK_IMPORTED_MODULE_4___default().shape({
-    horizontal: prop_types__WEBPACK_IMPORTED_MODULE_4___default().oneOf(['center', 'left', 'right']).isRequired,
-    vertical: prop_types__WEBPACK_IMPORTED_MODULE_4___default().oneOf(['bottom', 'top']).isRequired
-  }),
+  direction: prop_types__WEBPACK_IMPORTED_MODULE_3___default().oneOf(['down', 'left', 'right', 'up']),
 
   /**
-   * The number of milliseconds to wait before automatically calling the
-   * `onClose` function. `onClose` should then set the state of the `open`
-   * prop to hide the Snackbar. This behavior is disabled by default with
-   * the `null` value.
+   * If `true`, show the component; triggers the enter or exit animation.
    */
-  autoHideDuration: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().number),
-
-  /**
-   * Replace the `SnackbarContent` component.
-   */
-  children: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().element),
-
-  /**
-   * Override or extend the styles applied to the component.
-   * See [CSS API](#css) below for more details.
-   */
-  classes: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().object),
+  in: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().bool),
 
   /**
    * @ignore
    */
-  className: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string),
-
-  /**
-   * Props applied to the `ClickAwayListener` element.
-   */
-  ClickAwayListenerProps: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().object),
-
-  /**
-   * Props applied to the [`SnackbarContent`](/api/snackbar-content/) element.
-   */
-  ContentProps: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().object),
-
-  /**
-   * If `true`, the `autoHideDuration` timer will expire even if the window is not focused.
-   */
-  disableWindowBlurListener: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().bool),
-
-  /**
-   * When displaying multiple consecutive Snackbars from a parent rendering a single
-   * <Snackbar/>, add the key prop to ensure independent treatment of each message.
-   * e.g. <Snackbar key={message} />, otherwise, the message may update-in-place and
-   * features such as autoHideDuration may be canceled.
-   */
-  key: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().any),
-
-  /**
-   * The message to display.
-   */
-  message: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().node),
-
-  /**
-   * Callback fired when the component requests to be closed.
-   * Typically `onClose` is used to set state in the parent component,
-   * which is used to control the `Snackbar` `open` prop.
-   * The `reason` parameter can optionally be used to control the response to `onClose`,
-   * for example ignoring `clickaway`.
-   *
-   * @param {object} event The event source of the callback.
-   * @param {string} reason Can be: `"timeout"` (`autoHideDuration` expired), `"clickaway"`.
-   */
-  onClose: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().func),
-
-  /**
-   * Callback fired before the transition is entering.
-   * @deprecated Use the `TransitionProps` prop instead.
-   */
-  onEnter: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
-
-  /**
-   * Callback fired when the transition has entered.
-   * @deprecated Use the `TransitionProps` prop instead.
-   */
-  onEntered: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
-
-  /**
-   * Callback fired when the transition is entering.
-   * @deprecated Use the `TransitionProps` prop instead.
-   */
-  onEntering: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
-
-  /**
-   * Callback fired before the transition is exiting.
-   * @deprecated Use the `TransitionProps` prop instead.
-   */
-  onExit: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
-
-  /**
-   * Callback fired when the transition has exited.
-   * @deprecated Use the `TransitionProps` prop instead.
-   */
-  onExited: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
-
-  /**
-   * Callback fired when the transition is exiting.
-   * @deprecated Use the `TransitionProps` prop instead.
-   */
-  onExiting: (0,_utils_deprecatedPropType__WEBPACK_IMPORTED_MODULE_13__.default)((prop_types__WEBPACK_IMPORTED_MODULE_4___default().func), 'Use the `TransitionProps` prop instead.'),
+  onEnter: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().func),
 
   /**
    * @ignore
    */
-  onMouseEnter: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().func),
+  onEntered: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().func),
 
   /**
    * @ignore
    */
-  onMouseLeave: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().func),
+  onEntering: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().func),
 
   /**
-   * If `true`, `Snackbar` is open.
+   * @ignore
    */
-  open: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().bool),
+  onExit: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().func),
 
   /**
-   * The number of milliseconds to wait before dismissing after user interaction.
-   * If `autoHideDuration` prop isn't specified, it does nothing.
-   * If `autoHideDuration` prop is specified but `resumeHideDuration` isn't,
-   * we default to `autoHideDuration / 2` ms.
+   * @ignore
    */
-  resumeHideDuration: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().number),
+  onExited: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().func),
 
   /**
-   * The component used for the transition.
-   * [Follow this guide](/components/transitions/#transitioncomponent-prop) to learn more about the requirements for this component.
+   * @ignore
    */
-  TransitionComponent: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().elementType),
+  onExiting: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().func),
+
+  /**
+   * @ignore
+   */
+  style: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().object),
 
   /**
    * The duration for the transition, in milliseconds.
    * You may specify a single timeout for all transitions, or individually with an object.
    */
-  transitionDuration: prop_types__WEBPACK_IMPORTED_MODULE_4___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_4___default().number), prop_types__WEBPACK_IMPORTED_MODULE_4___default().shape({
-    appear: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().number),
-    enter: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().number),
-    exit: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().number)
-  })]),
-
-  /**
-   * Props applied to the [`Transition`](http://reactcommunity.org/react-transition-group/transition#Transition-props) element.
-   */
-  TransitionProps: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().object)
+  timeout: prop_types__WEBPACK_IMPORTED_MODULE_3___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_3___default().number), prop_types__WEBPACK_IMPORTED_MODULE_3___default().shape({
+    appear: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().number),
+    enter: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().number),
+    exit: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().number)
+  })])
 } : 0;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_styles_withStyles__WEBPACK_IMPORTED_MODULE_14__.default)(styles, {
-  flip: false,
-  name: 'MuiSnackbar'
-})(Snackbar));
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/@material-ui/core/esm/SnackbarContent/SnackbarContent.js ***!
-  \*******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "styles": () => (/* binding */ styles),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
-/* harmony import */ var _babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/defineProperty */ "./node_modules/@babel/runtime/helpers/esm/defineProperty.js");
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
-/* harmony import */ var _styles_withStyles__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../styles/withStyles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
-/* harmony import */ var _Paper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Paper */ "./node_modules/@material-ui/core/esm/Paper/Paper.js");
-/* harmony import */ var _styles_colorManipulator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../styles/colorManipulator */ "./node_modules/@material-ui/core/esm/styles/colorManipulator.js");
-
-
-
-
-
-
-
-
-
-var styles = function styles(theme) {
-  var emphasis = theme.palette.type === 'light' ? 0.8 : 0.98;
-  var backgroundColor = (0,_styles_colorManipulator__WEBPACK_IMPORTED_MODULE_6__.emphasize)(theme.palette.background.default, emphasis);
-  return {
-    /* Styles applied to the root element. */
-    root: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({}, theme.typography.body2, (0,_babel_runtime_helpers_esm_defineProperty__WEBPACK_IMPORTED_MODULE_1__.default)({
-      color: theme.palette.getContrastText(backgroundColor),
-      backgroundColor: backgroundColor,
-      display: 'flex',
-      alignItems: 'center',
-      flexWrap: 'wrap',
-      padding: '6px 16px',
-      borderRadius: theme.shape.borderRadius,
-      flexGrow: 1
-    }, theme.breakpoints.up('sm'), {
-      flexGrow: 'initial',
-      minWidth: 288
-    })),
-
-    /* Styles applied to the message wrapper element. */
-    message: {
-      padding: '8px 0'
-    },
-
-    /* Styles applied to the action wrapper element if `action` is provided. */
-    action: {
-      display: 'flex',
-      alignItems: 'center',
-      marginLeft: 'auto',
-      paddingLeft: 16,
-      marginRight: -8
-    }
-  };
-};
-var SnackbarContent = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.forwardRef(function SnackbarContent(props, ref) {
-  var action = props.action,
-      classes = props.classes,
-      className = props.className,
-      message = props.message,
-      _props$role = props.role,
-      role = _props$role === void 0 ? 'alert' : _props$role,
-      other = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__.default)(props, ["action", "classes", "className", "message", "role"]);
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement(_Paper__WEBPACK_IMPORTED_MODULE_7__.default, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_2__.default)({
-    role: role,
-    square: true,
-    elevation: 6,
-    className: (0,clsx__WEBPACK_IMPORTED_MODULE_5__.default)(classes.root, className),
-    ref: ref
-  }, other), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
-    className: classes.message
-  }, message), action ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__.createElement("div", {
-    className: classes.action
-  }, action) : null);
-});
- true ? SnackbarContent.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
-
-  /**
-   * The action to display. It renders after the message, at the end of the snackbar.
-   */
-  action: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().node),
-
-  /**
-   * Override or extend the styles applied to the component.
-   * See [CSS API](#css) below for more details.
-   */
-  classes: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().object),
-
-  /**
-   * @ignore
-   */
-  className: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string),
-
-  /**
-   * The message to display.
-   */
-  message: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().node),
-
-  /**
-   * The ARIA role attribute of the element.
-   */
-  role: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string)
-} : 0;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_styles_withStyles__WEBPACK_IMPORTED_MODULE_8__.default)(styles, {
-  name: 'MuiSnackbarContent'
-})(SnackbarContent));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Slide);
 
 /***/ }),
 
@@ -16076,6 +16187,35 @@ function createSpacing() {
 
 /***/ }),
 
+/***/ "./node_modules/@material-ui/core/esm/styles/createStyles.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/@material-ui/core/esm/styles/createStyles.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ createStyles)
+/* harmony export */ });
+/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @material-ui/styles */ "./node_modules/@material-ui/styles/esm/createStyles/createStyles.js");
+ // let warnOnce = false;
+// To remove in v5
+
+function createStyles(styles) {
+  // warning(
+  //   warnOnce,
+  //   [
+  //     'Material-UI: createStyles from @material-ui/core/styles is deprecated.',
+  //     'Please use @material-ui/styles/createStyles',
+  //   ].join('\n'),
+  // );
+  // warnOnce = true;
+  return (0,_material_ui_styles__WEBPACK_IMPORTED_MODULE_0__.default)(styles);
+}
+
+/***/ }),
+
 /***/ "./node_modules/@material-ui/core/esm/styles/createTheme.js":
 /*!******************************************************************!*\
   !*** ./node_modules/@material-ui/core/esm/styles/createTheme.js ***!
@@ -17735,457 +17875,6 @@ var _utils = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/
 
 /***/ }),
 
-/***/ "./node_modules/@material-ui/lab/esm/Alert/Alert.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@material-ui/lab/esm/Alert/Alert.js ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "styles": () => (/* binding */ styles),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutProperties */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js");
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/colorManipulator.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
-/* harmony import */ var _material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/core/Paper */ "./node_modules/@material-ui/core/esm/Paper/Paper.js");
-/* harmony import */ var _internal_svg_icons_SuccessOutlined__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../internal/svg-icons/SuccessOutlined */ "./node_modules/@material-ui/lab/esm/internal/svg-icons/SuccessOutlined.js");
-/* harmony import */ var _internal_svg_icons_ReportProblemOutlined__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../internal/svg-icons/ReportProblemOutlined */ "./node_modules/@material-ui/lab/esm/internal/svg-icons/ReportProblemOutlined.js");
-/* harmony import */ var _internal_svg_icons_ErrorOutline__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../internal/svg-icons/ErrorOutline */ "./node_modules/@material-ui/lab/esm/internal/svg-icons/ErrorOutline.js");
-/* harmony import */ var _internal_svg_icons_InfoOutlined__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../internal/svg-icons/InfoOutlined */ "./node_modules/@material-ui/lab/esm/internal/svg-icons/InfoOutlined.js");
-/* harmony import */ var _internal_svg_icons_Close__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../internal/svg-icons/Close */ "./node_modules/@material-ui/lab/esm/internal/svg-icons/Close.js");
-/* harmony import */ var _material_ui_core_IconButton__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @material-ui/core/IconButton */ "./node_modules/@material-ui/core/esm/IconButton/IconButton.js");
-/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/capitalize.js");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var styles = function styles(theme) {
-  var getColor = theme.palette.type === 'light' ? _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.darken : _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.lighten;
-  var getBackgroundColor = theme.palette.type === 'light' ? _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.lighten : _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.darken;
-  return {
-    /* Styles applied to the root element. */
-    root: (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__.default)({}, theme.typography.body2, {
-      borderRadius: theme.shape.borderRadius,
-      backgroundColor: 'transparent',
-      display: 'flex',
-      padding: '6px 16px'
-    }),
-
-    /* Styles applied to the root element if `variant="standard"` and `color="success"`. */
-    standardSuccess: {
-      color: getColor(theme.palette.success.main, 0.6),
-      backgroundColor: getBackgroundColor(theme.palette.success.main, 0.9),
-      '& $icon': {
-        color: theme.palette.success.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="standard"` and `color="info"`. */
-    standardInfo: {
-      color: getColor(theme.palette.info.main, 0.6),
-      backgroundColor: getBackgroundColor(theme.palette.info.main, 0.9),
-      '& $icon': {
-        color: theme.palette.info.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="standard"` and `color="warning"`. */
-    standardWarning: {
-      color: getColor(theme.palette.warning.main, 0.6),
-      backgroundColor: getBackgroundColor(theme.palette.warning.main, 0.9),
-      '& $icon': {
-        color: theme.palette.warning.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="standard"` and `color="error"`. */
-    standardError: {
-      color: getColor(theme.palette.error.main, 0.6),
-      backgroundColor: getBackgroundColor(theme.palette.error.main, 0.9),
-      '& $icon': {
-        color: theme.palette.error.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"` and `color="success"`. */
-    outlinedSuccess: {
-      color: getColor(theme.palette.success.main, 0.6),
-      border: "1px solid ".concat(theme.palette.success.main),
-      '& $icon': {
-        color: theme.palette.success.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"` and `color="info"`. */
-    outlinedInfo: {
-      color: getColor(theme.palette.info.main, 0.6),
-      border: "1px solid ".concat(theme.palette.info.main),
-      '& $icon': {
-        color: theme.palette.info.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"` and `color="warning"`. */
-    outlinedWarning: {
-      color: getColor(theme.palette.warning.main, 0.6),
-      border: "1px solid ".concat(theme.palette.warning.main),
-      '& $icon': {
-        color: theme.palette.warning.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="outlined"` and `color="error"`. */
-    outlinedError: {
-      color: getColor(theme.palette.error.main, 0.6),
-      border: "1px solid ".concat(theme.palette.error.main),
-      '& $icon': {
-        color: theme.palette.error.main
-      }
-    },
-
-    /* Styles applied to the root element if `variant="filled"` and `color="success"`. */
-    filledSuccess: {
-      color: '#fff',
-      fontWeight: theme.typography.fontWeightMedium,
-      backgroundColor: theme.palette.success.main
-    },
-
-    /* Styles applied to the root element if `variant="filled"` and `color="info"`. */
-    filledInfo: {
-      color: '#fff',
-      fontWeight: theme.typography.fontWeightMedium,
-      backgroundColor: theme.palette.info.main
-    },
-
-    /* Styles applied to the root element if `variant="filled"` and `color="warning"`. */
-    filledWarning: {
-      color: '#fff',
-      fontWeight: theme.typography.fontWeightMedium,
-      backgroundColor: theme.palette.warning.main
-    },
-
-    /* Styles applied to the root element if `variant="filled"` and `color="error"`. */
-    filledError: {
-      color: '#fff',
-      fontWeight: theme.typography.fontWeightMedium,
-      backgroundColor: theme.palette.error.main
-    },
-
-    /* Styles applied to the icon wrapper element. */
-    icon: {
-      marginRight: 12,
-      padding: '7px 0',
-      display: 'flex',
-      fontSize: 22,
-      opacity: 0.9
-    },
-
-    /* Styles applied to the message wrapper element. */
-    message: {
-      padding: '8px 0'
-    },
-
-    /* Styles applied to the action wrapper element if `action` is provided. */
-    action: {
-      display: 'flex',
-      alignItems: 'center',
-      marginLeft: 'auto',
-      paddingLeft: 16,
-      marginRight: -8
-    }
-  };
-};
-var defaultIconMapping = {
-  success: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_internal_svg_icons_SuccessOutlined__WEBPACK_IMPORTED_MODULE_6__.default, {
-    fontSize: "inherit"
-  }),
-  warning: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_internal_svg_icons_ReportProblemOutlined__WEBPACK_IMPORTED_MODULE_7__.default, {
-    fontSize: "inherit"
-  }),
-  error: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_internal_svg_icons_ErrorOutline__WEBPACK_IMPORTED_MODULE_8__.default, {
-    fontSize: "inherit"
-  }),
-  info: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_internal_svg_icons_InfoOutlined__WEBPACK_IMPORTED_MODULE_9__.default, {
-    fontSize: "inherit"
-  })
-};
-
-var _ref = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_internal_svg_icons_Close__WEBPACK_IMPORTED_MODULE_10__.default, {
-  fontSize: "small"
-});
-
-var Alert = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef(function Alert(props, ref) {
-  var action = props.action,
-      children = props.children,
-      classes = props.classes,
-      className = props.className,
-      _props$closeText = props.closeText,
-      closeText = _props$closeText === void 0 ? 'Close' : _props$closeText,
-      color = props.color,
-      icon = props.icon,
-      _props$iconMapping = props.iconMapping,
-      iconMapping = _props$iconMapping === void 0 ? defaultIconMapping : _props$iconMapping,
-      onClose = props.onClose,
-      _props$role = props.role,
-      role = _props$role === void 0 ? 'alert' : _props$role,
-      _props$severity = props.severity,
-      severity = _props$severity === void 0 ? 'success' : _props$severity,
-      _props$variant = props.variant,
-      variant = _props$variant === void 0 ? 'standard' : _props$variant,
-      other = (0,_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_0__.default)(props, ["action", "children", "classes", "className", "closeText", "color", "icon", "iconMapping", "onClose", "role", "severity", "variant"]);
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_material_ui_core_Paper__WEBPACK_IMPORTED_MODULE_11__.default, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__.default)({
-    role: role,
-    square: true,
-    elevation: 0,
-    className: (0,clsx__WEBPACK_IMPORTED_MODULE_4__.default)(classes.root, classes["".concat(variant).concat((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_12__.default)(color || severity))], className),
-    ref: ref
-  }, other), icon !== false ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
-    className: classes.icon
-  }, icon || iconMapping[severity] || defaultIconMapping[severity]) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
-    className: classes.message
-  }, children), action != null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
-    className: classes.action
-  }, action) : null, action == null && onClose ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
-    className: classes.action
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_material_ui_core_IconButton__WEBPACK_IMPORTED_MODULE_13__.default, {
-    size: "small",
-    "aria-label": closeText,
-    title: closeText,
-    color: "inherit",
-    onClick: onClose
-  }, _ref)) : null);
-});
- true ? Alert.propTypes = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
-
-  /**
-   * The action to display. It renders after the message, at the end of the alert.
-   */
-  action: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
-
-  /**
-   * The content of the component.
-   */
-  children: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
-
-  /**
-   * Override or extend the styles applied to the component.
-   * See [CSS API](#css) below for more details.
-   */
-  classes: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().object),
-
-  /**
-   * @ignore
-   */
-  className: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().string),
-
-  /**
-   * Override the default label for the *close popup* icon button.
-   *
-   * For localization purposes, you can use the provided [translations](/guides/localization/).
-   */
-  closeText: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().string),
-
-  /**
-   * The main color for the alert. Unless provided, the value is taken from the `severity` prop.
-   */
-  color: prop_types__WEBPACK_IMPORTED_MODULE_3___default().oneOf(['error', 'info', 'success', 'warning']),
-
-  /**
-   * Override the icon displayed before the children.
-   * Unless provided, the icon is mapped to the value of the `severity` prop.
-   */
-  icon: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
-
-  /**
-   * The component maps the `severity` prop to a range of different icons,
-   * for instance success to `<SuccessOutlined>`.
-   * If you wish to change this mapping, you can provide your own.
-   * Alternatively, you can use the `icon` prop to override the icon displayed.
-   */
-  iconMapping: prop_types__WEBPACK_IMPORTED_MODULE_3___default().shape({
-    error: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
-    info: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
-    success: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node),
-    warning: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().node)
-  }),
-
-  /**
-   * Callback fired when the component requests to be closed.
-   * When provided and no `action` prop is set, a close icon button is displayed that triggers the callback when clicked.
-   *
-   * @param {object} event The event source of the callback.
-   */
-  onClose: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().func),
-
-  /**
-   * The ARIA role attribute of the element.
-   */
-  role: (prop_types__WEBPACK_IMPORTED_MODULE_3___default().string),
-
-  /**
-   * The severity of the alert. This defines the color and icon used.
-   */
-  severity: prop_types__WEBPACK_IMPORTED_MODULE_3___default().oneOf(['error', 'info', 'success', 'warning']),
-
-  /**
-   * The variant to use.
-   */
-  variant: prop_types__WEBPACK_IMPORTED_MODULE_3___default().oneOf(['filled', 'outlined', 'standard'])
-} : 0;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_14__.default)(styles, {
-  name: 'MuiAlert'
-})(Alert));
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/lab/esm/internal/svg-icons/Close.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/@material-ui/lab/esm/internal/svg-icons/Close.js ***!
-  \***********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
-
-
-/**
- * @ignore - internal component.
- */
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
-  d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-}), 'Close'));
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/lab/esm/internal/svg-icons/ErrorOutline.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/@material-ui/lab/esm/internal/svg-icons/ErrorOutline.js ***!
-  \******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
-
-
-/**
- * @ignore - internal component.
- */
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
-  d: "M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
-}), 'ErrorOutline'));
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/lab/esm/internal/svg-icons/InfoOutlined.js":
-/*!******************************************************************************!*\
-  !*** ./node_modules/@material-ui/lab/esm/internal/svg-icons/InfoOutlined.js ***!
-  \******************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
-
-
-/**
- * @ignore - internal component.
- */
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
-  d: "M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20, 12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10, 10 0 0,0 12,2M11,17H13V11H11V17Z"
-}), 'InfoOutlined'));
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/lab/esm/internal/svg-icons/ReportProblemOutlined.js":
-/*!***************************************************************************************!*\
-  !*** ./node_modules/@material-ui/lab/esm/internal/svg-icons/ReportProblemOutlined.js ***!
-  \***************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
-
-
-/**
- * @ignore - internal component.
- */
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
-  d: "M12 5.99L19.53 19H4.47L12 5.99M12 2L1 21h22L12 2zm1 14h-2v2h2v-2zm0-6h-2v4h2v-4z"
-}), 'ReportProblemOutlined'));
-
-/***/ }),
-
-/***/ "./node_modules/@material-ui/lab/esm/internal/svg-icons/SuccessOutlined.js":
-/*!*********************************************************************************!*\
-  !*** ./node_modules/@material-ui/lab/esm/internal/svg-icons/SuccessOutlined.js ***!
-  \*********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/utils */ "./node_modules/@material-ui/core/esm/utils/createSvgIcon.js");
-
-
-/**
- * @ignore - internal component.
- */
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_material_ui_core_utils__WEBPACK_IMPORTED_MODULE_1__.default)( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
-  d: "M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2, 4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0, 0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"
-}), 'SuccessOutlined'));
-
-/***/ }),
-
 /***/ "./node_modules/@material-ui/styles/esm/StylesProvider/StylesProvider.js":
 /*!*******************************************************************************!*\
   !*** ./node_modules/@material-ui/styles/esm/StylesProvider/StylesProvider.js ***!
@@ -18455,6 +18144,23 @@ function createGenerateClassName() {
 
     return "".concat(seedPrefix).concat(suffix);
   };
+}
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/styles/esm/createStyles/createStyles.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@material-ui/styles/esm/createStyles/createStyles.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ createStyles)
+/* harmony export */ });
+function createStyles(styles) {
+  return styles;
 }
 
 /***/ }),
@@ -23777,19 +23483,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ RegisterForm)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/lab/Alert */ "./node_modules/@material-ui/lab/esm/Alert/Alert.js");
 /* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
 /* harmony import */ var apisauce__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! apisauce */ "./node_modules/apisauce/dist/apisauce.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Grid/Grid.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Snackbar/Snackbar.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/DialogActions/DialogActions.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Button/Button.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Grid/Grid.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/DialogActions/DialogActions.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Button/Button.js");
 /* harmony import */ var _FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../FormsUI/Textfield */ "./resources/js/components/FormsUI/Textfield.js");
 /* harmony import */ var _FormsUI_Select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../FormsUI/Select */ "./resources/js/components/FormsUI/Select.js");
 /* harmony import */ var _FormsUI_Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../FormsUI/Button */ "./resources/js/components/FormsUI/Button.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var notistack__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! notistack */ "./node_modules/notistack/dist/notistack.esm.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -23818,9 +23523,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+ // import { SnackbarProvider, useSnackbar } from "notistack";
 
 
-var useStyles = (0,_material_ui_core__WEBPACK_IMPORTED_MODULE_8__.default)(function (theme) {
+
+var useStyles = (0,_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default)(function (theme) {
   return {
     formControl: {
       // margin: theme.spacing(1),
@@ -23828,7 +23535,10 @@ var useStyles = (0,_material_ui_core__WEBPACK_IMPORTED_MODULE_8__.default)(funct
     },
     selectEmpty: {
       marginTop: theme.spacing(2)
-    } // alertBox: {
+    } // cancelButton: {
+    //   marginRight: "20px",
+    // },
+    // alertBox: {
     //   margin: theme.spacing(2),
     // },
 
@@ -23879,49 +23589,40 @@ function RegisterForm(props) {
 
   var onClose = props.onClose;
 
+  var _useSnackbar = (0,notistack__WEBPACK_IMPORTED_MODULE_7__.useSnackbar)(),
+      enqueueSnackbar = _useSnackbar.enqueueSnackbar,
+      closeSnackbar = _useSnackbar.closeSnackbar;
+
   var handleClose = function handleClose() {
     setOpen(false);
-  }; // Add User
-  // const addUser = async (user) => {
-  //   const res = await fetch("http://localhost/api/user", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify(user),
-  //   });
-  //   const data = await res.json();
-  //   setSeverity(data.status);
-  //   setAlertMessage(data.message);
-  // console.log(data.status);
-  // console.log(data.message);
-  // const data = await res.json();
-  // setUsers([...users, data]);
-  // Show alert box
-  // setAlertBox(true);
-  // };
-  // Form submit
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   const userData = {
-  //     firstName,
-  //     middleName,
-  //     lastName,
-  //     username,
-  //     password,
-  //     userType,
-  //     emailAddress,
-  //     mobile,
-  //   };
-  // Add user to the server
-  // addUser(userData);
-  // handleClose();
-  // Reset alert box useStates
-  // setAlertBox(false);
-  // setSeverity("success");
-  // setAlertMessage({});
-  // };
-  // define the api
+  };
+
+  var handleSnackbarMessage = function handleSnackbarMessage(msg, variant) {
+    enqueueSnackbar(msg, {
+      variant: variant,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center",
+        autoHideDuration: 99999999
+      }
+    });
+    enqueueSnackbar(msg, {
+      variant: variant,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center",
+        autoHideDuration: 99999999
+      }
+    });
+    enqueueSnackbar(msg, {
+      variant: variant,
+      anchorOrigin: {
+        vertical: "top",
+        horizontal: "center",
+        autoHideDuration: 99999999
+      }
+    });
+  }; // API base Url
 
 
   var api = (0,apisauce__WEBPACK_IMPORTED_MODULE_3__.create)({
@@ -23929,14 +23630,14 @@ function RegisterForm(props) {
     headers: {
       "Content-Type": "application/json"
     }
-  }); // start making calls
+  }); // get
   // api
   //   .get("/repos/skellock/apisauce/commits")
   //   .then((response) => response.data[0].commit.message)
   //   .then(console.log);
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)("div", {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Formik, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Formik, {
       initialValues: _objectSpread({}, INITIAL_FORM_STATE),
       validationSchema: FORM_VALIDATION,
       onSubmit: function onSubmit(values) {
@@ -23946,115 +23647,90 @@ function RegisterForm(props) {
         }).then(function (data) {
           console.log(data.status);
           console.log(data.message);
+          handleSnackbarMessage(data.message, data.status);
         });
       },
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Form, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(formik__WEBPACK_IMPORTED_MODULE_1__.Form, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
           container: true,
           spacing: 2,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
-            open: open,
-            autoHideDuration: 6000,
-            onClose: handleClose,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_11__.default, {
-              onClose: handleClose,
-              severity: "success",
-              children: "This is a success message!"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
-            open: open,
-            autoHideDuration: 6000,
-            onClose: handleClose,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_11__.default, {
-              onClose: handleClose,
-              severity: "success",
-              children: "This is a success message!"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
-            open: open,
-            autoHideDuration: 6000,
-            onClose: handleClose,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_lab_Alert__WEBPACK_IMPORTED_MODULE_11__.default, {
-              onClose: handleClose,
-              severity: "success",
-              children: "This is a success message!"
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
               autoFocus: true,
               name: "firstName",
               label: "First Name",
               type: "text"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
               name: "middleName",
               label: "Middle Name",
               type: "text"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
               name: "lastName",
               label: "Last Name",
               type: "text"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
               name: "username",
               label: "Username",
               type: "text"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
               name: "password",
               label: "Password",
               type: "password",
               autoComplete: "new-password"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Select__WEBPACK_IMPORTED_MODULE_5__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_FormsUI_Select__WEBPACK_IMPORTED_MODULE_5__.default, {
               name: "userType",
               label: "User Type",
               options: ["user", "author", "admin"]
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
               name: "emailAddress",
               label: "Email Address",
               type: "email"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
               name: "mobile",
               label: "Mobile",
               type: "text"
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_12__.default, {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_13__.default, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_11__.default, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_12__.default, {
                 onClick: onClose,
                 variant: "contained",
                 color: "primary",
+                className: classes.cancelButton,
                 children: "Cancel"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Button__WEBPACK_IMPORTED_MODULE_6__.default, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_FormsUI_Button__WEBPACK_IMPORTED_MODULE_6__.default, {
                 children: "Register"
               })]
             })
@@ -24080,13 +23756,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _Signup_RegisterForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Signup/RegisterForm */ "./resources/js/components/Signup/RegisterForm.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Button/Button.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Dialog/Dialog.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/DialogTitle/DialogTitle.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/DialogContent/DialogContent.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/DialogContentText/DialogContentText.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Button/Button.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/Dialog/Dialog.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/DialogTitle/DialogTitle.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/DialogContent/DialogContent.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/DialogContentText/DialogContentText.js");
+/* harmony import */ var notistack__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! notistack */ "./node_modules/notistack/dist/notistack.esm.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -24106,7 +23783,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var useStyles = (0,_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.default)(function (theme) {
+
+var useStyles = (0,_material_ui_core__WEBPACK_IMPORTED_MODULE_4__.default)(function (theme) {
   return {// alertBox: {
     //   margin: theme.spacing(2),
     // },
@@ -24128,28 +23806,30 @@ function RegisterModal() {
     setOpen(false);
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__.default, {
-      variant: "outlined",
-      color: "primary",
-      size: "small",
-      onClick: handleClickOpen,
-      children: "Sign Up"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_5__.default, {
-      open: open,
-      onClose: handleClose,
-      "aria-labelledby": "form-dialog-title",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_6__.default, {
-        id: "form-dialog-title",
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(notistack__WEBPACK_IMPORTED_MODULE_2__.SnackbarProvider, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_5__.default, {
+        variant: "outlined",
+        color: "primary",
+        size: "small",
+        onClick: handleClickOpen,
         children: "Sign Up"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_7__.default, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_8__.default, {
-          children: "Please fill up the neccessary required fields."
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Signup_RegisterForm__WEBPACK_IMPORTED_MODULE_1__.default, {
-          onClose: handleClose
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_6__.default, {
+        open: open,
+        onClose: handleClose,
+        "aria-labelledby": "form-dialog-title",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_7__.default, {
+          id: "form-dialog-title",
+          children: "Sign Up"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_8__.default, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+            children: "Please fill up the neccessary required fields."
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Signup_RegisterForm__WEBPACK_IMPORTED_MODULE_1__.default, {
+            onClose: handleClose
+          })]
         })]
       })]
-    })]
+    })
   });
 }
 
@@ -58082,6 +57762,1158 @@ function baseClone (src, circulars, clones) {
 function clone (src) {
   return baseClone(src, [], [])
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/notistack/dist/notistack.esm.js":
+/*!******************************************************!*\
+  !*** ./node_modules/notistack/dist/notistack.esm.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SnackbarContent": () => (/* binding */ SnackbarContent$1),
+/* harmony export */   "SnackbarProvider": () => (/* binding */ SnackbarProvider),
+/* harmony export */   "useSnackbar": () => (/* binding */ useSnackbar),
+/* harmony export */   "withSnackbar": () => (/* binding */ withSnackbar)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
+/* harmony import */ var _material_ui_core_Slide__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core/Slide */ "./node_modules/@material-ui/core/esm/Slide/Slide.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/createStyles.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/withStyles.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/colorManipulator.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/makeStyles.js");
+/* harmony import */ var _material_ui_core_Collapse__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @material-ui/core/Collapse */ "./node_modules/@material-ui/core/esm/Collapse/Collapse.js");
+/* harmony import */ var _material_ui_core_SvgIcon__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @material-ui/core/SvgIcon */ "./node_modules/@material-ui/core/esm/SvgIcon/SvgIcon.js");
+/* harmony import */ var _material_ui_core_ClickAwayListener__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @material-ui/core/ClickAwayListener */ "./node_modules/@material-ui/core/esm/ClickAwayListener/ClickAwayListener.js");
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! hoist-non-react-statics */ "./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js");
+/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+
+
+
+
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _extends() {
+  _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+function _inheritsLoose(subClass, superClass) {
+  subClass.prototype = Object.create(superClass.prototype);
+  subClass.prototype.constructor = subClass;
+  subClass.__proto__ = superClass;
+}
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+var SnackbarContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext();
+
+var allClasses = {
+  mui: {
+    root: {},
+    anchorOriginTopCenter: {},
+    anchorOriginBottomCenter: {},
+    anchorOriginTopRight: {},
+    anchorOriginBottomRight: {},
+    anchorOriginTopLeft: {},
+    anchorOriginBottomLeft: {}
+  },
+  container: {
+    containerRoot: {},
+    containerAnchorOriginTopCenter: {},
+    containerAnchorOriginBottomCenter: {},
+    containerAnchorOriginTopRight: {},
+    containerAnchorOriginBottomRight: {},
+    containerAnchorOriginTopLeft: {},
+    containerAnchorOriginBottomLeft: {}
+  }
+};
+var MESSAGES = {
+  NO_PERSIST_ALL: 'WARNING - notistack: Reached maxSnack while all enqueued snackbars have \'persist\' flag. Notistack will dismiss the oldest snackbar anyway to allow other ones in the queue to be presented.'
+};
+var SNACKBAR_INDENTS = {
+  view: {
+    "default": 20,
+    dense: 4
+  },
+  snackbar: {
+    "default": 6,
+    dense: 2
+  }
+};
+var DEFAULTS = {
+  maxSnack: 3,
+  dense: false,
+  hideIconVariant: false,
+  variant: 'default',
+  autoHideDuration: 5000,
+  anchorOrigin: {
+    vertical: 'bottom',
+    horizontal: 'left'
+  },
+  TransitionComponent: _material_ui_core_Slide__WEBPACK_IMPORTED_MODULE_4__.default,
+  transitionDuration: {
+    enter: 225,
+    exit: 195
+  }
+};
+var capitalise = function capitalise(text) {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+};
+var originKeyExtractor = function originKeyExtractor(anchor) {
+  return "" + capitalise(anchor.vertical) + capitalise(anchor.horizontal);
+};
+/**
+ * Omit SnackbarContainer class keys that are not needed for SnackbarItem
+ */
+
+var omitContainerKeys = function omitContainerKeys(classes) {
+  return (// @ts-ignore
+    Object.keys(classes).filter(function (key) {
+      return !allClasses.container[key];
+    }).reduce(function (obj, key) {
+      var _extends2;
+
+      return _extends({}, obj, (_extends2 = {}, _extends2[key] = classes[key], _extends2));
+    }, {})
+  );
+};
+var REASONS = {
+  TIMEOUT: 'timeout',
+  CLICKAWAY: 'clickaway',
+  MAXSNACK: 'maxsnack',
+  INSTRUCTED: 'instructed'
+};
+/** Tranforms classes name */
+
+var transformer = {
+  toContainerAnchorOrigin: function toContainerAnchorOrigin(origin) {
+    return "containerAnchorOrigin" + origin;
+  },
+  toAnchorOrigin: function toAnchorOrigin(_ref) {
+    var vertical = _ref.vertical,
+        horizontal = _ref.horizontal;
+    return "anchorOrigin" + capitalise(vertical) + capitalise(horizontal);
+  },
+  toVariant: function toVariant(variant) {
+    return "variant" + capitalise(variant);
+  }
+};
+var isDefined = function isDefined(value) {
+  return !!value || value === 0;
+};
+
+var numberOrNull = function numberOrNull(numberish) {
+  return typeof numberish === 'number' || numberish === null;
+}; // @ts-ignore
+
+
+var merge = function merge(options, props, defaults) {
+  return function (name) {
+    if (name === 'autoHideDuration') {
+      if (numberOrNull(options.autoHideDuration)) return options.autoHideDuration;
+      if (numberOrNull(props.autoHideDuration)) return props.autoHideDuration;
+      return DEFAULTS.autoHideDuration;
+    }
+
+    return options[name] || props[name] || defaults[name];
+  };
+};
+function objectMerge(options, props, defaults) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  if (props === void 0) {
+    props = {};
+  }
+
+  if (defaults === void 0) {
+    defaults = {};
+  }
+
+  return _extends({}, defaults, {}, props, {}, options);
+}
+
+var styles = function styles(theme) {
+  var _root;
+
+  return (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default)({
+    root: (_root = {
+      display: 'flex',
+      flexWrap: 'wrap',
+      flexGrow: 1
+    }, _root[theme.breakpoints.up('sm')] = {
+      flexGrow: 'initial',
+      minWidth: 288
+    }, _root)
+  });
+};
+
+var SnackbarContent = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(function (_ref, ref) {
+  var classes = _ref.classes,
+      className = _ref.className,
+      props = _objectWithoutPropertiesLoose(_ref, ["classes", "className"]);
+
+  return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", Object.assign({
+    ref: ref,
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_2__.default)(classes.root, className)
+  }, props));
+});
+var SnackbarContent$1 = /*#__PURE__*/(0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__.default)(styles)(SnackbarContent);
+
+var DIRECTION = {
+  right: 'left',
+  left: 'right',
+  bottom: 'up',
+  top: 'down'
+};
+var getTransitionDirection = function getTransitionDirection(anchorOrigin) {
+  if (anchorOrigin.horizontal !== 'center') {
+    return DIRECTION[anchorOrigin.horizontal];
+  }
+
+  return DIRECTION[anchorOrigin.vertical];
+};
+
+var CheckIcon = function CheckIcon(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_SvgIcon__WEBPACK_IMPORTED_MODULE_7__.default, Object.assign({}, props), react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+    d: "M12 2C6.5 2 2 6.5 2 12S6.5 22 12 22 22 17.5 22 12 17.5 2 12 2M10 17L5 12L6.41\n        10.59L10 14.17L17.59 6.58L19 8L10 17Z"
+  }));
+};
+
+var WarningIcon = function WarningIcon(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_SvgIcon__WEBPACK_IMPORTED_MODULE_7__.default, Object.assign({}, props), react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+    d: "M13,14H11V10H13M13,18H11V16H13M1,21H23L12,2L1,21Z"
+  }));
+};
+
+var ErrorIcon = function ErrorIcon(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_SvgIcon__WEBPACK_IMPORTED_MODULE_7__.default, Object.assign({}, props), react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+    d: "M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,\n        6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,\n        13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"
+  }));
+};
+
+var InfoIcon = function InfoIcon(props) {
+  return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_SvgIcon__WEBPACK_IMPORTED_MODULE_7__.default, Object.assign({}, props), react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+    d: "M13,9H11V7H13M13,17H11V11H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,\n        0 22,12A10,10 0 0,0 12,2Z"
+  }));
+};
+
+var iconStyles = {
+  fontSize: 20,
+  marginInlineEnd: 8
+};
+var defaultIconVariants = {
+  "default": undefined,
+  success: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(CheckIcon, {
+    style: iconStyles
+  }),
+  warning: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(WarningIcon, {
+    style: iconStyles
+  }),
+  error: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ErrorIcon, {
+    style: iconStyles
+  }),
+  info: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(InfoIcon, {
+    style: iconStyles
+  })
+};
+
+/**
+ * @link https://github.com/mui-org/material-ui/blob/master/packages/material-ui/src/utils/createChainedFunction.js
+ */
+function createChainedFunction(funcs, extraArg) {
+  return funcs.reduce(function (acc, func) {
+    if (func == null) return acc;
+
+    if (true) {
+      if (typeof func !== 'function') {
+        // eslint-disable-next-line no-console
+        console.error('Invalid Argument Type. must only provide functions, undefined, or null.');
+      }
+    }
+
+    return function chainedFunction() {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      var argums = [].concat(args);
+
+      if (extraArg && argums.indexOf(extraArg) === -1) {
+        argums.push(extraArg);
+      }
+
+      acc.apply(this, argums);
+      func.apply(this, argums);
+    };
+  }, function () {});
+}
+
+/**
+ * @link https://github.com/mui-org/material-ui/blob/master/packages/material-ui/src/utils/useEventCallback.js
+ */
+var useEnhancedEffect = typeof window !== 'undefined' ? react__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect : react__WEBPACK_IMPORTED_MODULE_0__.useEffect;
+function useEventCallback(fn) {
+  var ref = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(fn);
+  useEnhancedEffect(function () {
+    ref.current = fn;
+  });
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    return (ref.current).apply(void 0, arguments);
+  }, []);
+}
+
+var Snackbar = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.forwardRef)(function (props, ref) {
+  var children = props.children,
+      autoHideDuration = props.autoHideDuration,
+      ClickAwayListenerProps = props.ClickAwayListenerProps,
+      _props$disableWindowB = props.disableWindowBlurListener,
+      disableWindowBlurListener = _props$disableWindowB === void 0 ? false : _props$disableWindowB,
+      onClose = props.onClose,
+      onMouseEnter = props.onMouseEnter,
+      onMouseLeave = props.onMouseLeave,
+      open = props.open,
+      resumeHideDuration = props.resumeHideDuration,
+      other = _objectWithoutPropertiesLoose(props, ["children", "autoHideDuration", "ClickAwayListenerProps", "disableWindowBlurListener", "onClose", "onMouseEnter", "onMouseLeave", "open", "resumeHideDuration"]);
+
+  var timerAutoHide = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var handleClose = useEventCallback(function () {
+    if (onClose) {
+      onClose.apply(void 0, arguments);
+    }
+  });
+  var setAutoHideTimer = useEventCallback(function (autoHideDurationParam) {
+    if (!onClose || autoHideDurationParam == null) {
+      return;
+    }
+
+    clearTimeout(timerAutoHide.current);
+    timerAutoHide.current = setTimeout(function () {
+      handleClose(null, REASONS.TIMEOUT);
+    }, autoHideDurationParam);
+  });
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (open) {
+      setAutoHideTimer(autoHideDuration);
+    }
+
+    return function () {
+      clearTimeout(timerAutoHide.current);
+    };
+  }, [open, autoHideDuration, setAutoHideTimer]);
+  /**
+   * Pause the timer when the user is interacting with the Snackbar
+   * or when the user hide the window.
+   */
+
+  var handlePause = function handlePause() {
+    clearTimeout(timerAutoHide.current);
+  };
+  /**
+   * Restart the timer when the user is no longer interacting with the Snackbar
+   * or when the window is shown back.
+   */
+
+
+  var handleResume = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
+    if (autoHideDuration != null) {
+      setAutoHideTimer(resumeHideDuration != null ? resumeHideDuration : autoHideDuration * 0.5);
+    }
+  }, [autoHideDuration, resumeHideDuration, setAutoHideTimer]);
+
+  var handleMouseEnter = function handleMouseEnter(event) {
+    if (onMouseEnter) {
+      onMouseEnter(event);
+    }
+
+    handlePause();
+  };
+
+  var handleMouseLeave = function handleMouseLeave(event) {
+    if (onMouseLeave) {
+      onMouseLeave(event);
+    }
+
+    handleResume();
+  };
+
+  var handleClickAway = function handleClickAway(event) {
+    if (onClose) {
+      onClose(event, REASONS.CLICKAWAY);
+    }
+  };
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    if (!disableWindowBlurListener && open) {
+      window.addEventListener('focus', handleResume);
+      window.addEventListener('blur', handlePause);
+      return function () {
+        window.removeEventListener('focus', handleResume);
+        window.removeEventListener('blur', handlePause);
+      };
+    }
+
+    return undefined;
+  }, [disableWindowBlurListener, handleResume, open]);
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_material_ui_core_ClickAwayListener__WEBPACK_IMPORTED_MODULE_8__.default, _extends({
+    onClickAway: handleClickAway
+  }, ClickAwayListenerProps), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", _extends({
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
+    ref: ref
+  }, other), children));
+});
+
+var styles$1 = function styles(theme) {
+  // @ts-ignore
+  var mode = theme.palette.mode || theme.palette.type;
+  var backgroundColor = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_9__.emphasize)(theme.palette.background["default"], mode === 'light' ? 0.8 : 0.98);
+  return (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_5__.default)(_extends({}, allClasses.mui, {
+    contentRoot: _extends({}, theme.typography.body2, {
+      backgroundColor: backgroundColor,
+      color: theme.palette.getContrastText(backgroundColor),
+      alignItems: 'center',
+      padding: '6px 16px',
+      borderRadius: '4px',
+      boxShadow: '0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)'
+    }),
+    lessPadding: {
+      paddingLeft: 8 * 2.5
+    },
+    variantSuccess: {
+      backgroundColor: '#43a047',
+      color: '#fff'
+    },
+    variantError: {
+      backgroundColor: '#d32f2f',
+      color: '#fff'
+    },
+    variantInfo: {
+      backgroundColor: '#2196f3',
+      color: '#fff'
+    },
+    variantWarning: {
+      backgroundColor: '#ff9800',
+      color: '#fff'
+    },
+    message: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '8px 0'
+    },
+    action: {
+      display: 'flex',
+      alignItems: 'center',
+      marginLeft: 'auto',
+      paddingLeft: 16,
+      marginRight: -8
+    },
+    wrappedRoot: {
+      position: 'relative',
+      transform: 'translateX(0)',
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    }
+  }));
+};
+
+var SnackbarItem = function SnackbarItem(_ref) {
+  var classes = _ref.classes,
+      props = _objectWithoutPropertiesLoose(_ref, ["classes"]);
+
+  var timeout = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+      collapsed = _useState[0],
+      setCollapsed = _useState[1];
+
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    return function () {
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
+    };
+  }, []);
+  var handleClose = createChainedFunction([props.snack.onClose, props.onClose], props.snack.key);
+
+  var handleEntered = function handleEntered() {
+    if (props.snack.requestClose) {
+      handleClose(null, REASONS.INSTRCUTED);
+    }
+  };
+
+  var handleExitedScreen = function handleExitedScreen() {
+    timeout.current = setTimeout(function () {
+      setCollapsed(!collapsed);
+    }, 125);
+  };
+
+  var style = props.style,
+      otherAriaAttributes = props.ariaAttributes,
+      otherClassName = props.className,
+      hideIconVariant = props.hideIconVariant,
+      iconVariant = props.iconVariant,
+      snack = props.snack,
+      otherAction = props.action,
+      otherContent = props.content,
+      otherTranComponent = props.TransitionComponent,
+      otherTranProps = props.TransitionProps,
+      otherTranDuration = props.transitionDuration,
+      other = _objectWithoutPropertiesLoose(props, ["style", "dense", "ariaAttributes", "className", "hideIconVariant", "iconVariant", "snack", "action", "content", "TransitionComponent", "TransitionProps", "transitionDuration", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting"]);
+
+  var key = snack.key,
+      open = snack.open,
+      singleClassName = snack.className,
+      variant = snack.variant,
+      singleContent = snack.content,
+      singleAction = snack.action,
+      singleAriaAttributes = snack.ariaAttributes,
+      anchorOrigin = snack.anchorOrigin,
+      snackMessage = snack.message,
+      singleTranComponent = snack.TransitionComponent,
+      singleTranProps = snack.TransitionProps,
+      singleTranDuration = snack.transitionDuration,
+      singleSnackProps = _objectWithoutPropertiesLoose(snack, ["persist", "key", "open", "entered", "requestClose", "className", "variant", "content", "action", "ariaAttributes", "anchorOrigin", "message", "TransitionComponent", "TransitionProps", "transitionDuration", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting"]);
+
+  var icon = _extends({}, defaultIconVariants, {}, iconVariant)[variant];
+
+  var ariaAttributes = _extends({
+    'aria-describedby': 'notistack-snackbar'
+  }, objectMerge(singleAriaAttributes, otherAriaAttributes));
+
+  var TransitionComponent = singleTranComponent || otherTranComponent || DEFAULTS.TransitionComponent;
+  var transitionDuration = objectMerge(singleTranDuration, otherTranDuration, DEFAULTS.transitionDuration);
+
+  var transitionProps = _extends({
+    direction: getTransitionDirection(anchorOrigin)
+  }, objectMerge(singleTranProps, otherTranProps));
+
+  var action = singleAction || otherAction;
+
+  if (typeof action === 'function') {
+    action = action(key);
+  }
+
+  var content = singleContent || otherContent;
+
+  if (typeof content === 'function') {
+    content = content(key, snack.message);
+  }
+
+  var callbacks = ['onEnter', 'onEntering', 'onEntered', 'onExit', 'onExiting', 'onExited'].reduce(function (acc, cbName) {
+    var _extends2;
+
+    return _extends({}, acc, (_extends2 = {}, _extends2[cbName] = createChainedFunction([props.snack[cbName], props[cbName]], props.snack.key), _extends2));
+  }, {});
+  return react__WEBPACK_IMPORTED_MODULE_0__.createElement(_material_ui_core_Collapse__WEBPACK_IMPORTED_MODULE_10__.default, {
+    unmountOnExit: true,
+    timeout: 175,
+    "in": collapsed,
+    onExited: callbacks.onExited
+  }, react__WEBPACK_IMPORTED_MODULE_0__.createElement(Snackbar, Object.assign({}, other, singleSnackProps, {
+    open: open,
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_2__.default)(classes.root, classes.wrappedRoot, classes[transformer.toAnchorOrigin(anchorOrigin)]),
+    onClose: handleClose
+  }), react__WEBPACK_IMPORTED_MODULE_0__.createElement(TransitionComponent, Object.assign({
+    appear: true,
+    "in": open,
+    timeout: transitionDuration
+  }, transitionProps, {
+    onExit: callbacks.onExit,
+    onExiting: callbacks.onExiting,
+    onExited: handleExitedScreen,
+    onEnter: callbacks.onEnter,
+    onEntering: callbacks.onEntering,
+    // order matters. first callbacks.onEntered to set entered: true,
+    // then handleEntered to check if there's a request for closing
+    onEntered: createChainedFunction([callbacks.onEntered, handleEntered])
+  }), content || react__WEBPACK_IMPORTED_MODULE_0__.createElement(SnackbarContent$1, Object.assign({}, ariaAttributes, {
+    role: "alert",
+    style: style,
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_2__.default)(classes.contentRoot, classes[transformer.toVariant(variant)], otherClassName, singleClassName, !hideIconVariant && icon && classes.lessPadding)
+  }), react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    id: ariaAttributes['aria-describedby'],
+    className: classes.message
+  }, !hideIconVariant ? icon : null, snackMessage), action && react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    className: classes.action
+  }, action)))));
+};
+
+var SnackbarItem$1 = /*#__PURE__*/(0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_6__.default)(styles$1)(SnackbarItem);
+
+var collapse = {
+  container: '& > .MuiCollapse-container',
+  wrapper: '& > .MuiCollapse-container > .MuiCollapse-wrapper'
+};
+var xsWidthMargin = 16;
+var useStyle = /*#__PURE__*/(0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_11__.default)(function (theme) {
+  var _root, _rootDense, _left, _right, _center;
+
+  return {
+    root: (_root = {
+      boxSizing: 'border-box',
+      display: 'flex',
+      maxHeight: '100%',
+      position: 'fixed',
+      zIndex: theme.zIndex.snackbar,
+      height: 'auto',
+      width: 'auto',
+      transition: 'top 300ms ease 0ms, right 300ms ease 0ms, bottom 300ms ease 0ms, left 300ms ease 0ms, margin 300ms ease 0ms, max-width 300ms ease 0ms',
+      // container itself is invisible and should not block clicks, clicks should be passed to its children 
+      pointerEvents: 'none'
+    }, _root[collapse.container] = {
+      pointerEvents: 'all'
+    }, _root[collapse.wrapper] = {
+      padding: SNACKBAR_INDENTS.snackbar["default"] + "px 0px",
+      transition: 'padding 300ms ease 0ms'
+    }, _root.maxWidth = "calc(100% - " + SNACKBAR_INDENTS.view["default"] * 2 + "px)", _root[theme.breakpoints.down('xs')] = {
+      width: '100%',
+      maxWidth: "calc(100% - " + xsWidthMargin * 2 + "px)"
+    }, _root),
+    rootDense: (_rootDense = {}, _rootDense[collapse.wrapper] = {
+      padding: SNACKBAR_INDENTS.snackbar.dense + "px 0px"
+    }, _rootDense),
+    top: {
+      top: SNACKBAR_INDENTS.view["default"] - SNACKBAR_INDENTS.snackbar["default"],
+      flexDirection: 'column'
+    },
+    bottom: {
+      bottom: SNACKBAR_INDENTS.view["default"] - SNACKBAR_INDENTS.snackbar["default"],
+      flexDirection: 'column-reverse'
+    },
+    left: (_left = {
+      left: SNACKBAR_INDENTS.view["default"]
+    }, _left[theme.breakpoints.up('sm')] = {
+      alignItems: 'flex-start'
+    }, _left[theme.breakpoints.down('xs')] = {
+      left: xsWidthMargin + "px"
+    }, _left),
+    right: (_right = {
+      right: SNACKBAR_INDENTS.view["default"]
+    }, _right[theme.breakpoints.up('sm')] = {
+      alignItems: 'flex-end'
+    }, _right[theme.breakpoints.down('xs')] = {
+      right: xsWidthMargin + "px"
+    }, _right),
+    center: (_center = {
+      left: '50%',
+      transform: 'translateX(-50%)'
+    }, _center[theme.breakpoints.up('sm')] = {
+      alignItems: 'center'
+    }, _center)
+  };
+});
+
+var SnackbarContainer = function SnackbarContainer(props) {
+  var classes = useStyle();
+
+  var className = props.className,
+      anchorOrigin = props.anchorOrigin,
+      dense = props.dense,
+      other = _objectWithoutPropertiesLoose(props, ["className", "anchorOrigin", "dense"]);
+
+  var combinedClassname = (0,clsx__WEBPACK_IMPORTED_MODULE_2__.default)(classes[anchorOrigin.vertical], classes[anchorOrigin.horizontal], classes.root, // root should come after others to override maxWidth
+  className, dense && classes.rootDense);
+  return react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", Object.assign({
+    className: combinedClassname
+  }, other));
+};
+
+var SnackbarContainer$1 = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.memo(SnackbarContainer);
+
+/* eslint-disable */
+var __DEV__ = "development" !== 'production';
+
+var warning = (function (message) {
+  if (!__DEV__) return;
+
+  if (typeof console !== 'undefined') {
+    console.error(message);
+  }
+
+  try {
+    throw new Error(message);
+  } catch (x) {}
+});
+
+var SnackbarProvider = /*#__PURE__*/function (_Component) {
+  _inheritsLoose(SnackbarProvider, _Component);
+
+  function SnackbarProvider(props) {
+    var _this;
+
+    _this = _Component.call(this, props) || this;
+    /**
+     * Adds a new snackbar to the queue to be presented.
+     * Returns generated or user defined key referencing the new snackbar or null
+     */
+
+    _this.enqueueSnackbar = function (message, opts) {
+      if (opts === void 0) {
+        opts = {};
+      }
+
+      var _opts = opts,
+          key = _opts.key,
+          preventDuplicate = _opts.preventDuplicate,
+          options = _objectWithoutPropertiesLoose(_opts, ["key", "preventDuplicate"]);
+
+      var hasSpecifiedKey = isDefined(key);
+      var id = hasSpecifiedKey ? key : new Date().getTime() + Math.random();
+      var merger = merge(options, _this.props, DEFAULTS);
+
+      var snack = _extends({
+        key: id
+      }, options, {
+        message: message,
+        open: true,
+        entered: false,
+        requestClose: false,
+        variant: merger('variant'),
+        anchorOrigin: merger('anchorOrigin'),
+        autoHideDuration: merger('autoHideDuration')
+      });
+
+      if (options.persist) {
+        snack.autoHideDuration = undefined;
+      }
+
+      _this.setState(function (state) {
+        if (preventDuplicate === undefined && _this.props.preventDuplicate || preventDuplicate) {
+          var compareFunction = function compareFunction(item) {
+            return hasSpecifiedKey ? item.key === key : item.message === message;
+          };
+
+          var inQueue = state.queue.findIndex(compareFunction) > -1;
+          var inView = state.snacks.findIndex(compareFunction) > -1;
+
+          if (inQueue || inView) {
+            return state;
+          }
+        }
+
+        return _this.handleDisplaySnack(_extends({}, state, {
+          queue: [].concat(state.queue, [snack])
+        }));
+      });
+
+      return id;
+    };
+    /**
+     * Reducer: Display snack if there's space for it. Otherwise, immediately
+     * begin dismissing the oldest message to start showing the new one.
+     */
+
+
+    _this.handleDisplaySnack = function (state) {
+      var snacks = state.snacks;
+
+      if (snacks.length >= _this.maxSnack) {
+        return _this.handleDismissOldest(state);
+      }
+
+      return _this.processQueue(state);
+    };
+    /**
+     * Reducer: Display items (notifications) in the queue if there's space for them.
+     */
+
+
+    _this.processQueue = function (state) {
+      var queue = state.queue,
+          snacks = state.snacks;
+
+      if (queue.length > 0) {
+        return _extends({}, state, {
+          snacks: [].concat(snacks, [queue[0]]),
+          queue: queue.slice(1, queue.length)
+        });
+      }
+
+      return state;
+    };
+    /**
+     * Reducer: Hide oldest snackbar on the screen because there exists a new one which we have to display.
+     * (ignoring the one with 'persist' flag. i.e. explicitly told by user not to get dismissed).
+     *
+     * Note 1: If there is already a message leaving the screen, no new messages are dismissed.
+     * Note 2: If the oldest message has not yet entered the screen, only a request to close the
+     *         snackbar is made. Once it entered the screen, it will be immediately dismissed.
+     */
+
+
+    _this.handleDismissOldest = function (state) {
+      if (state.snacks.some(function (item) {
+        return !item.open || item.requestClose;
+      })) {
+        return state;
+      }
+
+      var popped = false;
+      var ignore = false;
+      var persistentCount = state.snacks.reduce(function (acc, current) {
+        return acc + (current.open && current.persist ? 1 : 0);
+      }, 0);
+
+      if (persistentCount === _this.maxSnack) {
+         true ? warning(MESSAGES.NO_PERSIST_ALL) : 0;
+        ignore = true;
+      }
+
+      var snacks = state.snacks.map(function (item) {
+        if (!popped && (!item.persist || ignore)) {
+          popped = true;
+
+          if (!item.entered) {
+            return _extends({}, item, {
+              requestClose: true
+            });
+          }
+
+          if (item.onClose) item.onClose(null, REASONS.MAXSNACK, item.key);
+          if (_this.props.onClose) _this.props.onClose(null, REASONS.MAXSNACK, item.key);
+          return _extends({}, item, {
+            open: false
+          });
+        }
+
+        return _extends({}, item);
+      });
+      return _extends({}, state, {
+        snacks: snacks
+      });
+    };
+    /**
+     * Set the entered state of the snackbar with the given key.
+     */
+
+
+    _this.handleEnteredSnack = function (node, isAppearing, key) {
+      if (!isDefined(key)) {
+        throw new Error('handleEnteredSnack Cannot be called with undefined key');
+      }
+
+      _this.setState(function (_ref) {
+        var snacks = _ref.snacks;
+        return {
+          snacks: snacks.map(function (item) {
+            return item.key === key ? _extends({}, item, {
+              entered: true
+            }) : _extends({}, item);
+          })
+        };
+      });
+    };
+    /**
+     * Hide a snackbar after its timeout.
+     */
+
+
+    _this.handleCloseSnack = function (event, reason, key) {
+      // should not use createChainedFunction for onClose.
+      // because this.closeSnackbar called this function
+      if (_this.props.onClose) {
+        _this.props.onClose(event, reason, key);
+      }
+
+      if (reason === REASONS.CLICKAWAY) return;
+      var shouldCloseAll = key === undefined;
+
+      _this.setState(function (_ref2) {
+        var snacks = _ref2.snacks,
+            queue = _ref2.queue;
+        return {
+          snacks: snacks.map(function (item) {
+            if (!shouldCloseAll && item.key !== key) {
+              return _extends({}, item);
+            }
+
+            return item.entered ? _extends({}, item, {
+              open: false
+            }) : _extends({}, item, {
+              requestClose: true
+            });
+          }),
+          queue: queue.filter(function (item) {
+            return item.key !== key;
+          })
+        };
+      });
+    };
+    /**
+     * Close snackbar with the given key
+     */
+
+
+    _this.closeSnackbar = function (key) {
+      // call individual snackbar onClose callback passed through options parameter
+      var toBeClosed = _this.state.snacks.find(function (item) {
+        return item.key === key;
+      });
+
+      if (isDefined(key) && toBeClosed && toBeClosed.onClose) {
+        toBeClosed.onClose(null, REASONS.INSTRUCTED, key);
+      }
+
+      _this.handleCloseSnack(null, REASONS.INSTRUCTED, key);
+    };
+    /**
+     * When we set open attribute of a snackbar to false (i.e. after we hide a snackbar),
+     * it leaves the screen and immediately after leaving animation is done, this method
+     * gets called. We remove the hidden snackbar from state and then display notifications
+     * waiting in the queue (if any). If after this process the queue is not empty, the
+     * oldest message is dismissed.
+     */
+    // @ts-ignore
+
+
+    _this.handleExitedSnack = function (event, key1, key2) {
+      var key = key1 || key2;
+
+      if (!isDefined(key)) {
+        throw new Error('handleExitedSnack Cannot be called with undefined key');
+      }
+
+      _this.setState(function (state) {
+        var newState = _this.processQueue(_extends({}, state, {
+          snacks: state.snacks.filter(function (item) {
+            return item.key !== key;
+          })
+        }));
+
+        if (newState.queue.length === 0) {
+          return newState;
+        }
+
+        return _this.handleDismissOldest(newState);
+      });
+    };
+
+    _this.state = {
+      snacks: [],
+      queue: [],
+      contextValue: {
+        enqueueSnackbar: _this.enqueueSnackbar,
+        closeSnackbar: _this.closeSnackbar
+      }
+    };
+    return _this;
+  }
+
+  var _proto = SnackbarProvider.prototype;
+
+  _proto.render = function render() {
+    var _this2 = this;
+
+    var contextValue = this.state.contextValue;
+
+    var _this$props = this.props,
+        iconVariant = _this$props.iconVariant,
+        _this$props$dense = _this$props.dense,
+        dense = _this$props$dense === void 0 ? DEFAULTS.dense : _this$props$dense,
+        _this$props$hideIconV = _this$props.hideIconVariant,
+        hideIconVariant = _this$props$hideIconV === void 0 ? DEFAULTS.hideIconVariant : _this$props$hideIconV,
+        domRoot = _this$props.domRoot,
+        children = _this$props.children,
+        _this$props$classes = _this$props.classes,
+        classes = _this$props$classes === void 0 ? {} : _this$props$classes,
+        props = _objectWithoutPropertiesLoose(_this$props, ["maxSnack", "preventDuplicate", "variant", "anchorOrigin", "iconVariant", "dense", "hideIconVariant", "domRoot", "children", "classes"]);
+
+    var categ = this.state.snacks.reduce(function (acc, current) {
+      var _extends2;
+
+      var category = originKeyExtractor(current.anchorOrigin);
+      var existingOfCategory = acc[category] || [];
+      return _extends({}, acc, (_extends2 = {}, _extends2[category] = [].concat(existingOfCategory, [current]), _extends2));
+    }, {});
+    var snackbars = Object.keys(categ).map(function (origin) {
+      var snacks = categ[origin];
+      return react__WEBPACK_IMPORTED_MODULE_0__.createElement(SnackbarContainer$1, {
+        key: origin,
+        dense: dense,
+        anchorOrigin: snacks[0].anchorOrigin,
+        className: (0,clsx__WEBPACK_IMPORTED_MODULE_2__.default)(classes.containerRoot, classes[transformer.toContainerAnchorOrigin(origin)])
+      }, snacks.map(function (snack) {
+        return react__WEBPACK_IMPORTED_MODULE_0__.createElement(SnackbarItem$1, Object.assign({}, props, {
+          key: snack.key,
+          snack: snack,
+          dense: dense,
+          iconVariant: iconVariant,
+          hideIconVariant: hideIconVariant,
+          classes: omitContainerKeys(classes),
+          onClose: _this2.handleCloseSnack,
+          onExited: createChainedFunction([_this2.handleExitedSnack, _this2.props.onExited]),
+          onEntered: createChainedFunction([_this2.handleEnteredSnack, _this2.props.onEntered])
+        }));
+      }));
+    });
+    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(SnackbarContext.Provider, {
+      value: contextValue
+    }, children, domRoot ? (0,react_dom__WEBPACK_IMPORTED_MODULE_1__.createPortal)(snackbars, domRoot) : snackbars);
+  };
+
+  _createClass(SnackbarProvider, [{
+    key: "maxSnack",
+    get: function get() {
+      return this.props.maxSnack || DEFAULTS.maxSnack;
+    }
+  }]);
+
+  return SnackbarProvider;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+
+// https://github.com/JamesMGreene/Function.name/blob/58b314d4a983110c3682f1228f845d39ccca1817/Function.name.js#L3
+var fnNameMatchRegex = /^\s*function(?:\s|\s*\/\*.*\*\/\s*)+([^(\s/]*)\s*/;
+
+var getFunctionName = function getFunctionName(fn) {
+  var match = ("" + fn).match(fnNameMatchRegex);
+  var name = match && match[1];
+  return name || '';
+};
+/**
+ * @param {function} Component
+ * @param {string} fallback
+ * @returns {string | undefined}
+ */
+
+
+var getFunctionComponentName = function getFunctionComponentName(Component, fallback) {
+  if (fallback === void 0) {
+    fallback = '';
+  }
+
+  return Component.displayName || Component.name || getFunctionName(Component) || fallback;
+};
+
+var getWrappedName = function getWrappedName(outerType, innerType, wrapperName) {
+  var functionName = getFunctionComponentName(innerType);
+  return outerType.displayName || (functionName !== '' ? wrapperName + "(" + functionName + ")" : wrapperName);
+};
+/** 
+ * From react-is
+ * @link https://github.com/facebook/react/blob/master/packages/shared/ReactSymbols.js
+ */
+
+
+var ForwardRef = function ForwardRef() {
+  var symbolFor = typeof Symbol === 'function' && Symbol["for"];
+  return symbolFor ? symbolFor('react.forward_ref') : 0xead0;
+};
+/**
+ * https://github.com/facebook/react/blob/769b1f270e1251d9dbdce0fcbd9e92e502d059b8/packages/shared/getComponentName.js
+ *
+ * @param {React.ReactType} Component
+ * @returns {string | undefined}
+ */
+
+
+var getDisplayName = (function (Component) {
+  if (Component == null) {
+    return undefined;
+  }
+
+  if (typeof Component === 'string') {
+    return Component;
+  }
+
+  if (typeof Component === 'function') {
+    return getFunctionComponentName(Component, 'Component');
+  }
+
+  if (typeof Component === 'object') {
+    switch (Component.$$typeof) {
+      case ForwardRef():
+        return getWrappedName(Component, Component.render, 'ForwardRef');
+
+      default:
+        return undefined;
+    }
+  }
+
+  return undefined;
+});
+
+var withSnackbar = function withSnackbar(Component) {
+  var WrappedComponent = react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(function (props, ref) {
+    return react__WEBPACK_IMPORTED_MODULE_0__.createElement(SnackbarContext.Consumer, null, function (context) {
+      return react__WEBPACK_IMPORTED_MODULE_0__.createElement(Component, _extends({}, props, {
+        ref: ref,
+        enqueueSnackbar: context.enqueueSnackbar,
+        closeSnackbar: context.closeSnackbar
+      }));
+    });
+  });
+
+  if (true) {
+    WrappedComponent.displayName = "WithSnackbar(" + getDisplayName(Component) + ")";
+  }
+
+  hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_3___default()(WrappedComponent, Component);
+  return WrappedComponent;
+};
+
+var useSnackbar = (function () {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(SnackbarContext);
+});
+
+
+//# sourceMappingURL=notistack.esm.js.map
 
 
 /***/ }),
