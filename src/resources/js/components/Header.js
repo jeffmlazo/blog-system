@@ -8,8 +8,9 @@ import {
   Link,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import Login from "./Login/LoginModal";
+import LoginModal from "./Login/LoginModal";
 import RegisterModal from "./Signup/RegisterModal";
+import PostModal from "./Post/PostModal";
 // import Dashboard from "./Dashboard/Dashboard";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +39,8 @@ export default function Header(props) {
       <Router>
         <Toolbar className={classes.toolbar}>
           {/* <Route path="/dashboard" component={Dashboard} /> */}
-          <Login />
+          <LoginModal />
+          <PostModal />
           <Typography
             component="h2"
             variant="h5"

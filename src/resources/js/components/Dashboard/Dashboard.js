@@ -1,6 +1,5 @@
-// import * as React from 'react';
+import { useState } from "react";
 import { experimentalStyled as styled } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   Drawer,
   Box,
@@ -19,9 +18,10 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./listItems";
-import Deposits from "./Deposits";
-import Orders from "./Orders";
+import { mainListItems, secondaryListItems } from "./Navigation";
+import RecentPost from "./RecentPost";
+// import Users from "./Users";
+import Posts from "./Posts";
 
 function Copyright(props) {
   return (
@@ -88,14 +88,13 @@ const MuiDrawer = styled(Drawer, {
 }));
 
 function DashboardContent() {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
       <MuiAppBar position="absolute" open={open}>
         <Toolbar
           sx={{
@@ -163,7 +162,7 @@ function DashboardContent() {
         <Toolbar />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
           <Grid container spacing={3}>
-            {/* Recent Deposits */}
+            {/* Recent Post */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper
                 sx={{
@@ -173,13 +172,19 @@ function DashboardContent() {
                   height: 240,
                 }}
               >
-                <Deposits />
+                <RecentPost />
               </Paper>
             </Grid>
-            {/* Recent Orders */}
+            {/* List of Users */}
+            {/* <Grid item xs={12}>
+              <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
+                <Users />
+              </Paper>
+            </Grid> */}
+            {/* List of Posts */}
             <Grid item xs={12}>
               <Paper sx={{ p: 2, display: "flex", flexDirection: "column" }}>
-                <Orders />
+                <Posts />
               </Paper>
             </Grid>
           </Grid>

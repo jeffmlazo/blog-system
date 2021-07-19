@@ -42,8 +42,8 @@ const rows = [
     "elvis2021",
     "user",
     "elvispress@yagoo.com",
-    094654413245,
-    "July 23, 2021",
+    "094654413245",
+    "July 23, 2021"
   ),
   createData(
     1,
@@ -53,8 +53,8 @@ const rows = [
     "elvis2021",
     "author",
     "elvigaliberd@yagoo.com",
-    094654413885,
-    "July 23, 2021",
+    "094654413885",
+    "July 23, 2021"
   ),
   createData(
     2,
@@ -64,8 +64,8 @@ const rows = [
     "jameshenry2021",
     "author",
     "jameshenry@gmail.com",
-    0911654413245,
-    "July 25, 2021",
+    "0911654413245",
+    "July 25, 2021"
   ),
 ];
 
