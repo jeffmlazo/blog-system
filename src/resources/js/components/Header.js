@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import {
   makeStyles,
   Toolbar,
@@ -7,8 +8,9 @@ import {
   Link,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import Login from "./Login";
+import Login from "./Login/LoginModal";
 import RegisterModal from "./Signup/RegisterModal";
+// import Dashboard from "./Dashboard/Dashboard";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -33,41 +35,44 @@ export default function Header(props) {
 
   return (
     <>
-      <Toolbar className={classes.toolbar}>
-        <Login />
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          className={classes.toolbarTitle}
-        >
-          {title}
-        </Typography>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-        <RegisterModal />
-      </Toolbar>
-      <Toolbar
-        component="nav"
-        variant="dense"
-        className={classes.toolbarSecondary}
-      >
-        {categories.map((category) => (
-          <Link
+      <Router>
+        <Toolbar className={classes.toolbar}>
+          {/* <Route path="/dashboard" component={Dashboard} /> */}
+          <Login />
+          <Typography
+            component="h2"
+            variant="h5"
             color="inherit"
+            align="center"
             noWrap
-            key={category.title}
-            variant="body2"
-            href={category.url}
-            className={classes.toolbarLink}
+            className={classes.toolbarTitle}
           >
-            {category.title}
-          </Link>
-        ))}
-      </Toolbar>
+            {title}
+          </Typography>
+          <IconButton>
+            <SearchIcon />
+          </IconButton>
+          <RegisterModal />
+        </Toolbar>
+        <Toolbar
+          component="nav"
+          variant="dense"
+          className={classes.toolbarSecondary}
+        >
+          {categories.map((category) => (
+            <Link
+              color="inherit"
+              noWrap
+              key={category.title}
+              variant="body2"
+              href={category.url}
+              className={classes.toolbarLink}
+            >
+              {category.title}
+            </Link>
+          ))}
+        </Toolbar>
+      </Router>
     </>
   );
 }

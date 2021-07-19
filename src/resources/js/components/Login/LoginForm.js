@@ -5,7 +5,6 @@ import { useSnackbar } from "notistack";
 import { makeStyles, Grid, DialogActions, Button } from "@material-ui/core";
 
 import Textfield from "../FormsUI/Textfield";
-import Select from "../FormsUI/Select";
 import ButtonForm from "../FormsUI/Button";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,33 +24,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const INITIAL_FORM_STATE = {
-  firstName: "",
-  middleName: "",
-  lastName: "",
   username: "",
   password: "",
-  userType: "",
-  emailAddress: "",
-  mobile: "",
 };
 
 const FORM_VALIDATION = Yup.object().shape({
-  firstName: Yup.string().required("Required"),
-  middleName: Yup.string().required("Required"),
-  lastName: Yup.string().required("Required"),
   username: Yup.string().required("Required"),
   password: Yup.string().required("Required"),
-  userType: Yup.string().required("Required"),
-  emailAddress: Yup.string()
-    .email("Invalid email address.")
-    .required("Required"),
-  mobile: Yup.number()
-    .integer()
-    .typeError("Please enter a valid mobile number")
-    .required("Required"),
 });
 
-export default function RegisterForm(props) {
+export default function LoginForm(props) {
   const classes = useStyles();
   const { onClose } = props;
   const { enqueueSnackbar } = useSnackbar();
@@ -114,14 +96,10 @@ export default function RegisterForm(props) {
         onSubmit={(values) => {
           // Send data to the server
           api
-            .post("/user/store", values)
+            .post("/user/login", values)
             .then((response) => response.data)
             .then((data) => {
-              console.log(data);
               handleSnackbarMessage(data.message, data.status);
-              setTimeout(() => {
-                onClose();
-              }, 4000);
             });
         }}
       >
@@ -130,19 +108,10 @@ export default function RegisterForm(props) {
             <Grid item xs={12}>
               <Textfield
                 autoFocus
-                name="firstName"
-                label="First Name"
+                name="username"
+                label="Username"
                 type="text"
               />
-            </Grid>
-            <Grid item xs={12}>
-              <Textfield name="middleName" label="Middle Name" type="text" />
-            </Grid>
-            <Grid item xs={12}>
-              <Textfield name="lastName" label="Last Name" type="text" />
-            </Grid>
-            <Grid item xs={12}>
-              <Textfield name="username" label="Username" type="text" />
             </Grid>
             <Grid item xs={12}>
               <Textfield
@@ -152,23 +121,7 @@ export default function RegisterForm(props) {
                 autoComplete="new-password"
               />
             </Grid>
-            <Grid item xs={12}>
-              <Select
-                name="userType"
-                label="User Type"
-                options={["user", "author", "admin"]}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Textfield
-                name="emailAddress"
-                label="Email Address"
-                type="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Textfield name="mobile" label="Mobile" type="text" />
-            </Grid>
+
             <Grid item xs={12}>
               <DialogActions>
                 <Button
@@ -179,7 +132,7 @@ export default function RegisterForm(props) {
                 >
                   Cancel
                 </Button>
-                <ButtonForm>Register</ButtonForm>
+                <ButtonForm>Login</ButtonForm>
               </DialogActions>
             </Grid>
           </Grid>

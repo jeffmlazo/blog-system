@@ -8,7 +8,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import EditorsPickPost from "./EditorsPickPost";
-import AboutUs from "./AboutUs";
+import AboutUs from "../AboutUs";
 
 const useStyles = makeStyles((theme) => ({
   root: {

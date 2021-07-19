@@ -1,8 +1,8 @@
 import ReactDOM from "react-dom";
 import { makeStyles, CssBaseline, Grid, Container } from "@material-ui/core";
-import MainFeaturedPost from "./MainFeaturedPost";
-import FeaturedPost from "./FeaturedPost";
-import EditorsPick from "./EditorsPick";
+import MainFeaturedPost from "./Post/MainFeaturedPost";
+import FeaturedPost from "./Post/FeaturedPost";
+import EditorsPick from "./Post/EditorsPick";
 import Header from "./Header";
 import Footer from "./Footer";
 

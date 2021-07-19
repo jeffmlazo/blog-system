@@ -70,6 +70,50 @@ class UserApiController extends Controller
         }
     }
 
+    public function login(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(['status' => 'error', 'message' => $errors->all()], 500);
+        } else {
+            // Check Username
+            $user = User::where('username', request('username'))->first();
+
+            // Check password
+            if (!$user || !Hash::check(request("password"), $user->password)) {
+                return response([
+                    'status' => 'error',
+                    'message' => 'Invalid username or password.'
+                ], 401);
+            }
+
+            // $token = $user->createToken('myapptoken')->plainTextToken;
+
+            $response = [
+                'status' => 'success',
+                'message' => $user,
+                // 'token' => $token
+                // 'token' => 'raaldkjaljdaljjadl3'
+            ];
+
+            return response($response, 201);
+
+            // User::create([
+            //     'username' => request('username'),
+            //     'password' => Hash::make(request('password')),
+            // ]);
+
+            // return [
+            //     'status' => 'success',
+            //     'message' => 'You have successfully registered!'
+            // ];
+        }
+    }
     /**
      * Display the specified resource.
      *
