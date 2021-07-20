@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class PostApiController extends Controller
 {
@@ -34,7 +37,39 @@ class PostApiController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'summary' => 'required',
+            'content' => 'required',
+            'imgUrl' => 'required',
+            'imgText' => 'required',
+            'tag' => 'required',
+            'category' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(['status' => 'error', 'message' => $errors->all()], 500);
+        } else {
+            Post::create([
+                'author_id' => request('authorId'),
+                'title' => request('title'),
+                'slug' => Str::slug(request('title'), '-'),
+                'summary' => request('summary'),
+                'content' => request('content'),
+                'img_url' => request('imgUrl'),
+                'img_text' => request('imgText'),
+                'published_at' => request('publishedAt'),
+                'tag_id' => request('tagId'),
+                'category_id' => request('categoryId'),
+            ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Blog was successfully save!'
+            ];
+        }
+    }
 
     /**
      * Display the specified resource.
@@ -55,7 +90,14 @@ class PostApiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id)->first();
+
+        dd($post);
+
+        // return [
+        //     'status' => 'success',
+        //     'message' => 'Blog was successfully posted!'
+        // ];
     }
 
     /**

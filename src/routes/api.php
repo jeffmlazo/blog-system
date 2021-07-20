@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use App\Http\Controllers\UserApiController;
+use App\Http\Controllers\PostApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,3 +42,12 @@ Route::get('/user{id}/edit', [UserApiController::class, 'edit']);
 Route::put('/user{id}', [UserApiController::class, 'update']);
 Route::delete('/user{id}', [UserApiController::class, 'destroy']);
 Route::get('/user{id}', [UserApiController::class, 'show']);
+
+// Post API Routes
+Route::get('/post', [PostApiController::class, 'index']);
+Route::get('/post/create', [PostApiController::class, 'create']);
+Route::post('/post/store', [PostApiController::class, 'store']);
+Route::get('/post{id}/edit', [PostApiController::class, 'edit']);
+Route::put('/post{id}', [PostApiController::class, 'update']);
+Route::delete('/post{id}', [PostApiController::class, 'destroy']);
+Route::get('/post{id}', [PostApiController::class, 'show']);

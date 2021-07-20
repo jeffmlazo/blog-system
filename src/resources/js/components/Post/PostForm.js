@@ -7,7 +7,7 @@ import {
   Grid,
   DialogActions,
   Button,
-  TextField,
+  // TextField,
 } from "@material-ui/core";
 
 import Textfield from "../FormsUI/Textfield";
@@ -22,19 +22,33 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  fieldHidden: {
+    width: 0,
+  },
 }));
 
 const INITIAL_FORM_STATE = {
   title: "",
   summary: "",
+  content: "",
+  imgUrl: "",
+  imgText: "",
+  tag: "",
+  category: "",
+  authorId: "9877",
 };
 
 const FORM_VALIDATION = Yup.object().shape({
   title: Yup.string().required("Required"),
   summary: Yup.string().required("Required"),
+  content: Yup.string().required("Required"),
+  imgUrl: Yup.string().required("Required"),
+  imgText: Yup.string().required("Required"),
+  tag: Yup.string().required("Required"),
+  category: Yup.string().required("Required"),
 });
 
-export default function LoginForm(props) {
+export default function PostForm(props) {
   const classes = useStyles();
   const { onClose } = props;
   const { enqueueSnackbar } = useSnackbar();
@@ -97,7 +111,7 @@ export default function LoginForm(props) {
         onSubmit={(values) => {
           // Send data to the server
           api
-            .post("/user/login", values)
+            .post("/post/store", values)
             .then((response) => response.data)
             .then((data) => {
               handleSnackbarMessage(data.message, data.status);
@@ -121,20 +135,11 @@ export default function LoginForm(props) {
             <Grid item xs={12}>
               <Textfield
                 multiline
-                name="cotent"
+                name="content"
                 label="Content"
                 type="text"
                 rows={5}
               />
-            </Grid>
-            <Grid item xs={12}>
-              <Textfield name="imgUrl" label="Image Url" type="text" />
-            </Grid>
-            <Grid item xs={12}>
-              <Textfield name="imgText" label="Image Text" type="text" />
-            </Grid>
-            <Grid item xs={12}>
-              <Textfield name="tag" label="Tag" type="text" />
             </Grid>
             <Grid item xs={12}>
               <Select
@@ -155,6 +160,15 @@ export default function LoginForm(props) {
               />
             </Grid>
             <Grid item xs={12}>
+              <Textfield name="imgUrl" label="Image Url" type="text" />
+            </Grid>
+            <Grid item xs={12}>
+              <Textfield name="imgText" label="Image Text" type="text" />
+            </Grid>
+            <Grid item xs={12}>
+              <Textfield name="tag" label="Tag" type="text" />
+            </Grid>
+            <Grid item xs={12}>
               <DialogActions>
                 <Button
                   onClick={onClose}
@@ -164,7 +178,7 @@ export default function LoginForm(props) {
                 >
                   Cancel
                 </Button>
-                <ButtonForm>Login</ButtonForm>
+                <ButtonForm>Post</ButtonForm>
               </DialogActions>
             </Grid>
           </Grid>

@@ -23652,7 +23652,7 @@ MainFeaturedPost.propTypes = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ LoginForm)
+/* harmony export */   "default": () => (/* binding */ PostForm)
 /* harmony export */ });
 /* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
@@ -23692,18 +23692,32 @@ var useStyles = (0,_material_ui_core__WEBPACK_IMPORTED_MODULE_8__.default)(funct
     },
     selectEmpty: {
       marginTop: theme.spacing(2)
+    },
+    fieldHidden: {
+      width: 0
     }
   };
 });
 var INITIAL_FORM_STATE = {
   title: "",
-  summary: ""
+  summary: "",
+  content: "",
+  imgUrl: "",
+  imgText: "",
+  tag: "",
+  category: "",
+  authorId: "9877"
 };
 var FORM_VALIDATION = yup__WEBPACK_IMPORTED_MODULE_1__.object().shape({
   title: yup__WEBPACK_IMPORTED_MODULE_1__.string().required("Required"),
-  summary: yup__WEBPACK_IMPORTED_MODULE_1__.string().required("Required")
+  summary: yup__WEBPACK_IMPORTED_MODULE_1__.string().required("Required"),
+  content: yup__WEBPACK_IMPORTED_MODULE_1__.string().required("Required"),
+  imgUrl: yup__WEBPACK_IMPORTED_MODULE_1__.string().required("Required"),
+  imgText: yup__WEBPACK_IMPORTED_MODULE_1__.string().required("Required"),
+  tag: yup__WEBPACK_IMPORTED_MODULE_1__.string().required("Required"),
+  category: yup__WEBPACK_IMPORTED_MODULE_1__.string().required("Required")
 });
-function LoginForm(props) {
+function PostForm(props) {
   var classes = useStyles();
   var onClose = props.onClose;
 
@@ -23764,7 +23778,7 @@ function LoginForm(props) {
       validationSchema: FORM_VALIDATION,
       onSubmit: function onSubmit(values) {
         // Send data to the server
-        api.post("/user/login", values).then(function (response) {
+        api.post("/post/store", values).then(function (response) {
           return response.data;
         }).then(function (data) {
           handleSnackbarMessage(data.message, data.status);
@@ -23798,10 +23812,18 @@ function LoginForm(props) {
             xs: 12,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Textfield__WEBPACK_IMPORTED_MODULE_4__.default, {
               multiline: true,
-              name: "cotent",
+              name: "content",
               label: "Content",
               type: "text",
               rows: 5
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
+            item: true,
+            xs: 12,
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Select__WEBPACK_IMPORTED_MODULE_6__.default, {
+              name: "category",
+              label: "Category",
+              options: ["technology", "design", "culture", "business", "politics", "opinion", "science", "health", "style", "travel"]
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
             item: true,
@@ -23830,14 +23852,6 @@ function LoginForm(props) {
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
             item: true,
             xs: 12,
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Select__WEBPACK_IMPORTED_MODULE_6__.default, {
-              name: "category",
-              label: "Category",
-              options: ["technology", "design", "culture", "business", "politics", "opinion", "science", "health", "style", "travel"]
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
-            item: true,
-            xs: 12,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_material_ui_core__WEBPACK_IMPORTED_MODULE_10__.default, {
               children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_11__.default, {
                 onClick: onClose,
@@ -23846,7 +23860,7 @@ function LoginForm(props) {
                 className: classes.cancelButton,
                 children: "Cancel"
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Button__WEBPACK_IMPORTED_MODULE_5__.default, {
-                children: "Login"
+                children: "Post"
               })]
             })
           })]

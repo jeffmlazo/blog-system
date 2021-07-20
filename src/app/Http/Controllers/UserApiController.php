@@ -45,7 +45,7 @@ class UserApiController extends Controller
             'password' => 'required',
             'userType' => 'required',
             'emailAddress' => 'required',
-            'mobile' => 'integer',
+            'mobile' => 'numeric',
         ]);
 
         if ($validator->fails()) {
