@@ -16,7 +16,7 @@ class PostApiController extends Controller
      */
     public function index()
     {
-        //
+        return Post::all();
     }
 
     /**
@@ -43,8 +43,8 @@ class PostApiController extends Controller
             'content' => 'required',
             'imgUrl' => 'required',
             'imgText' => 'required',
-            'tag' => 'required',
-            'category' => 'required',
+            'tagId' => 'required',
+            'categoryId' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -64,10 +64,12 @@ class PostApiController extends Controller
                 'category_id' => request('categoryId'),
             ]);
 
-            return [
-                'status' => 'success',
-                'message' => 'Blog was successfully save!'
-            ];
+            // return [
+            //     'status' => 'success',
+            //     'message' => 'Blog was successfully save!'
+            // ];
+
+            return response()->json(['status' => 'success', 'message' => 'Blog was successfully save!'], 200);
         }
     }
 
@@ -91,13 +93,8 @@ class PostApiController extends Controller
     public function edit($id)
     {
         $post = Post::find($id)->first();
-
-        dd($post);
-
-        // return [
-        //     'status' => 'success',
-        //     'message' => 'Blog was successfully posted!'
-        // ];
+        // dd($post);
+        return response()->json([$post], 200);
     }
 
     /**
@@ -109,7 +106,37 @@ class PostApiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'summary' => 'required',
+            'content' => 'required',
+            'imgUrl' => 'required',
+            'imgText' => 'required',
+            'tag' => 'required',
+            'category' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(['status' => 'error', 'message' => $errors->all()], 500);
+        } else {
+            Post::where('id', $id)
+                ->update([
+                    'title' => request('title'),
+                    'summary' => request('summary'),
+                    'content' => request('content'),
+                    'img_url' => request('imgUrl'),
+                    'img_text' => request('imgText'),
+                    'published_at' => request('publishedAt'),
+                    'tag_id' => request('tagId'),
+                    'category_id' => request('categoryId'),
+                ]);
+
+            return [
+                'status' => 'success',
+                'message' => 'Blog was successfully updated!'
+            ];
+        }
     }
 
     /**
@@ -120,6 +147,12 @@ class PostApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+
+        return [
+            'status' => 'success',
+            'message' => 'Post was successfully deleted!'
+        ];
     }
 }

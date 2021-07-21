@@ -156,6 +156,11 @@ export default function RegisterForm(props) {
               <Select
                 name="userType"
                 label="User Type"
+                // options={[
+                //   { id: 1, type: "user" },
+                //   { id: 2, type: "author" },
+                //   "admin",
+                // ]}
                 options={["user", "author", "admin"]}
               />
             </Grid>
