@@ -26,12 +26,14 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
 
   return (
     <TextField {...configSelect}>
-      {Object.keys(options).map((item, pos) => {
-        // console.log(options);
-        // console.log(item);
+      {options.map((obj, pos) => {
+        // console.log(obj.id + obj.title);
+        // console.log(obj);
+        // console.log(pos);
+
         return (
-          <MenuItem key={pos} value={options[item]}>
-            {capitalize(options[item])}
+          <MenuItem key={pos} value={obj.id}>
+            {capitalize(obj.option)}
           </MenuItem>
         );
       })}

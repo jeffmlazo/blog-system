@@ -156,12 +156,12 @@ export default function RegisterForm(props) {
               <Select
                 name="userType"
                 label="User Type"
-                // options={[
-                //   { id: 1, type: "user" },
-                //   { id: 2, type: "author" },
-                //   "admin",
-                // ]}
-                options={["user", "author", "admin"]}
+                options={[
+                  { id: 1, option: "user" },
+                  { id: 2, option: "author" },
+                  { id: 3, option: "admin" },
+                ]}
+                // options={["user", "author", "admin"]}
               />
             </Grid>
             <Grid item xs={12}>

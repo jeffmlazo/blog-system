@@ -145,17 +145,29 @@ export default function PostForm(props) {
               <Select
                 name="category"
                 label="Category"
+                // options={[
+                //   "technology",
+                //   "design",
+                //   "culture",
+                //   "business",
+                //   "politics",
+                //   "opinion",
+                //   "science",
+                //   "health",
+                //   "style",
+                //   "travel",
+                // ]}
                 options={[
-                  "technology",
-                  "design",
-                  "culture",
-                  "business",
-                  "politics",
-                  "opinion",
-                  "science",
-                  "health",
-                  "style",
-                  "travel",
+                  { id: 1, option: "technology" },
+                  { id: 2, option: "design" },
+                  { id: 3, option: "culture" },
+                  { id: 4, option: "business" },
+                  { id: 5, option: "politics" },
+                  { id: 6, option: "opinion" },
+                  { id: 7, option: "science" },
+                  { id: 8, option: "health" },
+                  { id: 9, option: "style" },
+                  { id: 10, option: "travel" },
                 ]}
               />
             </Grid>

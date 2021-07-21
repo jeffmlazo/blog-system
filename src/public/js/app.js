@@ -22670,12 +22670,13 @@ var SelectWrapper = function SelectWrapper(_ref) {
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__.default, _objectSpread(_objectSpread({}, configSelect), {}, {
-    children: Object.keys(options).map(function (item, pos) {
-      // console.log(options);
-      // console.log(item);
+    children: options.map(function (obj, pos) {
+      // console.log(obj.id + obj.title);
+      // console.log(obj);
+      // console.log(pos);
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__.default, {
-        value: options[item],
-        children: (0,_material_ui_core__WEBPACK_IMPORTED_MODULE_4__.default)(options[item])
+        value: obj.id,
+        children: (0,_material_ui_core__WEBPACK_IMPORTED_MODULE_4__.default)(obj.option)
       }, pos);
     })
   }));
@@ -23822,8 +23823,50 @@ function PostForm(props) {
             xs: 12,
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Select__WEBPACK_IMPORTED_MODULE_6__.default, {
               name: "category",
-              label: "Category",
-              options: ["technology", "design", "culture", "business", "politics", "opinion", "science", "health", "style", "travel"]
+              label: "Category" // options={[
+              //   "technology",
+              //   "design",
+              //   "culture",
+              //   "business",
+              //   "politics",
+              //   "opinion",
+              //   "science",
+              //   "health",
+              //   "style",
+              //   "travel",
+              // ]}
+              ,
+              options: [{
+                id: 1,
+                option: "technology"
+              }, {
+                id: 2,
+                option: "design"
+              }, {
+                id: 3,
+                option: "culture"
+              }, {
+                id: 4,
+                option: "business"
+              }, {
+                id: 5,
+                option: "politics"
+              }, {
+                id: 6,
+                option: "opinion"
+              }, {
+                id: 7,
+                option: "science"
+              }, {
+                id: 8,
+                option: "health"
+              }, {
+                id: 9,
+                option: "style"
+              }, {
+                id: 10,
+                option: "travel"
+              }]
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
             item: true,
@@ -24163,7 +24206,17 @@ function RegisterForm(props) {
             children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_FormsUI_Select__WEBPACK_IMPORTED_MODULE_5__.default, {
               name: "userType",
               label: "User Type",
-              options: ["user", "author", "admin"]
+              options: [{
+                id: 1,
+                option: "user"
+              }, {
+                id: 2,
+                option: "author"
+              }, {
+                id: 3,
+                option: "admin"
+              }] // options={["user", "author", "admin"]}
+
             })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_material_ui_core__WEBPACK_IMPORTED_MODULE_9__.default, {
             item: true,

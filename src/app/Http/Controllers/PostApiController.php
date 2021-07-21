@@ -43,8 +43,8 @@ class PostApiController extends Controller
             'content' => 'required',
             'imgUrl' => 'required',
             'imgText' => 'required',
-            'tagId' => 'required',
-            'categoryId' => 'required',
+            'tag' => 'required',
+            'category' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -60,8 +60,8 @@ class PostApiController extends Controller
                 'img_url' => request('imgUrl'),
                 'img_text' => request('imgText'),
                 'published_at' => request('publishedAt'),
-                'tag_id' => request('tagId'),
-                'category_id' => request('categoryId'),
+                'tag_id' => request('tag'),
+                'category_id' => request('category'),
             ]);
 
             // return [
