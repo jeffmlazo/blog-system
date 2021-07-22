@@ -117,7 +117,7 @@ export default function RegisterForm(props) {
             .post("/user/store", values)
             .then((response) => response.data)
             .then((data) => {
-              console.log(data);
+              // console.log(data);
               handleSnackbarMessage(data.message, data.status);
               setTimeout(() => {
                 onClose();

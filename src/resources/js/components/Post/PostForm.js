@@ -13,6 +13,7 @@ import {
 import Textfield from "../FormsUI/Textfield";
 import ButtonForm from "../FormsUI/Button";
 import Select from "../FormsUI/Select";
+import DateTimePicker from "../FormsUI/DateTimePicker";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -35,7 +36,8 @@ const INITIAL_FORM_STATE = {
   imgText: "",
   tag: "",
   category: "",
-  authorId: "9877",
+  authorId: "1",
+  publishedAt: "",
 };
 
 const FORM_VALIDATION = Yup.object().shape({
@@ -46,6 +48,7 @@ const FORM_VALIDATION = Yup.object().shape({
   imgText: Yup.string().required("Required"),
   tag: Yup.string().required("Required"),
   category: Yup.string().required("Required"),
+  publishedAt: Yup.string().required("Required"),
 });
 
 export default function PostForm(props) {
@@ -115,6 +118,9 @@ export default function PostForm(props) {
             .then((response) => response.data)
             .then((data) => {
               handleSnackbarMessage(data.message, data.status);
+              setTimeout(() => {
+                onClose();
+              }, 4000);
             });
         }}
       >
@@ -145,18 +151,6 @@ export default function PostForm(props) {
               <Select
                 name="category"
                 label="Category"
-                // options={[
-                //   "technology",
-                //   "design",
-                //   "culture",
-                //   "business",
-                //   "politics",
-                //   "opinion",
-                //   "science",
-                //   "health",
-                //   "style",
-                //   "travel",
-                // ]}
                 options={[
                   { id: 1, option: "technology" },
                   { id: 2, option: "design" },
@@ -179,6 +173,9 @@ export default function PostForm(props) {
             </Grid>
             <Grid item xs={12}>
               <Textfield name="tag" label="Tag" type="text" />
+            </Grid>
+            <Grid item xs={12}>
+              <DateTimePicker name="publishedAt" label="Publish Date" />
             </Grid>
             <Grid item xs={12}>
               <DialogActions>

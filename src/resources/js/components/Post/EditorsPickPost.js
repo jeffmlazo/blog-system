@@ -37,8 +37,8 @@ export default function EditorsPickPost(props) {
       <Card className={classes.root}>
         <CardMedia
           className={classes.cover}
-          image={post.imageUrl}
-          title={post.imageTitle}
+          image={post.image_url}
+          title={post.image_title}
         />
         <div className={classes.details}>
           <CardContent className={classes.content}>

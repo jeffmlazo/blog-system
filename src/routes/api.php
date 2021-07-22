@@ -3,6 +3,8 @@
 use App\Models\User;
 use App\Http\Controllers\UserApiController;
 use App\Http\Controllers\PostApiController;
+use App\Http\Controllers\CategoryApiController;
+use App\Http\Controllers\TagApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -59,7 +61,7 @@ Route::post('/category/store', [CategoryApiController::class, 'store']);
 Route::get('/category/{id}/edit', [CategoryApiController::class, 'edit']);
 Route::put('/category/{id}', [CategoryApiController::class, 'update']);
 Route::delete('/category/{id}', [CategoryApiController::class, 'destroy']);
-Route::get('/category/{id}', [PostApiController::class, 'show']);
+Route::get('/category/{id}', [CategoryApiController::class, 'show']);
 
 // Tag API Routes
 Route::get('/tag', [TagApiController::class, 'index']);
