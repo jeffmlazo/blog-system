@@ -78,7 +78,8 @@ class PostApiController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id)->first();
+        return response()->json([$post], 200);
     }
 
     /**
@@ -90,7 +91,6 @@ class PostApiController extends Controller
     public function edit($id)
     {
         $post = Post::find($id)->first();
-        // dd($post);
         return response()->json([$post], 200);
     }
 
@@ -129,10 +129,7 @@ class PostApiController extends Controller
                     'category_id' => request('categoryId'),
                 ]);
 
-            return [
-                'status' => 'success',
-                'message' => 'Blog was successfully updated!'
-            ];
+            return response()->json(['status' => 'success', 'message' => 'Post was successfully updated!'], 200);
         }
     }
 
@@ -147,9 +144,6 @@ class PostApiController extends Controller
         $post = Post::find($id);
         $post->delete();
 
-        return [
-            'status' => 'success',
-            'message' => 'Post was successfully deleted!'
-        ];
+        return response()->json(['status' => 'success', 'message' => 'Post was successfully deleted!'], 200);
     }
 }

@@ -39,6 +39,8 @@ export default function Header(props) {
         {/* <Route path="/dashboard" component={Dashboard} /> */}
         <LoginModal />
         <PostModal />
+
+        {/* <Link href="/"> */}
         <Typography
           component="h2"
           variant="h5"
@@ -49,6 +51,7 @@ export default function Header(props) {
         >
           {title}
         </Typography>
+        {/* </Link> */}
         <IconButton>
           <SearchIcon />
         </IconButton>
