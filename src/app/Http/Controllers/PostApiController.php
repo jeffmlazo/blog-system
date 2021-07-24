@@ -78,7 +78,7 @@ class PostApiController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id)->first();
+        $post = Post::findOrFail($id);
         return response()->json([$post], 200);
     }
 
@@ -90,7 +90,7 @@ class PostApiController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id)->first();
+        $post = Post::findOrFail($id);
         return response()->json([$post], 200);
     }
 

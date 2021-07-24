@@ -23,7 +23,7 @@ const api = create({
 function SinglePost() {
   const classes = useStyles();
   const { id } = useParams();
-  const [post, setPost] = useState();
+  const [post, setPost] = useState([]);
 
   const getPost = async () => {
     // 2. apisauce will fetch from the server asynchronously
