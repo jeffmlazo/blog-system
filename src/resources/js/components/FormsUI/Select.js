@@ -28,8 +28,6 @@ const SelectWrapper = ({ name, options, ...otherProps }) => {
     <TextField {...configSelect}>
       {options.map((obj, pos) => {
         // console.log(obj.id + obj.title);
-        // console.log(obj);
-        // console.log(pos);
 
         return (
           <MenuItem key={pos} value={obj.id}>

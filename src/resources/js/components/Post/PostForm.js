@@ -14,6 +14,7 @@ import Textfield from "../FormsUI/Textfield";
 import ButtonForm from "../FormsUI/Button";
 import Select from "../FormsUI/Select";
 import DateTimePicker from "../FormsUI/DateTimePicker";
+// import { addPost } from "../Api/PostApi.js";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -28,32 +29,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const INITIAL_FORM_STATE = {
-  title: "",
-  summary: "",
-  content: "",
-  imgUrl: "",
-  imgText: "",
-  tag: "",
-  category: "",
-  authorId: "1",
-  publishedAt: "",
-};
-
-const FORM_VALIDATION = Yup.object().shape({
-  title: Yup.string().required("Required"),
-  summary: Yup.string().required("Required"),
-  content: Yup.string().required("Required"),
-  imgUrl: Yup.string().required("Required"),
-  imgText: Yup.string().required("Required"),
-  tag: Yup.string().required("Required"),
-  category: Yup.string().required("Required"),
-  publishedAt: Yup.string().required("Required"),
-});
-
 export default function PostForm(props) {
+  const INITIAL_FORM_STATE = {
+    title: "",
+    summary: "",
+    content: "",
+    imgUrl: "",
+    imgText: "",
+    tag: "",
+    category: "",
+    authorId: "1",
+    publishedAt: "",
+  };
+
+  const FORM_VALIDATION = Yup.object().shape({
+    title: Yup.string().required("Required"),
+    summary: Yup.string().required("Required"),
+    content: Yup.string().required("Required"),
+    imgUrl: Yup.string().required("Required"),
+    imgText: Yup.string().required("Required"),
+    tag: Yup.string().required("Required"),
+    category: Yup.string().required("Required"),
+    publishedAt: Yup.string().required("Required"),
+  });
+
   const classes = useStyles();
-  const { onClose } = props;
+  const { onClose, isLoading, setLoading } = props;
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSnackbarMessage = (msg, variant) => {
@@ -92,17 +93,20 @@ export default function PostForm(props) {
     }
   };
 
+  // Get the token
+  const token = document.head
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content");
+
   // API base Url
   const api = create({
     baseURL: "http://localhost/api",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-CSRF-TOKEN": token,
+    },
   });
-
-  // get
-  // api
-  //   .get("/repos/skellock/apisauce/commits")
-  //   .then((response) => response.data[0].commit.message)
-  //   .then(console.log);
 
   return (
     <div>
@@ -111,23 +115,37 @@ export default function PostForm(props) {
           ...INITIAL_FORM_STATE,
         }}
         validationSchema={FORM_VALIDATION}
-        onSubmit={(values) => {
+        onSubmit={async (values) => {
+          setLoading(true);
+          //TODO: Refactor code here api calls
+          // const data = addPost(values);
+          // console.log(data);
+          // handleSnackbarMessage(data.message, data.status);
+          // setTimeout(() => {
+          //   onClose();
+          // }, 4000);
+
           // Send data to the server
-          api
-            .post("/post/store", values)
-            .then((response) => response.data)
-            .then((data) => {
-              handleSnackbarMessage(data.message, data.status);
-              setTimeout(() => {
-                onClose();
-              }, 4000);
-            });
+          const post = await api.post("/post/store", values);
+          setLoading(false);
+          if (post.ok && post.data) {
+            handleSnackbarMessage(post.data.message, post.data.status);
+            setTimeout(() => {
+              onClose();
+            }, 4000);
+          }
         }}
       >
         <Form>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Textfield autoFocus name="title" label="Title" type="text" />
+              <Textfield
+                autoFocus
+                name="title"
+                label="Title"
+                type="text"
+                disabled={isLoading}
+              />
             </Grid>
             <Grid item xs={12}>
               <Textfield
@@ -136,6 +154,7 @@ export default function PostForm(props) {
                 label="Summary"
                 type="text"
                 rows={5}
+                disabled={isLoading}
               />
             </Grid>
             <Grid item xs={12}>
@@ -145,6 +164,7 @@ export default function PostForm(props) {
                 label="Content"
                 type="text"
                 rows={5}
+                disabled={isLoading}
               />
             </Grid>
             <Grid item xs={12}>
@@ -163,19 +183,39 @@ export default function PostForm(props) {
                   { id: 9, option: "style" },
                   { id: 10, option: "travel" },
                 ]}
+                disabled={isLoading}
               />
             </Grid>
             <Grid item xs={12}>
-              <Textfield name="imgUrl" label="Image Url" type="text" />
+              <Textfield
+                name="imgUrl"
+                label="Image Url"
+                type="text"
+                disabled={isLoading}
+              />
             </Grid>
             <Grid item xs={12}>
-              <Textfield name="imgText" label="Image Text" type="text" />
+              <Textfield
+                name="imgText"
+                label="Image Text"
+                type="text"
+                disabled={isLoading}
+              />
             </Grid>
             <Grid item xs={12}>
-              <Textfield name="tag" label="Tag" type="text" />
+              <Textfield
+                name="tag"
+                label="Tag"
+                type="text"
+                disabled={isLoading}
+              />
             </Grid>
             <Grid item xs={12}>
-              <DateTimePicker name="publishedAt" label="Publish Date" />
+              <DateTimePicker
+                name="publishedAt"
+                label="Publish Date"
+                disabled={isLoading}
+              />
             </Grid>
             <Grid item xs={12}>
               <DialogActions>
@@ -184,10 +224,11 @@ export default function PostForm(props) {
                   variant="contained"
                   color="primary"
                   className={classes.cancelButton}
+                  disabled={isLoading}
                 >
                   Cancel
                 </Button>
-                <ButtonForm>Post</ButtonForm>
+                <ButtonForm disabled={isLoading}>Post</ButtonForm>
               </DialogActions>
             </Grid>
           </Grid>

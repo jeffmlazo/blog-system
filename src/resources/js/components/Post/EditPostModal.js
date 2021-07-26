@@ -6,11 +6,13 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  LinearProgress,
 } from "@material-ui/core";
 import { SnackbarProvider } from "notistack";
 
 export default function EditPostModal() {
   const [open, setOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -34,10 +36,15 @@ export default function EditPostModal() {
         >
           <DialogTitle id="form-dialog-title">Edit Post</DialogTitle>
           <DialogContent>
+            {isLoading ? <LinearProgress /> : undefined}
             <DialogContentText>
               Please fill up the neccessary required fields.
             </DialogContentText>
-            <EditPostForm onClose={handleClose} />
+            <EditPostForm
+              isLoading={isLoading}
+              setLoading={setLoading}
+              onClose={handleClose}
+            />
           </DialogContent>
         </Dialog>
       </SnackbarProvider>

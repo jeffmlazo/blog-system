@@ -6,24 +6,33 @@ import {
   DialogContentText,
   DialogTitle,
   DialogActions,
+  LinearProgress,
 } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 import { create } from "apisauce";
-import { useHistory } from "react-router-dom";
 
 export default function DeletePostModal(prop) {
-  let history = useHistory();
   const [open, setOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const { postId } = prop;
+
   const { enqueueSnackbar } = useSnackbar();
 
+  // Get the token
+  const token = document.head
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content");
+
   const api = create({
-    baseURL: "http://localhost/api",
-    headers: { "Content-Type": "application/json" },
+    baseURL: `${baseUrl}/api`,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-CSRF-TOKEN": token,
+    },
   });
 
   //#region FUNCTIONS
-
   const handleSnackbarMessage = (msg, variant) => {
     if (variant === "success" && typeof msg === "string") {
       // Success Message
@@ -61,14 +70,15 @@ export default function DeletePostModal(prop) {
   };
 
   const deletePost = async () => {
+    setLoading(true);
     // 2. apisauce will fetch from the server asynchronously
     const post = await api.delete(`/post/${postId}`);
+    setLoading(false);
     // 3. on awaiting successfully the next code will run
     if (post.ok && post.data) {
       handleSnackbarMessage(post.data.message, post.data.status);
       setTimeout(() => {
-        // history.push("/");
-        window.location.href = "http://localhost";
+        window.location.href = baseUrl;
       }, 4000);
     }
   };
@@ -95,14 +105,25 @@ export default function DeletePostModal(prop) {
       >
         <DialogTitle id="form-dialog-title">Delete Post</DialogTitle>
         <DialogContent>
+          {isLoading ? <LinearProgress /> : undefined}
           <DialogContentText>
             Are you sure you want to delete this post?.
           </DialogContentText>
           <DialogActions>
-            <Button onClick={handleClose} variant="contained" color="primary">
+            <Button
+              onClick={handleClose}
+              variant="contained"
+              color="primary"
+              disabled={isLoading}
+            >
               Cancel
             </Button>
-            <Button onClick={deletePost} variant="contained" color="secondary">
+            <Button
+              onClick={deletePost}
+              variant="contained"
+              color="secondary"
+              disabled={isLoading}
+            >
               Delete
             </Button>
           </DialogActions>

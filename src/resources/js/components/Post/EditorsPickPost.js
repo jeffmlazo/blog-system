@@ -43,7 +43,7 @@ export default function EditorsPickPost(props) {
         />
         <div className={classes.details}>
           <CardContent className={classes.content}>
-            <Link to={`/post/${post.id}`}>
+            <Link to={`/post/${post.slug}`}>
               <Typography component="h6" variant="h6">
                 {post.title}
               </Typography>

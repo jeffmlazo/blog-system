@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -38,6 +39,7 @@ class PostApiController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'summary' => 'required',
@@ -76,9 +78,9 @@ class PostApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::where("slug", $slug)->firstOrFail();
         return response()->json([$post], 200);
     }
 
@@ -103,6 +105,7 @@ class PostApiController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'summary' => 'required',
@@ -125,8 +128,8 @@ class PostApiController extends Controller
                     'img_url' => request('imgUrl'),
                     'img_text' => request('imgText'),
                     'published_at' => request('publishedAt'),
-                    'tag' => request('tagId'),
-                    'category_id' => request('categoryId'),
+                    'tag' => request('tag'),
+                    'category_id' => request('category'),
                 ]);
 
             return response()->json(['status' => 'success', 'message' => 'Post was successfully updated!'], 200);

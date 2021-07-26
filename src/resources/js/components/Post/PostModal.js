@@ -6,19 +6,13 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  makeStyles,
+  LinearProgress,
 } from "@material-ui/core";
 import { SnackbarProvider } from "notistack";
 
-const useStyles = makeStyles((theme) => ({
-  // alertBox: {
-  //   margin: theme.spacing(2),
-  // },
-}));
-
 export default function PostModal() {
-  const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -47,10 +41,15 @@ export default function PostModal() {
         >
           <DialogTitle id="form-dialog-title">Add Post</DialogTitle>
           <DialogContent>
+            {isLoading ? <LinearProgress /> : undefined}
             <DialogContentText>
               Please fill up the neccessary required fields.
             </DialogContentText>
-            <PostForm onClose={handleClose} />
+            <PostForm
+              isLoading={isLoading}
+              setLoading={setLoading}
+              onClose={handleClose}
+            />
           </DialogContent>
         </Dialog>
       </div>

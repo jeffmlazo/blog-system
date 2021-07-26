@@ -23,18 +23,6 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-// Route::get('user', 'UserApiController@index');
-// Route::post('user/create', 'UserController@create');
-// Route::get('user', [UserController::class, 'index']);
-
-// Route::get('/user', [UserApiController::class, 'create']);
-// Route::get('user', 'App\\Http\\Controllers\\UserApiController@index');
-// Route::post('/user', [UserController::class, 'create']);
-// Route::get('posts', function () {
-// Route::get('users', function () {
-//     return User::all();
-// });
-
 // User API Routes
 Route::get('/user', [UserApiController::class, 'index']);
 Route::get('/user/create', [UserApiController::class, 'create']);
