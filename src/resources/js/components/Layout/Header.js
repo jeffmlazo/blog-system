@@ -7,10 +7,10 @@ import {
   Link,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import LoginModal from "./Login/LoginModal";
-import RegisterModal from "./Signup/RegisterModal";
-import PostModal from "./Post/PostModal";
-// import Dashboard from "./Dashboard/Dashboard";
+import LoginModal from "../Login/LoginModal";
+import RegisterModal from "../Signup/RegisterModal";
+import PostModal from "../Post/PostModal";
+// import Dashboard from "../Dashboard/Dashboard";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {

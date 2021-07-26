@@ -10,10 +10,12 @@ import {
 } from "@material-ui/core";
 import { SnackbarProvider } from "notistack";
 
-export default function EditPostModal() {
+export default function EditPostModal(props) {
   const [open, setOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const { postId } = props;
 
+  // console.log(postId);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -44,6 +46,7 @@ export default function EditPostModal() {
               isLoading={isLoading}
               setLoading={setLoading}
               onClose={handleClose}
+              postId={postId}
             />
           </DialogContent>
         </Dialog>

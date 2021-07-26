@@ -1,12 +1,12 @@
 import ReactDOM from "react-dom";
 import { makeStyles, CssBaseline, Grid, Container } from "@material-ui/core";
 import { create } from "apisauce";
-import MainFeaturedPost from "./Post/MainFeaturedPost";
-import FeaturedPost from "./Post/FeaturedPost";
-import EditorsPick from "./Post/EditorsPick";
-import SinglePost from "./Post/SinglePost";
-import Header from "./Header";
-import Footer from "./Footer";
+import MainFeaturedPost from "../Post/MainFeaturedPost";
+import FeaturedPost from "../Post/FeaturedPost";
+import EditorsPick from "../Post/EditorsPick";
+import SinglePost from "../Post/SinglePost";
+import Header from "../Layout/Header";
+import Footer from "../Layout/Footer";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -118,7 +118,7 @@ function Main() {
                   <EditorsPick editorsPickPosts={editorPickPosts} />
                 </Grid>
               </Route>
-              <Route path="/post/:id">
+              <Route path="/post/:slug">
                 <SinglePost />
               </Route>
             </Switch>

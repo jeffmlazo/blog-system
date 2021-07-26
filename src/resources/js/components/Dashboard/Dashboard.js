@@ -18,10 +18,11 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./Navigation";
-import RecentPost from "./RecentPost";
-// import Users from "./Users";
-import Posts from "./Posts";
+import { Redirect } from "react-router-dom";
+import { mainListItems, secondaryListItems } from "../Dashboard/Navigation";
+import RecentPost from "../Dashboard/RecentPost";
+// import Users from "../Dashboard/Users";
+import Posts from "../Dashboard/Posts";
 
 function Copyright(props) {
   return (
@@ -87,11 +88,15 @@ const MuiDrawer = styled(Drawer, {
   },
 }));
 
-function DashboardContent() {
+function DashboardContent({ authorized }) {
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  if (!authorized) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Box sx={{ display: "flex" }}>

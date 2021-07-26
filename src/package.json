@@ -35,6 +35,7 @@
     "formik": "^2.2.9",
     "formik-material-ui": "^3.0.1",
     "formik-material-ui-lab": "0.0.8",
+    "html-react-parser": "^1.2.7",
     "notistack": "^1.0.9",
     "yup": "^0.32.9"
   }

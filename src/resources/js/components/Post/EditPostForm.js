@@ -49,9 +49,8 @@ export default function EditPostForm(props) {
   });
 
   const classes = useStyles();
-  const { onClose, isLoading, setLoading } = props;
+  const { postId, onClose, isLoading, setLoading } = props;
   const { enqueueSnackbar } = useSnackbar();
-  const { id } = useParams();
 
   const handleSnackbarMessage = (msg, variant) => {
     if (variant === "success" && typeof msg === "string") {
@@ -107,7 +106,7 @@ export default function EditPostForm(props) {
   const getPost = async () => {
     setLoading(true);
     // 2. apisauce will fetch from the server asynchronously
-    const post = await api.get(`/post/${id}/edit`);
+    const post = await api.get(`/post/${postId}/edit`);
     setLoading(false);
     // 3. on awaiting successfully the next code will run
     if (post.ok && post.data) {
@@ -144,6 +143,7 @@ export default function EditPostForm(props) {
             handleSnackbarMessage(post.data.message, post.data.status);
             setTimeout(() => {
               onClose();
+              window.location.href = baseUrl;
             }, 4000);
           }
         }}

@@ -3,9 +3,12 @@ import * as Yup from "yup";
 import { create } from "apisauce";
 import { useSnackbar } from "notistack";
 import { makeStyles, Grid, DialogActions, Button } from "@material-ui/core";
+import { Route } from "react-router-dom";
 
 import Textfield from "../FormsUI/Textfield";
 import ButtonForm from "../FormsUI/Button";
+// import Dashboard from "../Dashboard/Dashboard";
+import Dashboard from "../Dashboard/DashboardV2";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -80,14 +83,13 @@ export default function LoginForm(props) {
     headers: { "Content-Type": "application/json" },
   });
 
-  // get
-  // api
-  //   .get("/repos/skellock/apisauce/commits")
-  //   .then((response) => response.data[0].commit.message)
-  //   .then(console.log);
-
   return (
     <div>
+      <Route
+        exact
+        path="/dashboard"
+        component={() => <Dashboard authorized={true} />}
+      />
       <Formik
         initialValues={{
           ...INITIAL_FORM_STATE,

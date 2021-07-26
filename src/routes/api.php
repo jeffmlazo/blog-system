@@ -40,7 +40,7 @@ Route::post('/post/store', [PostApiController::class, 'store']);
 Route::get('/post/{id}/edit', [PostApiController::class, 'edit']);
 Route::put('/post/{id}', [PostApiController::class, 'update']);
 Route::delete('/post/{id}', [PostApiController::class, 'destroy']);
-Route::get('/post/{id}', [PostApiController::class, 'show']);
+// Route::get('/post/{id}', [PostApiController::class, 'show']);
 
 // Category API Routes
 Route::get('/category', [CategoryApiController::class, 'index']);

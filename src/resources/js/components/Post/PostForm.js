@@ -132,6 +132,7 @@ export default function PostForm(props) {
             handleSnackbarMessage(post.data.message, post.data.status);
             setTimeout(() => {
               onClose();
+              window.location.href = baseURL;
             }, 4000);
           }
         }}

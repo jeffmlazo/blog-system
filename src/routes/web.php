@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PostApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+// POST Route
+Route::get('/post/{id}', [PostApiController::class, 'show']);

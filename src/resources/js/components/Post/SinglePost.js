@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { create } from "apisauce";
 import { makeStyles, Typography, Grid, Paper, Button } from "@material-ui/core";
 import { SnackbarProvider } from "notistack";
+import parse from "html-react-parser";
 import Tags from "../Tag/Tags";
 import EditPostModal from "../Post/EditPostModal";
 import DeletePostModal from "../Post/DeletePostModal";
@@ -14,20 +15,29 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Get the token
+const token = document.head
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute("content");
+
 // API base Url
 const api = create({
-  baseURL: "http://localhost/api",
-  headers: { "Content-Type": "application/json" },
+  baseURL: "http://localhost/",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "X-CSRF-TOKEN": token,
+  },
 });
 
 function SinglePost() {
   const classes = useStyles();
-  const { id } = useParams();
+  const { slug } = useParams();
   const [post, setPost] = useState([]);
 
   const getPost = async () => {
     // 2. apisauce will fetch from the server asynchronously
-    const post = await api.get(`/post/${id}`);
+    const post = await api.get(`/post/${slug}`);
     // 3. on awaiting successfully the next code will run
     if (post.ok && post.data) {
       setPost(post.data);
@@ -60,13 +70,13 @@ function SinglePost() {
                   {post.published_at}
                 </Typography>
                 <Typography variant="body1" gutterBottom>
-                  {post.content}
+                  {parse(post.content)}
                 </Typography>
                 <Tags tags={post.tag} />
               </Grid>
               <Grid item xs={12} md={12}>
-                <EditPostModal postId={id} />
-                <DeletePostModal postId={id} />
+                <EditPostModal postId={post.id} />
+                <DeletePostModal postId={post.id} />
               </Grid>
             </Grid>
           ))}
