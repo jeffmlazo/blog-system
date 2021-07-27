@@ -13,6 +13,7 @@ import {
 import Textfield from "../FormsUI/Textfield";
 import ButtonForm from "../FormsUI/Button";
 import Select from "../FormsUI/Select";
+import DateTimePicker from "../FormsUI/DateTimePicker";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -145,18 +146,6 @@ export default function PostForm(props) {
               <Select
                 name="category"
                 label="Category"
-                // options={[
-                //   "technology",
-                //   "design",
-                //   "culture",
-                //   "business",
-                //   "politics",
-                //   "opinion",
-                //   "science",
-                //   "health",
-                //   "style",
-                //   "travel",
-                // ]}
                 options={[
                   { id: 1, option: "technology" },
                   { id: 2, option: "design" },
@@ -179,6 +168,9 @@ export default function PostForm(props) {
             </Grid>
             <Grid item xs={12}>
               <Textfield name="tag" label="Tag" type="text" />
+            </Grid>
+            <Grid item xs={12}>
+              <DateTimePicker name="dateTime" label="Date" />
             </Grid>
             <Grid item xs={12}>
               <DialogActions>

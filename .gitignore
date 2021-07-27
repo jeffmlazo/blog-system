@@ -129,3 +129,7 @@ dist
 
 ### Docker Folders & Files
 mysql/
+
+### Composer
+src/package-lock.json
+src/composer.lock
