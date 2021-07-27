@@ -92,17 +92,20 @@ export default function RegisterForm(props) {
     }
   };
 
+  // Get the token
+  const token = document.head
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content");
+
   // API base Url
   const api = create({
     baseURL: "http://localhost/api",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-CSRF-TOKEN": token,
+    },
   });
-
-  // get
-  // api
-  //   .get("/repos/skellock/apisauce/commits")
-  //   .then((response) => response.data[0].commit.message)
-  //   .then(console.log);
 
   return (
     <div>

@@ -52,17 +52,15 @@ export default function LoginForm(props) {
           autoHideDuration: 3000,
         },
       });
-    } else if (variant === "error" && typeof msg === "object") {
-      // Error Messages
-      Array.from(msg).forEach(function (msg, index) {
-        enqueueSnackbar(msg, {
-          variant,
-          anchorOrigin: {
-            vertical: "top",
-            horizontal: "center",
-            autoHideDuration: 3000,
-          },
-        });
+    } else if (variant === "error") {
+      // Error Message
+      enqueueSnackbar(msg, {
+        variant,
+        anchorOrigin: {
+          vertical: "top",
+          horizontal: "center",
+          autoHideDuration: 3000,
+        },
       });
     } else {
       // Server or SQL Messages
@@ -77,10 +75,19 @@ export default function LoginForm(props) {
     }
   };
 
+  // Get the token
+  const token = document.head
+    .querySelector('meta[name="csrf-token"]')
+    .getAttribute("content");
+
   // API base Url
   const api = create({
-    baseURL: "http://localhost/api",
-    headers: { "Content-Type": "application/json" },
+    baseURL: baseUrl,
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-CSRF-TOKEN": token,
+    },
   });
 
   return (
@@ -101,7 +108,11 @@ export default function LoginForm(props) {
             .post("/user/login", values)
             .then((response) => response.data)
             .then((data) => {
+              // console.log(data);
+              console.log(data.userData);
               handleSnackbarMessage(data.message, data.status);
+
+              window.location = "/dassboard";
             });
         }}
       >

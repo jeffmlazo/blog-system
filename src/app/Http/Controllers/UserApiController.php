@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class UserApiController extends Controller
 {
@@ -63,13 +65,16 @@ class UserApiController extends Controller
                 'mobile' => request('mobile'),
             ]);
 
-            return [
-                'status' => 'success',
-                'message' => 'You have successfully registered!'
-            ];
+            return response()->json(['status' => 'success', 'message' => 'You have successfully registered!'], 201);
         }
     }
 
+    /**
+     * Handle an authentication attempt.
+     *
+     * @param Request $request
+     * @return void
+     */
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -81,38 +86,48 @@ class UserApiController extends Controller
             $errors = $validator->errors();
             return response()->json(['status' => 'error', 'message' => $errors->all()], 500);
         } else {
-            // Check Username
-            $user = User::where('username', request('username'))->first();
+            // // Check Username
+            // $user = User::where('username', request('username'))->first();
 
-            // Check password
-            if (!$user || !Hash::check(request("password"), $user->password)) {
-                return response([
-                    'status' => 'error',
-                    'message' => 'Invalid username or password.'
-                ], 401);
-            }
+            // // Check password
+            // if (!$user || !Hash::check(request("password"), $user->password)) {
 
-            // $token = $user->createToken('myapptoken')->plainTextToken;
+            //     return response()->json(['status' => 'error', 'message' => 'Invalid username or password.'], 401);
+            // }
 
-            $response = [
-                'status' => 'success',
-                'message' => $user,
-                // 'token' => $token
-                // 'token' => 'raaldkjaljdaljjadl3'
+            // return response()->json(['status' => 'success', 'message' => $user], 200);
+            $credentials = [
+                'username' => $request->username,
+                'password' => $request->password,
             ];
 
-            return response($response, 201);
+            if (Auth::attempt($credentials)) {
+                Auth::login(Auth::user());
+                $user = Auth::user();
 
-            // User::create([
-            //     'username' => request('username'),
-            //     'password' => Hash::make(request('password')),
+                // $request->session()->regenerate();
+
+                return response()->json(['status' => 'success', 'message' => 'User was successfully logged in.', 'userData' => $user], 200);
+
+                // return redirect()->intended('dashboard');
+            }
+
+            return response()->json(['status' => 'error', 'message' => 'Invalid username or password.'], 401);
+
+            // return back()->withErrors([
+            //     'username' => 'Invalid username or password.',
             // ]);
-
-            // return [
-            //     'status' => 'success',
-            //     'message' => 'You have successfully registered!'
-            // ];
         }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        Cache::flush();
+        $request->session()->flush();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
     /**
      * Display the specified resource.

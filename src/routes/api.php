@@ -27,7 +27,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', [UserApiController::class, 'index']);
 Route::get('/user/create', [UserApiController::class, 'create']);
 Route::post('/user/store', [UserApiController::class, 'store']);
-Route::post('/user/login', [UserApiController::class, 'login']);
+// Route::group(['middleware' => 'web'], function () {
+//     Route::post('/user/login', [UserApiController::class, 'login']);
+// });
 Route::get('/user/{id}/edit', [UserApiController::class, 'edit']);
 Route::put('/user/{id}', [UserApiController::class, 'update']);
 Route::delete('/user/{id}', [UserApiController::class, 'destroy']);

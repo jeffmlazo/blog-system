@@ -9,10 +9,7 @@ const DateTimePicker = ({ name, ...otherProps }) => {
     ...otherProps,
     type: "date",
     // variant: "outlined",
-<<<<<<< HEAD
-=======
     // defaultValue: "2021-07-22",
->>>>>>> 4f5786f42415f2cd425fdf564e5a1cdb5f096475
     fullWidth: true,
     InputLabelProps: {
       shrink: true,

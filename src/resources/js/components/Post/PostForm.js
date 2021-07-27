@@ -14,10 +14,7 @@ import Textfield from "../FormsUI/Textfield";
 import ButtonForm from "../FormsUI/Button";
 import Select from "../FormsUI/Select";
 import DateTimePicker from "../FormsUI/DateTimePicker";
-<<<<<<< HEAD
-=======
 // import { addPost } from "../Api/PostApi.js";
->>>>>>> 4f5786f42415f2cd425fdf564e5a1cdb5f096475
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
