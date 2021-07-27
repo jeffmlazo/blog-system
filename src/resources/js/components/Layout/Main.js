@@ -1,10 +1,14 @@
 import ReactDOM from "react-dom";
 import { makeStyles, CssBaseline, Grid, Container } from "@material-ui/core";
-import MainFeaturedPost from "./Post/MainFeaturedPost";
-import FeaturedPost from "./Post/FeaturedPost";
-import EditorsPick from "./Post/EditorsPick";
-import Header from "./Header";
-import Footer from "./Footer";
+import { create } from "apisauce";
+import MainFeaturedPost from "../Post/MainFeaturedPost";
+import FeaturedPost from "../Post/FeaturedPost";
+import EditorsPick from "../Post/EditorsPick";
+import SinglePost from "../Post/SinglePost";
+import Header from "../Layout/Header";
+import Footer from "../Layout/Footer";
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -12,18 +16,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const categories = [
-  { id: 1, title: "Technology", slug: "technology", url: "#" },
-  { id: 2, title: "Design", slug: "design", url: "#" },
-  { id: 3, title: "Culture", slug: "culture", url: "#" },
-  { id: 4, title: "Business", slug: "business", url: "#" },
-  { id: 5, title: "Politics", slug: "politics", url: "#" },
-  { id: 6, title: "Opinion", slug: "opinion", url: "#" },
-  { id: 7, title: "Science", slug: "science", url: "#" },
-  { id: 8, title: "Health", slug: "health", url: "#" },
-  { id: 9, title: "Style", slug: "style", url: "#" },
-  { id: 10, title: "Travel", slug: "travel", url: "#" },
-];
+// API base Url
+const api = create({
+  baseURL: "http://localhost/api",
+  headers: { "Content-Type": "application/json" },
+});
 
 const mainFeaturedPost = {
   id: 1,
@@ -71,61 +68,64 @@ const featuredPosts = [
   },
 ];
 
-const editorsPickPosts = [
-  {
-    id: 4,
-    title: "Passages of Lorem Ipsum available",
-    slug: "passages-of-lorem-ipsum-available",
-    imageUrl: "https://source.unsplash.com/user/erondu/800x600",
-    imgText: "Nullam nec faucibus risus. Integer rutrum metus ut est convallis",
-  },
-  {
-    id: 3,
-    title: "Discovered The Undoubtable Source",
-    slug: "discovered-the-undoubtable-source",
-    imageUrl: "https://placeimg.com/800/600/tech",
-    imgText: "Morbi ut augue quis nunc scelerisque rhoncus sed ut justo",
-  },
-  {
-    id: 2,
-    title: "Making This The First True Generator",
-    slug: "making-this-the-first-true-generator",
-    imageUrl: "https://placeimg.com/800/600/nature",
-    imgText: "Morbi ut augue quis nunc scelerisque rhoncus sed ut justo",
-  },
-  {
-    id: 1,
-    title: "Sed Do Eiusmod Tempor Incididunt Ut Labore",
-    slug: "sed-do-eiusmod-tempor-incididunt-ut-labore",
-    imageUrl: "https://placeimg.com/800/600/people",
-    imgText: "Morbi ut augue quis nunc scelerisque rhoncus sed ut justo",
-  },
-];
-
 function Main() {
   const classes = useStyles();
+  const [editorPickPosts, setEditorPickPosts] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-  // Registration variables
-  // const [users, setUsers] = useState([]);
+  //#region FUNCTIONS
+  const getCategories = async () => {
+    // 2. apisauce will fetch from the server asynchronously
+    const categories = await api.get("/category");
+    // 3. on awaiting successfully the next code will run
+    if (categories.ok && categories.data) {
+      setCategories(categories.data);
+    }
+  };
+
+  const getEditorPickPosts = async () => {
+    // 2. apisauce will fetch from the server asynchronously
+    const posts = await api.get("/post");
+    // 3. on awaiting successfully the next code will run
+    if (posts.ok && posts.data) {
+      setEditorPickPosts(posts.data);
+    }
+  };
+
+  useEffect(() => {
+    // 1. editorPickPosts will run once on page load
+    getEditorPickPosts();
+    getCategories();
+  }, []);
+  //#endregion
 
   return (
     <>
       <CssBaseline />
-      <Container maxWidth="lg">
-        <Header title="Blog System" categories={categories} />
-        <main>
-          <Grid container spacing={5} className={classes.mainGrid}>
-            <MainFeaturedPost post={mainFeaturedPost} />
-            {featuredPosts.map((post) => (
-              <FeaturedPost key={post.id} post={post} />
-            ))}
-          </Grid>
-          <Grid container spacing={5} className={classes.mainGrid}>
-            <EditorsPick editorsPickPosts={editorsPickPosts} />
-          </Grid>
-        </main>
-      </Container>
-      <Footer />
+      <Router>
+        <Container maxWidth="lg">
+          <Header title="Blog System" categories={categories} />
+          <main>
+            <Switch>
+              <Route exact path="/">
+                <Grid container spacing={5} className={classes.mainGrid}>
+                  <MainFeaturedPost post={mainFeaturedPost} />
+                  {featuredPosts.map((post) => (
+                    <FeaturedPost key={post.id} post={post} />
+                  ))}
+                </Grid>
+                <Grid container spacing={5} className={classes.mainGrid}>
+                  <EditorsPick editorsPickPosts={editorPickPosts} />
+                </Grid>
+              </Route>
+              <Route path="/post/:slug">
+                <SinglePost />
+              </Route>
+            </Switch>
+          </main>
+        </Container>
+        <Footer />
+      </Router>
     </>
   );
 }

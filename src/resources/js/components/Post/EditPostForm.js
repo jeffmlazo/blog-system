@@ -2,22 +2,14 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { create } from "apisauce";
 import { useSnackbar } from "notistack";
-import {
-  makeStyles,
-  Grid,
-  DialogActions,
-  Button,
-  // TextField,
-} from "@material-ui/core";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { makeStyles, Grid, DialogActions, Button } from "@material-ui/core";
 
 import Textfield from "../FormsUI/Textfield";
 import ButtonForm from "../FormsUI/Button";
 import Select from "../FormsUI/Select";
 import DateTimePicker from "../FormsUI/DateTimePicker";
-<<<<<<< HEAD
-=======
-// import { addPost } from "../Api/PostApi.js";
->>>>>>> 4f5786f42415f2cd425fdf564e5a1cdb5f096475
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -32,8 +24,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PostForm(props) {
-  const INITIAL_FORM_STATE = {
+export default function EditPostForm(props) {
+  const [INITIAL_FORM_STATE, setInitial] = useState({
     title: "",
     summary: "",
     content: "",
@@ -43,7 +35,7 @@ export default function PostForm(props) {
     category: "",
     authorId: "1",
     publishedAt: "",
-  };
+  });
 
   const FORM_VALIDATION = Yup.object().shape({
     title: Yup.string().required("Required"),
@@ -57,7 +49,7 @@ export default function PostForm(props) {
   });
 
   const classes = useStyles();
-  const { onClose, isLoading, setLoading } = props;
+  const { postId, onClose, isLoading, setLoading } = props;
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSnackbarMessage = (msg, variant) => {
@@ -111,6 +103,31 @@ export default function PostForm(props) {
     },
   });
 
+  const getPost = async () => {
+    setLoading(true);
+    // 2. apisauce will fetch from the server asynchronously
+    const post = await api.get(`/post/${postId}/edit`);
+    setLoading(false);
+    // 3. on awaiting successfully the next code will run
+    if (post.ok && post.data) {
+      // Repopulate Form
+      setInitial({
+        title: post.data[0].title,
+        summary: post.data[0].summary,
+        content: post.data[0].content,
+        imgUrl: post.data[0].img_url,
+        imgText: post.data[0].img_text,
+        tag: post.data[0].tag,
+        publishedAt: post.data[0].published_at,
+        category: post.data[0].category_id,
+      });
+    }
+  };
+
+  useEffect(() => {
+    getPost();
+  }, []);
+
   return (
     <div>
       <Formik
@@ -118,24 +135,15 @@ export default function PostForm(props) {
           ...INITIAL_FORM_STATE,
         }}
         validationSchema={FORM_VALIDATION}
+        enableReinitialize
         onSubmit={async (values) => {
-          setLoading(true);
-          //TODO: Refactor code here api calls
-          // const data = addPost(values);
-          // console.log(data);
-          // handleSnackbarMessage(data.message, data.status);
-          // setTimeout(() => {
-          //   onClose();
-          // }, 4000);
-
           // Send data to the server
-          const post = await api.post("/post/store", values);
-          setLoading(false);
+          const post = await api.put(`/post/${id}`, values);
           if (post.ok && post.data) {
             handleSnackbarMessage(post.data.message, post.data.status);
             setTimeout(() => {
               onClose();
-              window.location.href = baseURL;
+              window.location.href = baseUrl;
             }, 4000);
           }
         }}
@@ -222,20 +230,16 @@ export default function PostForm(props) {
               />
             </Grid>
             <Grid item xs={12}>
-              <DateTimePicker name="dateTime" label="Date" />
-            </Grid>
-            <Grid item xs={12}>
               <DialogActions>
                 <Button
                   onClick={onClose}
                   variant="contained"
                   color="primary"
                   className={classes.cancelButton}
-                  disabled={isLoading}
                 >
                   Cancel
                 </Button>
-                <ButtonForm disabled={isLoading}>Post</ButtonForm>
+                <ButtonForm>Update</ButtonForm>
               </DialogActions>
             </Grid>
           </Grid>

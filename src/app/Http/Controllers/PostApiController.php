@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Tag;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -37,6 +39,7 @@ class PostApiController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'summary' => 'required',
@@ -45,6 +48,7 @@ class PostApiController extends Controller
             'imgText' => 'required',
             'tag' => 'required',
             'category' => 'required',
+            'publishedAt' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -60,16 +64,11 @@ class PostApiController extends Controller
                 'img_url' => request('imgUrl'),
                 'img_text' => request('imgText'),
                 'published_at' => request('publishedAt'),
-                'tag_id' => request('tag'),
+                'tag' => request('tag'),
                 'category_id' => request('category'),
             ]);
 
-            // return [
-            //     'status' => 'success',
-            //     'message' => 'Blog was successfully save!'
-            // ];
-
-            return response()->json(['status' => 'success', 'message' => 'Blog was successfully save!'], 200);
+            return response()->json(['status' => 'success', 'message' => 'Post was successfully save!'], 200);
         }
     }
 
@@ -79,9 +78,10 @@ class PostApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $post = Post::where("slug", $slug)->firstOrFail();
+        return response()->json([$post], 200);
     }
 
     /**
@@ -92,8 +92,7 @@ class PostApiController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id)->first();
-        // dd($post);
+        $post = Post::findOrFail($id);
         return response()->json([$post], 200);
     }
 
@@ -106,6 +105,7 @@ class PostApiController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'summary' => 'required',
@@ -128,14 +128,11 @@ class PostApiController extends Controller
                     'img_url' => request('imgUrl'),
                     'img_text' => request('imgText'),
                     'published_at' => request('publishedAt'),
-                    'tag_id' => request('tagId'),
-                    'category_id' => request('categoryId'),
+                    'tag' => request('tag'),
+                    'category_id' => request('category'),
                 ]);
 
-            return [
-                'status' => 'success',
-                'message' => 'Blog was successfully updated!'
-            ];
+            return response()->json(['status' => 'success', 'message' => 'Post was successfully updated!'], 200);
         }
     }
 
@@ -150,9 +147,6 @@ class PostApiController extends Controller
         $post = Post::find($id);
         $post->delete();
 
-        return [
-            'status' => 'success',
-            'message' => 'Post was successfully deleted!'
-        ];
+        return response()->json(['status' => 'success', 'message' => 'Post was successfully deleted!'], 200);
     }
 }

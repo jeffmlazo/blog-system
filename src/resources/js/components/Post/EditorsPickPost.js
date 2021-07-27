@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import EditorsPick from "./EditorsPick";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,14 +38,16 @@ export default function EditorsPickPost(props) {
       <Card className={classes.root}>
         <CardMedia
           className={classes.cover}
-          image={post.imageUrl}
-          title={post.imageTitle}
+          image={post.img_url}
+          title={post.img_text}
         />
         <div className={classes.details}>
           <CardContent className={classes.content}>
-            <Typography component="h6" variant="h6">
-              {post.title}
-            </Typography>
+            <Link to={`/post/${post.slug}`}>
+              <Typography component="h6" variant="h6">
+                {post.title}
+              </Typography>
+            </Link>
           </CardContent>
         </div>
       </Card>

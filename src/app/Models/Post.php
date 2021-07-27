@@ -23,7 +23,7 @@ class Post extends Model
         'img_url',
         'img_text',
         'published_at',
-        'tag_id',
+        'tag',
         'category_id',
     ];
 }

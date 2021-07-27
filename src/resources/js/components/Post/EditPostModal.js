@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PostForm from "../Post/PostForm";
+import EditPostForm from "../Post/EditPostForm";
 import {
   Button,
   Dialog,
@@ -10,10 +10,12 @@ import {
 } from "@material-ui/core";
 import { SnackbarProvider } from "notistack";
 
-export default function PostModal() {
+export default function EditPostModal(props) {
   const [open, setOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const { postId } = props;
 
+  // console.log(postId);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -23,15 +25,10 @@ export default function PostModal() {
   };
 
   return (
-    <SnackbarProvider>
-      <div>
-        <Button
-          variant="outlined"
-          color="primary"
-          size="small"
-          onClick={handleClickOpen}
-        >
-          Add Post
+    <>
+      <SnackbarProvider>
+        <Button variant="contained" color="primary" onClick={handleClickOpen}>
+          Edit Post
         </Button>
 
         <Dialog
@@ -39,20 +36,21 @@ export default function PostModal() {
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Add Post</DialogTitle>
+          <DialogTitle id="form-dialog-title">Edit Post</DialogTitle>
           <DialogContent>
             {isLoading ? <LinearProgress /> : undefined}
             <DialogContentText>
               Please fill up the neccessary required fields.
             </DialogContentText>
-            <PostForm
+            <EditPostForm
               isLoading={isLoading}
               setLoading={setLoading}
               onClose={handleClose}
+              postId={postId}
             />
           </DialogContent>
         </Dialog>
-      </div>
-    </SnackbarProvider>
+      </SnackbarProvider>
+    </>
   );
 }
