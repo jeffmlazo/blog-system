@@ -86,37 +86,20 @@ class UserApiController extends Controller
             $errors = $validator->errors();
             return response()->json(['status' => 'error', 'message' => $errors->all()], 500);
         } else {
-            // // Check Username
-            // $user = User::where('username', request('username'))->first();
-
-            // // Check password
-            // if (!$user || !Hash::check(request("password"), $user->password)) {
-
-            //     return response()->json(['status' => 'error', 'message' => 'Invalid username or password.'], 401);
-            // }
-
-            // return response()->json(['status' => 'success', 'message' => $user], 200);
             $credentials = [
                 'username' => $request->username,
                 'password' => $request->password,
             ];
 
+            // Check Username & password
             if (Auth::attempt($credentials)) {
-                Auth::login(Auth::user());
-                $user = Auth::user();
-
+                // Auth::login(Auth::user());
                 // $request->session()->regenerate();
 
-                return response()->json(['status' => 'success', 'message' => 'User was successfully logged in.', 'userData' => $user], 200);
-
-                // return redirect()->intended('dashboard');
+                return response()->json(['status' => 'success', 'message' => 'User was successfully logged in.'], 200);
             }
 
             return response()->json(['status' => 'error', 'message' => 'Invalid username or password.'], 401);
-
-            // return back()->withErrors([
-            //     'username' => 'Invalid username or password.',
-            // ]);
         }
     }
 

@@ -13,3 +13,4 @@ require("./bootstrap");
  */
 
 require("./components/Layout/Main");
+require("./components/Dashboard/Dashboard");

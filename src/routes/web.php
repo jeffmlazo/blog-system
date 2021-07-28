@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostApiController;
 use App\Http\Controllers\UserApiController;
+use App\Http\Controllers\DashboardApiController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,24 +16,31 @@ use Illuminate\Support\Facades\Cache;
 |
 */
 
-// Route::get('/user', [UserApiController::class, 'index']);
+#region PUBLIC ROUTES
 Route::get('/', function () {
-    return view('welcome');
-})->name('login');
+    if (Auth::check()) {
+        $isLoggedIn = [
+            'isLoggedIn' => true
+        ];
 
-Route::get('/logout', function () {
-    Auth::logout();
-    Cache::flush();
-    redirect('/');
-})->name('logout');
-
-// Login Route
-Route::group(['middleware' => 'web'], function () {
-    Route::get('/dashboard', function () {
-        return Auth::user();
-    });
-    Route::post('/user/login', [UserApiController::class, 'login']);
+        return view('home', $isLoggedIn);
+    } else {
+        return view('home');
+    }
 });
 
-// Post Route
+Route::get('/logout', [UserApiController::class, 'logout'])->name('logout');
+
+// Post
 Route::get('/post/{id}', [PostApiController::class, 'show']);
+#endregion
+
+#region PRIVATE ROUTES
+Route::middleware(['web'])->group(function () {
+    // Login
+    Route::post('/user/login', [UserApiController::class, 'login']);
+
+    // Dashboard
+    Route::get('/dashboard', [DashboardApiController::class, 'index']);
+});
+#endregion

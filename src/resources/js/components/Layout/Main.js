@@ -9,6 +9,7 @@ import Header from "../Layout/Header";
 import Footer from "../Layout/Footer";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import Dashboard from "../Dashboard/DashboardV2";
 
 const useStyles = makeStyles((theme) => ({
   mainGrid: {
@@ -16,10 +17,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// Get the token
+const token = document.head
+  .querySelector('meta[name="csrf-token"]')
+  .getAttribute("content");
+
 // API base Url
 const api = create({
-  baseURL: "http://localhost/api",
-  headers: { "Content-Type": "application/json" },
+  baseURL: `${baseUrl}/api`,
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    "X-CSRF-TOKEN": token,
+  },
 });
 
 const mainFeaturedPost = {
@@ -68,10 +78,14 @@ const featuredPosts = [
   },
 ];
 
-function Main() {
+function Main(props) {
   const classes = useStyles();
   const [editorPickPosts, setEditorPickPosts] = useState([]);
   const [categories, setCategories] = useState([]);
+  // NOTE: isloggedin name will always be small caps in the DOM
+  const { isloggedin } = props;
+  // console.log(isLoggedIn);
+  // const { authorize, setAuthorize } = useState(false);
 
   //#region FUNCTIONS
   const getCategories = async () => {
@@ -103,8 +117,12 @@ function Main() {
     <>
       <CssBaseline />
       <Router>
+        <Header
+          title="Blog System"
+          categories={categories}
+          isLoggedIn={isloggedin}
+        />
         <Container maxWidth="lg">
-          <Header title="Blog System" categories={categories} />
           <main>
             <Switch>
               <Route exact path="/">
@@ -133,5 +151,6 @@ function Main() {
 export default Main;
 
 if (document.getElementById("app")) {
-  ReactDOM.render(<Main />, document.getElementById("app"));
+  const props = Object.assign({}, document.getElementById("app").dataset);
+  ReactDOM.render(<Main {...props} />, document.getElementById("app"));
 }

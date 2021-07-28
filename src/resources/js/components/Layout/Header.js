@@ -31,13 +31,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header(props) {
   const classes = useStyles();
-  const { categories, title } = props;
+  const { categories, title, isLoggedIn } = props;
 
   return (
     <>
       <Toolbar className={classes.toolbar}>
-        {/* <Route path="/dashboard" component={Dashboard} /> */}
-        <LoginModal />
+        {isLoggedIn == "1" ? undefined : <LoginModal />}
         <PostModal />
 
         {/* <Link href="/"> */}

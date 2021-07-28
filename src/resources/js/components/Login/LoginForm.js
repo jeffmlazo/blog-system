@@ -3,12 +3,12 @@ import * as Yup from "yup";
 import { create } from "apisauce";
 import { useSnackbar } from "notistack";
 import { makeStyles, Grid, DialogActions, Button } from "@material-ui/core";
-import { Route } from "react-router-dom";
+// import { Route } from "react-router-dom";
 
 import Textfield from "../FormsUI/Textfield";
 import ButtonForm from "../FormsUI/Button";
 // import Dashboard from "../Dashboard/Dashboard";
-import Dashboard from "../Dashboard/DashboardV2";
+// import Dashboard from "../Dashboard/DashboardV2";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -92,11 +92,6 @@ export default function LoginForm(props) {
 
   return (
     <div>
-      <Route
-        exact
-        path="/dashboard"
-        component={() => <Dashboard authorized={true} />}
-      />
       <Formik
         initialValues={{
           ...INITIAL_FORM_STATE,
@@ -108,11 +103,16 @@ export default function LoginForm(props) {
             .post("/user/login", values)
             .then((response) => response.data)
             .then((data) => {
-              // console.log(data);
-              console.log(data.userData);
+              // console.log(data.userData);
+              // sessionStorage.setItem("user", JSON.stringify(data.userData));
               handleSnackbarMessage(data.message, data.status);
 
-              window.location = "/dassboard";
+              if (data.status === "success") {
+                window.location = `${baseUrl}/dashboard`;
+              }
+              // const userObj = JSON.parse(sessionStorage.getItem("user"));
+              // console.log(userObj.id);
+              // console.log(userObj.user_type);
             });
         }}
       >
