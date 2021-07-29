@@ -2,15 +2,14 @@ import PropTypes from "prop-types";
 import {
   makeStyles,
   Toolbar,
-  IconButton,
+  // IconButton,
   Typography,
   Link,
+  Button,
 } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
+// import SearchIcon from "@material-ui/icons/Search";
 import LoginModal from "../Login/LoginModal";
 import RegisterModal from "../Signup/RegisterModal";
-import PostModal from "../Post/PostModal";
-// import Dashboard from "../Dashboard/Dashboard";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -37,8 +36,6 @@ export default function Header(props) {
     <>
       <Toolbar className={classes.toolbar}>
         {isLoggedIn == "1" ? undefined : <LoginModal />}
-        <PostModal />
-
         {/* <Link href="/"> */}
         <Typography
           component="h2"
@@ -51,10 +48,21 @@ export default function Header(props) {
           {title}
         </Typography>
         {/* </Link> */}
-        <IconButton>
+        {/* <IconButton>
           <SearchIcon />
-        </IconButton>
-        <RegisterModal />
+        </IconButton> */}
+        {isLoggedIn == "1" ? (
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={() => (window.location = "/dashboard")}
+          >
+            Go Back To Dashboard
+          </Button>
+        ) : (
+          <RegisterModal />
+        )}
       </Toolbar>
       <Toolbar
         component="nav"

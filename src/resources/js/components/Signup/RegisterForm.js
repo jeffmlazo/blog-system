@@ -30,7 +30,7 @@ const INITIAL_FORM_STATE = {
   lastName: "",
   username: "",
   password: "",
-  userType: "",
+  userType: "user",
   emailAddress: "",
   mobile: "",
 };
@@ -41,7 +41,6 @@ const FORM_VALIDATION = Yup.object().shape({
   lastName: Yup.string().required("Required"),
   username: Yup.string().required("Required"),
   password: Yup.string().required("Required"),
-  userType: Yup.string().required("Required"),
   emailAddress: Yup.string()
     .email("Invalid email address.")
     .required("Required"),
@@ -153,18 +152,6 @@ export default function RegisterForm(props) {
                 label="Password"
                 type="password"
                 autoComplete="new-password"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Select
-                name="userType"
-                label="User Type"
-                options={[
-                  { id: 1, option: "user" },
-                  { id: 2, option: "author" },
-                  { id: 3, option: "admin" },
-                ]}
-                // options={["user", "author", "admin"]}
               />
             </Grid>
             <Grid item xs={12}>

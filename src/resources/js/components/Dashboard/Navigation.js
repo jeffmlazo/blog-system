@@ -5,44 +5,62 @@ import {
   ListSubheader,
 } from "@material-ui/core";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
-import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
-import AssignmentIcon from "@material-ui/icons/Assignment";
+// import PostAddIcon from '@material-ui/icons/PostAdd';
+import BallotIcon from "@material-ui/icons/Ballot";
+import PictureInPictureIcon from "@material-ui/icons/PictureInPicture";
+import { NavLink } from "react-router-dom";
 
 export const mainListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Users" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Posts" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Categories" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Tags" />
-    </ListItem>
+    <NavLink to={"/dashboard"}>
+      <ListItem button>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItem>
+    </NavLink>
+    <NavLink
+      to={"/dashboard/users"}
+      // activeClassName="selected"
+      activeStyle={{
+        fontWeight: "bold",
+        color: "red",
+      }}
+    >
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Users" />
+      </ListItem>
+    </NavLink>
+    <NavLink to={"/dashboard/posts"}>
+      <ListItem button>
+        <ListItemIcon>
+          <BallotIcon />
+        </ListItemIcon>
+        <ListItemText primary="Posts" />
+      </ListItem>
+    </NavLink>
+    <NavLink to={"/dashboard/categories"}>
+      <ListItem button>
+        <ListItemIcon>
+          <PictureInPictureIcon />
+        </ListItemIcon>
+        <ListItemText primary="Categories" />
+      </ListItem>
+    </NavLink>
+    <NavLink to={"/dashboard/tags"}>
+      <ListItem button>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Tags" />
+      </ListItem>
+    </NavLink>
   </div>
 );
 

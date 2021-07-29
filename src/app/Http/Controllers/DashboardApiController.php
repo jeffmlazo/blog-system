@@ -19,10 +19,10 @@ class DashboardApiController extends Controller
         if (Auth::check()) {
             $userData = [
                 'id' => Auth::id(),
+                'username' => Auth::user()->username,
                 'user_type' => Auth::user()->user_type
             ];
 
-            // return view('dashboard')->with($userData);
             return view('dashboard', $userData);
         } else {
             return redirect()->intended('/');

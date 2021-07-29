@@ -39,7 +39,6 @@ class PostApiController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'summary' => 'required',
