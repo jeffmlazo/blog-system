@@ -1,7 +1,7 @@
-//#region PACKAGE IMPORTS
-import ReactDOM from "react-dom";
-import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// #region PACKAGE IMPORTS
+import ReactDOM from 'react-dom';
+// import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
   makeStyles,
   CssBaseline,
@@ -9,36 +9,36 @@ import {
   ThemeProvider,
   Grid,
   Container,
-} from "@material-ui/core";
-//#endregion
+} from '@material-ui/core';
+// #endregion
 
-//#region COMPONENT IMPORTS
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import UserListTbl from "./Tables/UserListTbl";
-import PostListTbl from "./Tables/PostListTbl";
-import CategoryListTbl from "./Tables/CategoryListTbl";
-import TagListTbl from "./Tables/TagListTbl";
-//#endregion
+// #region COMPONENT IMPORTS
+import Header from './Header';
+import Sidebar from './Sidebar';
+import UserListTbl from './Tables/UserListTbl';
+import PostListTbl from './Tables/PostListTbl';
+import CategoryListTbl from './Tables/CategoryListTbl';
+import TagListTbl from './Tables/TagListTbl';
+// #endregion
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#333996",
-      light: "#3c44b126",
+      main: '#333996',
+      light: '#3c44b126',
     },
     secondary: {
-      main: "#f83245",
-      light: "#f8324526",
+      main: '#f83245',
+      light: '#f8324526',
     },
     background: {
-      default: "#f4f5fd",
+      default: '#f4f5fd',
     },
   },
   overrides: {
     MuiAppBar: {
       root: {
-        transform: "translateZ(0)",
+        transform: 'translateZ(0)',
       },
     },
   },
@@ -52,8 +52,8 @@ const theme = createTheme({
 const useStyles = makeStyles({
   appMain: {
     // paddingLeft: "320px",
-    paddingLeft: "200px",
-    width: "100%",
+    paddingLeft: '200px',
+    width: '100%',
   },
   mainGrid: {
     marginTop: theme.spacing(3),
@@ -99,6 +99,6 @@ function Dashboard() {
 
 export default Dashboard;
 
-if (document.getElementById("dashboard")) {
-  ReactDOM.render(<Dashboard />, document.getElementById("dashboard"));
+if (document.getElementById('dashboard')) {
+  ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
 }

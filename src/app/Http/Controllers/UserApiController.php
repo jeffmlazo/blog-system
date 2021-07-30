@@ -131,7 +131,8 @@ class UserApiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return response()->json([$user], 200);
     }
 
     /**
@@ -141,11 +142,51 @@ class UserApiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateProfile(Request $request, $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'firstName' => 'required',
+            'middleName' => 'required',
+            'lastName' => 'required',
+            'emailAddress' => 'required',
+            'mobile' => 'numeric',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(['status' => 'error', 'message' => $errors->all()], 500);
+        } else {
+            User::where('id', $id)
+                ->update([
+                    'first_name' => request('firstName'),
+                    'middle_name' => request('middleName'),
+                    'last_name' => request('lastName'),
+                    'email_address' => request('emailAddress'),
+                    'mobile' => request('mobile'),
+                ]);
+
+            return response()->json(['status' => 'success', 'message' => 'Profile was successfully updated!'], 200);
+        }
     }
 
+    public function updateAccount(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            return response()->json(['status' => 'error', 'message' => $errors->all()], 500);
+        } else {
+            User::where('id', $id)
+                ->update([
+                    'password' => Hash::make(request('password')),
+                ]);
+
+            return response()->json(['status' => 'success', 'message' => 'Account was successfully updated!'], 200);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

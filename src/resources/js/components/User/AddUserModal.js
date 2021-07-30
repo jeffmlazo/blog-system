@@ -1,16 +1,18 @@
 import { useState } from "react";
-import RegisterForm from "../User/AddUserForm";
 import {
   Button,
   Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  LinearProgress,
 } from "@material-ui/core";
 import { SnackbarProvider } from "notistack";
+import AddUserForm from "./AddUserForm";
 
-export default function RegisterModal() {
+export default function AddUserModal() {
   const [open, setOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,11 +39,16 @@ export default function RegisterModal() {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Add User</DialogTitle>
+        {isLoading ? <LinearProgress /> : undefined}
         <DialogContent>
           <DialogContentText>
             Please fill up the neccessary required fields.
           </DialogContentText>
-          <RegisterForm onClose={handleClose} />
+          <AddUserForm
+            isLoading={isLoading}
+            setLoading={setLoading}
+            onClose={handleClose}
+          />
         </DialogContent>
       </Dialog>
     </SnackbarProvider>

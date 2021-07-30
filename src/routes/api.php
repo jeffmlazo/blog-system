@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\User;
+// use App\Models\User;
 use App\Http\Controllers\UserApiController;
 use App\Http\Controllers\PostApiController;
 use App\Http\Controllers\CategoryApiController;
 use App\Http\Controllers\TagApiController;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,7 +31,8 @@ Route::post('/user/store', [UserApiController::class, 'store']);
 //     Route::post('/user/login', [UserApiController::class, 'login']);
 // });
 Route::get('/user/{id}/edit', [UserApiController::class, 'edit']);
-Route::put('/user/{id}', [UserApiController::class, 'update']);
+Route::put('/user/profile/update/{id}', [UserApiController::class, 'updateProfile']);
+Route::put('/user/account/update/{id}', [UserApiController::class, 'updateAccount']);
 Route::delete('/user/{id}', [UserApiController::class, 'destroy']);
 Route::get('/user/{id}', [UserApiController::class, 'show']);
 

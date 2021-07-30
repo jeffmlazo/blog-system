@@ -1,5 +1,5 @@
-//#region PACKAGE IMPORTS
-import React from "react";
+// #region PACKAGE IMPORTS
+import React from 'react';
 import {
   AppBar,
   Toolbar,
@@ -8,34 +8,36 @@ import {
   makeStyles,
   Typography,
   Box,
-} from "@material-ui/core";
-import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-//#endregion
+  Badge,
+} from '@material-ui/core';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+// import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+// #endregion
 
-//#region COMPONENT IMPORTS
+// #region COMPONENT IMPORTS
 // import { Link } from "react-router-dom";
-import PostModal from "../Post/PostModal";
-import AddUserModal from "../User/AddUserModal";
-//#endregion
+import PostModal from '../Post/PostModal';
+import AddUserModal from '../User/AddUserModal';
+import UserProfileModal from '../User/UserProfileModal';
+// #endregion
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   searchInput: {
-    opacity: "0.6",
+    opacity: '0.6',
     padding: `0px ${theme.spacing(1)}px`,
-    fontSize: "0.8rem",
-    "&:hover": {
-      backgroundColor: "#f2f2f2",
+    fontSize: '0.8rem',
+    '&:hover': {
+      backgroundColor: '#f2f2f2',
     },
-    "& .MuiSvgIcon-root": {
+    '& .MuiSvgIcon-root': {
       marginRight: theme.spacing(1),
     },
   },
   appButtonGrp: {
-    "& > *": {
+    '& > *': {
       margin: theme.spacing(0.5),
     },
   },
@@ -58,19 +60,26 @@ export default function Header() {
               <Box component="div" display="inline">
                 <PostModal />
               </Box>
-
               <Box component="div" display="inline">
                 <AddUserModal />
               </Box>
             </Box>
           </Grid>
           <Grid item>
-            <IconButton>
-              <AccountCircleIcon fontSize="small" />
-            </IconButton>
-            <IconButton onClick={() => (window.location = "/logout")}>
-              <PowerSettingsNewIcon fontSize="small" />
-            </IconButton>
+            <UserProfileModal />
+            <Badge
+              badgeContent={'Logout'}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              color="primary"
+              invisible
+            >
+              <IconButton onClick={() => (window.location = '/logout')}>
+                <PowerSettingsNewIcon fontSize="small" />
+              </IconButton>
+            </Badge>
           </Grid>
         </Grid>
       </Toolbar>

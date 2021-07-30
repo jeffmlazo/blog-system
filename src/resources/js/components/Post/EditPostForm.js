@@ -65,7 +65,7 @@ export default function EditPostForm(props) {
       });
     } else if (variant === "error" && typeof msg === "object") {
       // Error Messages
-      Array.from(msg).forEach(function (msg, index) {
+      Array.from(msg).forEach((msg, index) => {
         enqueueSnackbar(msg, {
           variant,
           anchorOrigin: {
@@ -95,7 +95,7 @@ export default function EditPostForm(props) {
 
   // API base Url
   const api = create({
-    baseURL: "http://localhost/api",
+    baseURL: `${baseUrl}/api`,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",

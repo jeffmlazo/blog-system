@@ -1,25 +1,26 @@
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import { create } from "apisauce";
-import { useSnackbar } from "notistack";
+import React from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { create } from 'apisauce';
+import { useSnackbar } from 'notistack';
 import {
   makeStyles,
   Grid,
   DialogActions,
   Button,
   // TextField,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
-import Textfield from "../FormsUI/Textfield";
-import ButtonForm from "../FormsUI/Button";
-import Select from "../FormsUI/Select";
-import DateTimePicker from "../FormsUI/DateTimePicker";
+import Textfield from '../FormsUI/Textfield';
+import ButtonForm from '../FormsUI/Button';
+import Select from '../FormsUI/Select';
+import DateTimePicker from '../FormsUI/DateTimePicker';
 // import { addPost } from "../Api/PostApi.js";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
     // margin: theme.spacing(1),
-    minWidth: "100%",
+    minWidth: '100%',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -31,26 +32,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PostForm(props) {
   const INITIAL_FORM_STATE = {
-    title: "",
-    summary: "",
-    content: "",
-    imgUrl: "",
-    imgText: "",
-    tag: "",
-    category: "",
-    authorId: "1",
-    publishedAt: "",
+    title: '',
+    summary: '',
+    content: '',
+    imgUrl: '',
+    imgText: '',
+    tag: '',
+    category: '',
+    authorId: userId,
+    publishedAt: '',
   };
 
   const FORM_VALIDATION = Yup.object().shape({
-    title: Yup.string().required("Required"),
-    summary: Yup.string().required("Required"),
-    content: Yup.string().required("Required"),
-    imgUrl: Yup.string().required("Required"),
-    imgText: Yup.string().required("Required"),
-    tag: Yup.string().required("Required"),
-    category: Yup.string().required("Required"),
-    publishedAt: Yup.string().required("Required"),
+    title: Yup.string().required('Required'),
+    summary: Yup.string().required('Required'),
+    content: Yup.string().required('Required'),
+    imgUrl: Yup.string().required('Required'),
+    imgText: Yup.string().required('Required'),
+    tag: Yup.string().required('Required'),
+    category: Yup.string().required('Required'),
+    publishedAt: Yup.string().required('Required'),
   });
 
   const classes = useStyles();
@@ -58,24 +59,24 @@ export default function PostForm(props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSnackbarMessage = (msg, variant) => {
-    if (variant === "success" && typeof msg === "string") {
+    if (variant === 'success' && typeof msg === 'string') {
       // Success Message
       enqueueSnackbar(msg, {
         variant,
         anchorOrigin: {
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
           autoHideDuration: 3000,
         },
       });
-    } else if (variant === "error" && typeof msg === "object") {
+    } else if (variant === 'error' && typeof msg === 'object') {
       // Error Messages
-      Array.from(msg).forEach(function (msg, index) {
+      Array.from(msg).forEach((msg, index) => {
         enqueueSnackbar(msg, {
           variant,
           anchorOrigin: {
-            vertical: "top",
-            horizontal: "center",
+            vertical: 'top',
+            horizontal: 'center',
             autoHideDuration: 3000,
           },
         });
@@ -83,10 +84,10 @@ export default function PostForm(props) {
     } else {
       // Server or SQL Messages
       enqueueSnackbar(msg, {
-        variant: "info",
+        variant: 'info',
         anchorOrigin: {
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
           autoHideDuration: 3000,
         },
       });
@@ -96,15 +97,15 @@ export default function PostForm(props) {
   // Get the token
   const token = document.head
     .querySelector('meta[name="csrf-token"]')
-    .getAttribute("content");
+    .getAttribute('content');
 
   // API base Url
   const api = create({
-    baseURL: "http://localhost/api",
+    baseURL: `${baseUrl}/api`,
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "X-CSRF-TOKEN": token,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': token,
     },
   });
 
@@ -117,22 +118,14 @@ export default function PostForm(props) {
         validationSchema={FORM_VALIDATION}
         onSubmit={async (values) => {
           setLoading(true);
-          //TODO: Refactor code here api calls
-          // const data = addPost(values);
-          // console.log(data);
-          // handleSnackbarMessage(data.message, data.status);
-          // setTimeout(() => {
-          //   onClose();
-          // }, 4000);
 
           // Send data to the server
-          const post = await api.post("/post/store", values);
+          const post = await api.post('/post/store', values);
           setLoading(false);
           if (post.ok && post.data) {
             handleSnackbarMessage(post.data.message, post.data.status);
             setTimeout(() => {
               onClose();
-              window.location.href = baseURL;
             }, 4000);
           }
         }}
@@ -173,16 +166,16 @@ export default function PostForm(props) {
                 name="category"
                 label="Category"
                 options={[
-                  { id: 1, option: "technology" },
-                  { id: 2, option: "design" },
-                  { id: 3, option: "culture" },
-                  { id: 4, option: "business" },
-                  { id: 5, option: "politics" },
-                  { id: 6, option: "opinion" },
-                  { id: 7, option: "science" },
-                  { id: 8, option: "health" },
-                  { id: 9, option: "style" },
-                  { id: 10, option: "travel" },
+                  { id: 1, option: 'technology' },
+                  { id: 2, option: 'design' },
+                  { id: 3, option: 'culture' },
+                  { id: 4, option: 'business' },
+                  { id: 5, option: 'politics' },
+                  { id: 6, option: 'opinion' },
+                  { id: 7, option: 'science' },
+                  { id: 8, option: 'health' },
+                  { id: 9, option: 'style' },
+                  { id: 10, option: 'travel' },
                 ]}
                 disabled={isLoading}
               />
