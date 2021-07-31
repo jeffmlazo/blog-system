@@ -1,4 +1,5 @@
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
 import {
   makeStyles,
   Toolbar,
@@ -6,10 +7,10 @@ import {
   Typography,
   Link,
   Button,
-} from "@material-ui/core";
+} from '@material-ui/core';
 // import SearchIcon from "@material-ui/icons/Search";
-import LoginModal from "../Login/LoginModal";
-import RegisterModal from "../Signup/RegisterModal";
+import LoginModal from '../Login/LoginModal';
+import RegisterModal from '../Signup/RegisterModal';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -19,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   toolbarSecondary: {
-    justifyContent: "space-between",
-    overflowX: "auto",
+    justifyContent: 'space-between',
+    overflowX: 'auto',
   },
   toolbarLink: {
     padding: theme.spacing(1),
@@ -35,7 +36,7 @@ export default function Header(props) {
   return (
     <>
       <Toolbar className={classes.toolbar}>
-        {isLoggedIn == "1" ? undefined : <LoginModal />}
+        {isLoggedIn === '1' ? undefined : <LoginModal />}
         {/* <Link href="/"> */}
         <Typography
           component="h2"
@@ -51,12 +52,12 @@ export default function Header(props) {
         {/* <IconButton>
           <SearchIcon />
         </IconButton> */}
-        {isLoggedIn == "1" ? (
+        {isLoggedIn === '1' ? (
           <Button
             variant="outlined"
             color="primary"
             size="small"
-            onClick={() => (window.location = "/dashboard")}
+            onClick={() => window.location.assign('/dashboard')}
           >
             Go Back To Dashboard
           </Button>
@@ -89,4 +90,5 @@ export default function Header(props) {
 Header.propTypes = {
   categories: PropTypes.array,
   title: PropTypes.string,
+  isLoggedIn: PropTypes.string,
 };

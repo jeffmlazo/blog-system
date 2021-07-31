@@ -1,39 +1,35 @@
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import { create } from "apisauce";
-import { useSnackbar } from "notistack";
-import { makeStyles, Grid, DialogActions, Button } from "@material-ui/core";
-// import { Route } from "react-router-dom";
+import React from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { create } from 'apisauce';
+import { useSnackbar } from 'notistack';
+import {
+  makeStyles, Grid, DialogActions, Button,
+} from '@material-ui/core';
+import PropTypes from 'prop-types';
 
-import Textfield from "../FormsUI/Textfield";
-import ButtonForm from "../FormsUI/Button";
+import Textfield from '../FormsUI/Textfield';
+import ButtonForm from '../FormsUI/Button';
 // import Dashboard from "../Dashboard/Dashboard";
 // import Dashboard from "../Dashboard/DashboardV2";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
-    // margin: theme.spacing(1),
-    minWidth: "100%",
+    minWidth: '100%',
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-  // cancelButton: {
-  //   marginRight: "20px",
-  // },
-  // alertBox: {
-  //   margin: theme.spacing(2),
-  // },
 }));
 
 const INITIAL_FORM_STATE = {
-  username: "",
-  password: "",
+  username: '',
+  password: '',
 };
 
 const FORM_VALIDATION = Yup.object().shape({
-  username: Yup.string().required("Required"),
-  password: Yup.string().required("Required"),
+  username: Yup.string().required('Required'),
+  password: Yup.string().required('Required'),
 });
 
 export default function LoginForm(props) {
@@ -42,33 +38,33 @@ export default function LoginForm(props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const handleSnackbarMessage = (msg, variant) => {
-    if (variant === "success" && typeof msg === "string") {
+    if (variant === 'success' && typeof msg === 'string') {
       // Success Message
       enqueueSnackbar(msg, {
         variant,
         anchorOrigin: {
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
           autoHideDuration: 3000,
         },
       });
-    } else if (variant === "error") {
+    } else if (variant === 'error') {
       // Error Message
       enqueueSnackbar(msg, {
         variant,
         anchorOrigin: {
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
           autoHideDuration: 3000,
         },
       });
     } else {
       // Server or SQL Messages
       enqueueSnackbar(msg, {
-        variant: "info",
+        variant: 'info',
         anchorOrigin: {
-          vertical: "top",
-          horizontal: "center",
+          vertical: 'top',
+          horizontal: 'center',
           autoHideDuration: 3000,
         },
       });
@@ -78,15 +74,16 @@ export default function LoginForm(props) {
   // Get the token
   const token = document.head
     .querySelector('meta[name="csrf-token"]')
-    .getAttribute("content");
+    .getAttribute('content');
 
   // API base Url
   const api = create({
+    // eslint-disable-next-line no-undef
     baseURL: baseUrl,
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "X-CSRF-TOKEN": token,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': token,
     },
   });
 
@@ -100,15 +97,16 @@ export default function LoginForm(props) {
         onSubmit={(values) => {
           // Send data to the server
           api
-            .post("/user/login", values)
+            .post('/user/login', values)
             .then((response) => response.data)
             .then((data) => {
               // console.log(data.userData);
               // sessionStorage.setItem("user", JSON.stringify(data.userData));
               handleSnackbarMessage(data.message, data.status);
 
-              if (data.status === "success") {
-                window.location = `${baseUrl}/dashboard`;
+              if (data.status === 'success') {
+                // eslint-disable-next-line no-undef
+                window.location.replace(`${baseUrl}/dashboard`);
               }
               // const userObj = JSON.parse(sessionStorage.getItem("user"));
               // console.log(userObj.id);
@@ -154,3 +152,7 @@ export default function LoginForm(props) {
     </div>
   );
 }
+
+LoginForm.propTypes = {
+  onClose: PropTypes.func,
+};
