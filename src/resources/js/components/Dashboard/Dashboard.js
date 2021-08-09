@@ -1,4 +1,5 @@
 // #region PACKAGE IMPORTS
+import React from 'react';
 import ReactDOM from 'react-dom';
 // import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -19,6 +20,7 @@ import UserListTbl from './Tables/UserListTbl';
 import PostListTbl from './Tables/PostListTbl';
 import CategoryListTbl from './Tables/CategoryListTbl';
 import TagListTbl from './Tables/TagListTbl';
+import DashboardContent from './DashboardContent';
 // #endregion
 
 const theme = createTheme({
@@ -74,7 +76,7 @@ function Dashboard() {
             <Grid container spacing={5} className={classes.mainGrid}>
               <Switch>
                 <Route exact path="/dashboard">
-                  Dashboard
+                  <DashboardContent />
                 </Route>
                 <Route exact path="/dashboard/users">
                   <UserListTbl />

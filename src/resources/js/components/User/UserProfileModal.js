@@ -29,7 +29,7 @@ export default function UserProfileModal() {
     <SnackbarProvider>
       <Badge
         badgeContent={'My Profile'}
-        overlap={'circle'}
+        overlap={'circular'}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'left',

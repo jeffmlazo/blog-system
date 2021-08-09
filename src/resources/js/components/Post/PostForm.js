@@ -15,7 +15,8 @@ import Textfield from '../FormsUI/Textfield';
 import ButtonForm from '../FormsUI/Button';
 import Select from '../FormsUI/Select';
 import DateTimePicker from '../FormsUI/DateTimePicker';
-// import { addPost } from "../Api/PostApi.js";
+// eslint-disable-next-line import/named
+import { addPost } from '../Service/PostService';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -39,6 +40,7 @@ export default function PostForm(props) {
     imgText: '',
     tag: '',
     category: '',
+    // eslint-disable-next-line no-undef
     authorId: userId,
     publishedAt: '',
   };
@@ -101,6 +103,7 @@ export default function PostForm(props) {
 
   // API base Url
   const api = create({
+    // eslint-disable-next-line no-undef
     baseURL: `${baseUrl}/api`,
     headers: {
       Accept: 'application/json',
@@ -116,18 +119,21 @@ export default function PostForm(props) {
           ...INITIAL_FORM_STATE,
         }}
         validationSchema={FORM_VALIDATION}
-        onSubmit={async (values) => {
+        onSubmit={(values) => {
+          const test = addPost(values);
           setLoading(true);
-
+          console.log(test);
+          console.log(test.message);
+          console.log(test.status);
           // Send data to the server
-          const post = await api.post('/post/store', values);
-          setLoading(false);
-          if (post.ok && post.data) {
-            handleSnackbarMessage(post.data.message, post.data.status);
-            setTimeout(() => {
-              onClose();
-            }, 4000);
-          }
+          // const post = await api.post('/post/store', values);
+          // setLoading(false);
+          // if (post.ok && post.data) {
+          //   handleSnackbarMessage(post.data.message, post.data.status);
+          //   setTimeout(() => {
+          //     onClose();
+          //   }, 4000);
+          // }
         }}
       >
         <Form>

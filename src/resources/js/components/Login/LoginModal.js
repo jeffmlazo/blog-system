@@ -1,5 +1,4 @@
-import { useState } from "react";
-import LoginForm from "../Login/LoginForm";
+import React, { useState } from 'react';
 import {
   Button,
   Dialog,
@@ -7,8 +6,9 @@ import {
   DialogContentText,
   DialogTitle,
   makeStyles,
-} from "@material-ui/core";
-import { SnackbarProvider } from "notistack";
+} from '@material-ui/core';
+import { SnackbarProvider } from 'notistack';
+import LoginForm from './LoginForm';
 
 const useStyles = makeStyles((theme) => ({
   // alertBox: {
