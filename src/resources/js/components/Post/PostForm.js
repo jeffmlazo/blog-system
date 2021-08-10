@@ -1,7 +1,6 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import { create } from 'apisauce';
 import { useSnackbar } from 'notistack';
 import {
   makeStyles,
@@ -96,22 +95,6 @@ export default function PostForm(props) {
     }
   };
 
-  // Get the token
-  const token = document.head
-    .querySelector('meta[name="csrf-token"]')
-    .getAttribute('content');
-
-  // API base Url
-  const api = create({
-    // eslint-disable-next-line no-undef
-    baseURL: `${baseUrl}/api`,
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': token,
-    },
-  });
-
   return (
     <div>
       <Formik
@@ -120,9 +103,8 @@ export default function PostForm(props) {
         }}
         validationSchema={FORM_VALIDATION}
         onSubmit={(values) => {
-          const test = addPost(values);
           setLoading(true);
-          console.log(test);
+          const test = addPost(values);
           console.log(test.message);
           console.log(test.status);
           // Send data to the server
@@ -218,7 +200,11 @@ export default function PostForm(props) {
               />
             </Grid>
             <Grid item xs={12}>
-              <DateTimePicker name="dateTime" label="Date" />
+              <DateTimePicker
+                name="dateTime"
+                label="Date"
+                disabled={isLoading}
+              />
             </Grid>
             <Grid item xs={12}>
               <DialogActions>
