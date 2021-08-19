@@ -15,29 +15,35 @@ const api = create({
 });
 
 // FIXME: Need to fix some returning issue of data
-async function addPost(values) {
+const addPost = async (values) => {
   const post = await api.post('/post/store', values);
   if (post.ok && post.data) {
+    // console.log(post.data);
+    // console.log(Object.values(post));
+    // console.log(Object.values(post.value));
     const postData = {
       status: post.data.status,
       message: post.data.message,
       addNew: 'addData',
     };
-    return postData;
+    // console.log(postData);
+    // return postData;
+    return post.data.status;
+    // return post;
   }
   return 'An error occurred';
-}
+};
 
 async function updatePost(values) {
   console.log(`API = ${values}`);
 }
 
 async function deletePost(values) {
-  console.log('Edit Post');
+  console.log(`Edit Post = ${values}`);
 }
 
 async function getPost(values) {
-  console.log('Edit Post');
+  console.log(`Get Post = ${values}`);
 }
 
 export { addPost, updatePost, deletePost, getPost };

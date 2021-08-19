@@ -1,7 +1,6 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 // import Alert from "@material-ui/lab/Alert";
 // import AlertDisplay from "./AlertDisplay";
-import RegisterForm from "../Signup/RegisterForm";
 import {
   Button,
   Dialog,
@@ -9,8 +8,9 @@ import {
   DialogContentText,
   DialogTitle,
   makeStyles,
-} from "@material-ui/core";
-import { SnackbarProvider } from "notistack";
+} from '@material-ui/core';
+import { SnackbarProvider } from 'notistack';
+import RegisterForm from './RegisterForm';
 
 const useStyles = makeStyles((theme) => ({
   // alertBox: {

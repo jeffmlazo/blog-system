@@ -1,6 +1,8 @@
+// eslint-disable-next-line import/named
+// #region PACKAGE IMPORTS
 import React from 'react';
-import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { Formik, Form } from 'formik';
 import { useSnackbar } from 'notistack';
 import {
   makeStyles,
@@ -9,13 +11,15 @@ import {
   Button,
   // TextField,
 } from '@material-ui/core';
+// #endregion
 
+// #region COMPONENT IMPORTS
 import Textfield from '../FormsUI/Textfield';
 import ButtonForm from '../FormsUI/Button';
 import Select from '../FormsUI/Select';
 import DateTimePicker from '../FormsUI/DateTimePicker';
-// eslint-disable-next-line import/named
-import { addPost } from '../Service/PostService';
+import { addPost, getPost } from '../Service/PostService';
+// #endregion
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -105,8 +109,17 @@ export default function PostForm(props) {
         onSubmit={(values) => {
           setLoading(true);
           const test = addPost(values);
-          console.log(test.message);
-          console.log(test.status);
+          // console.log(test);
+          console.log(test.success);
+          console.log(test.value);
+          // console.log(test.data);
+          // console.log(test.message);
+          // console.log(test.status);
+          // console.log(test.value.status);
+          // console.log(test['value']);
+
+          // const getPostRes = getPost(values);
+          // console.log(getPostRes);
           // Send data to the server
           // const post = await api.post('/post/store', values);
           // setLoading(false);
