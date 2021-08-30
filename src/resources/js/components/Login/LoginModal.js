@@ -29,31 +29,33 @@ export default function LoginModal() {
   };
 
   return (
-    <SnackbarProvider>
-      <div>
-        <Button
-          variant="outlined"
-          color="primary"
-          size="small"
-          onClick={handleClickOpen}
-        >
-          Login
-        </Button>
+    <div className={classes.root}>
+      <SnackbarProvider>
+        <div>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="small"
+            onClick={handleClickOpen}
+          >
+            Login
+          </Button>
 
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Login</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Please fill up the neccessary required fields.
-            </DialogContentText>
-            <LoginForm onClose={handleClose} />
-          </DialogContent>
-        </Dialog>
-      </div>
-    </SnackbarProvider>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="form-dialog-title"
+          >
+            <DialogTitle id="form-dialog-title">Login</DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Please fill up the neccessary required fields.
+              </DialogContentText>
+              <LoginForm onClose={handleClose} />
+            </DialogContent>
+          </Dialog>
+        </div>
+      </SnackbarProvider>
+    </div>
   );
 }

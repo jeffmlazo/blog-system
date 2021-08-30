@@ -3,9 +3,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import { create } from 'apisauce';
 import { useSnackbar } from 'notistack';
-import {
-  makeStyles, Grid, DialogActions, Button,
-} from '@material-ui/core';
+import { makeStyles, Grid, DialogActions, Button } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 import Textfield from '../FormsUI/Textfield';
@@ -138,7 +136,7 @@ export default function LoginForm(props) {
                 <Button
                   onClick={onClose}
                   variant="contained"
-                  color="primary"
+                  color="secondary"
                   className={classes.cancelButton}
                 >
                   Cancel

@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/named
 // #region PACKAGE IMPORTS
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { useSnackbar } from 'notistack';
@@ -99,6 +99,19 @@ export default function PostForm(props) {
     }
   };
 
+  useEffect(() => {
+    const test = getPost('NewTest');
+    // Promise.resolve(getPost('NewTest')).then(
+    //   (value) => {
+    //     console.log(value); // "Success"
+    //   },
+    //   (value) => {
+    //     // not called
+    //   }
+    // );
+    console.log(test);
+  }, []);
+
   return (
     <div>
       <Formik
@@ -108,15 +121,17 @@ export default function PostForm(props) {
         validationSchema={FORM_VALIDATION}
         onSubmit={(values) => {
           setLoading(true);
-          const test = addPost(values);
-          // console.log(test);
-          console.log(test.success);
-          console.log(test.value);
-          // console.log(test.data);
-          // console.log(test.message);
-          // console.log(test.status);
-          // console.log(test.value.status);
-          // console.log(test['value']);
+          // const test = addPost(values);
+          Promise.resolve(addPost(values)).then(
+            (value) => {
+              console.log(
+                `ADDNEW = ${value.addNew} STATUS = ${value.status} MESSAGE = ${value.message}`
+              ); // Success
+            },
+            (value) => {
+              // not called
+            }
+          );
 
           // const getPostRes = getPost(values);
           // console.log(getPostRes);

@@ -27,8 +27,8 @@ const addPost = async (values) => {
       addNew: 'addData',
     };
     // console.log(postData);
-    // return postData;
-    return post.data.status;
+    return postData;
+    // return post.data.status;
     // return post;
   }
   return 'An error occurred';
@@ -44,6 +44,8 @@ async function deletePost(values) {
 
 async function getPost(values) {
   console.log(`Get Post = ${values}`);
+
+  return Promise.resolve('Return values').then((val) => `Newvaaal ${val}`);
 }
 
 export { addPost, updatePost, deletePost, getPost };
